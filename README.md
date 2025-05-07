@@ -1,10 +1,10 @@
 # EasySave - Version 1.0
 
-📘 [Français](#📘-lire-ce-readme-en-français) | 📙 [English](#📙-read-this-readme-in-english)
+📘 [Français](#lire-ce-readme-en-français) | 📙 [English](#read-this-readme-in-english)
 
 ---
 
-## 📘 Lire ce README en Français
+## Lire ce README en Français
 
 ### Présentation
 
@@ -44,7 +44,7 @@ Puis entrez une commande comme :
 
 ---
 
-## 📙 Read this README in English
+## Read this README in English
 Overview
 EasySave is a .NET Core console application that manages up to 5 backup jobs. It supports both full and differential backups, while generating JSON files for real-time state and daily logging.
 
