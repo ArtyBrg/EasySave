@@ -42,7 +42,9 @@ Puis entrez une commande comme :
 - Composant de log intégré sous forme de DLL réutilisable
 - Fichiers de configuration et journaux : JSON, avec retour à la ligne pour la lisibilité
 
-📙 Read this README in English
+---
+
+## 📙 Read this README in English
 Overview
 EasySave is a .NET Core console application that manages up to 5 backup jobs. It supports both full and differential backups, while generating JSON files for real-time state and daily logging.
 
