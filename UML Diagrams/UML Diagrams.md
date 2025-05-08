@@ -6,7 +6,8 @@
 
 **Projet : EasySave – Version 1.0**  
 **Date :** `8 mai 2025`  
-**Groupe :** `Nom de votre groupe`
+**Groupe :** `Groupe 2`
+**Chef de projet :** `Bruno RIECKENBERG`
 
 ---
 
@@ -88,8 +89,8 @@ Ce diagramme met en lumière la structure modulaire de l’application, notammen
 - Préparer une architecture modulaire pour les futures versions (GUI)
     
 
-> _Voir l'image dans `pictures/composants.png`._
-> _Voir le code dans `diagrams/composants.puml`._
+> _Voir l'image dans `pictures/components.png`._
+> _Voir le code dans `diagrams/components.puml`._
 
 ---
 
@@ -115,7 +116,8 @@ Ces diagrammes ont permis de :
 
 **Project:** EasySave – Version 1.0  
 **Date:** `May 8, 2025`  
-**Team:** `Your team name`
+**Team:** `Group 2`
+**Project manager:** `Bruno RIECKENBERG`
 
 ---
 
@@ -197,8 +199,8 @@ The component diagram provides a modular view of the application, especially the
 - Support modularity and scalability for version 2.0 (MVVM GUI)
     
 
-> _Picture in `pictures/composants.png`._
-> _Source file: `diagrams/composants.puml`_
+> _Picture in `pictures/components.png`._
+> _Source file: `diagrams/components.puml`_
 
 ---
 
