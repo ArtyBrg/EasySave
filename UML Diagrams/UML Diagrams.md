@@ -6,7 +6,8 @@
 
 **Projet : EasySave – Version 1.0**  
 **Date :** `8 mai 2025`  
-**Groupe :** `Nom de votre groupe`
+**Groupe :** `Groupe 2`
+**Chef de projet :** `Bruno RIECKENBERG`
 
 ---
 
@@ -115,7 +116,8 @@ Ces diagrammes ont permis de :
 
 **Project:** EasySave – Version 1.0  
 **Date:** `May 8, 2025`  
-**Team:** `Your team name`
+**Team:** `Group 2`
+**Project manager :** `Bruno RIECKENBERG`
 
 ---
 
