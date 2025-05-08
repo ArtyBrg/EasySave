@@ -117,7 +117,7 @@ Ces diagrammes ont permis de :
 **Project:** EasySave – Version 1.0  
 **Date:** `May 8, 2025`  
 **Team:** `Group 2`
-**Project manager :** `Bruno RIECKENBERG`
+**Project manager:** `Bruno RIECKENBERG`
 
 ---
 
