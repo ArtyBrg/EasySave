@@ -1,0 +1,30 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor User
+
+rectangle "EasySave Console App" {
+
+    (Select language) as UC_Language
+    (Create a backup job) as UC_CreateJob
+    (Display list of jobs) as UC_List
+    (Execute one or more jobs) as UC_Execute
+    (Full backup) as UC_Full
+    (Differential backup) as UC_Diff
+    (Generate log file) as UC_Log
+    (Update real-time state) as UC_State
+
+    User --> UC_Language
+    User --> UC_CreateJob
+    User --> UC_List
+    User --> UC_Execute
+
+    UC_Execute --> UC_Full : <<include>>
+    UC_Execute --> UC_Diff : <<include>>
+
+    UC_Execute --> UC_Log : <<include>>
+    UC_Execute --> UC_State : <<include>>
+}
+@enduml
