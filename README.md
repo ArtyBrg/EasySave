@@ -34,7 +34,7 @@ Puis entrez une commande comme :
 ```
 
 ### Fichiers générés
-- og_YYYY-MM-DD.json : journal des actions
+- log_YYYY-MM-DD.json : journal des actions
 - state.json : état temps réel des sauvegardes
 
 ### Structure technique
