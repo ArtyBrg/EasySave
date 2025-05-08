@@ -34,6 +34,7 @@ Le diagramme de cas d’utilisation présente les interactions principales entre
 - Mettre en évidence les dépendances internes (logger, état)
     
 
+> _Voir l'image dans `pictures/usecase.png`._
 > _Diagramme réalisé avec PlantUML. Voir le code dans `diagrams/usecase.puml`._
 
 ---
@@ -51,6 +52,7 @@ Le diagramme de séquence modélise l’enchaînement des opérations lors du la
 - Journalisation et mise à jour de l'état en temps réel
     
 
+> _Voir l'image dans `pictures/sequence.png`._
 > _Voir le code dans `diagrams/sequence.puml`._
 
 ---
@@ -70,6 +72,7 @@ Ce diagramme structure l’architecture orientée objet de la solution. Il prés
 - `LanguageManager` : gestion multilingue
     
 
+> _Voir l'image dans `pictures/classes.png`._
 > _Voir le code dans `diagrams/classes.puml`._
 
 ---
@@ -85,6 +88,7 @@ Ce diagramme met en lumière la structure modulaire de l’application, notammen
 - Préparer une architecture modulaire pour les futures versions (GUI)
     
 
+> _Voir l'image dans `pictures/composants.png`._
 > _Voir le code dans `diagrams/composants.puml`._
 
 ---
@@ -98,6 +102,8 @@ Ces diagrammes ont permis de :
 - Structurer son architecture logicielle
     
 - Préparer son extensibilité vers une version 2.0 avec interface graphique (MVVM)
+
+- Les diagrammes seront modifiés pour chaque nouvelle version majeure (ou modification mineure dans le cadre de la V1)
     
 
 👉 Tous les diagrammes sont générés avec **PlantUML** et stockés dans le dossier `/diagrams`.
@@ -137,6 +143,7 @@ The use case diagram outlines the primary interactions between the user and the 
 - Show internal component dependencies (logger, state management)
     
 
+> _Picture in `pictures/usecase.png`._
 > _Diagram created with PlantUML. Source code in `diagrams/usecase.puml`._
 
 ---
@@ -154,6 +161,7 @@ The sequence diagram models the flow of operations during **command input and ba
 - Real-time logging and state tracking
     
 
+> _Picture in `pictures/sequence.png`._
 > _Source file: `diagrams/sequence.puml`_
 
 ---
@@ -173,6 +181,7 @@ This diagram shows the object-oriented architecture of the solution. It defines 
 - `LanguageManager`: manages multilingual support
     
 
+> _Picture in `pictures/classes.png`._
 > _Source file: `diagrams/classes.puml`_
 
 ---
@@ -188,6 +197,7 @@ The component diagram provides a modular view of the application, especially the
 - Support modularity and scalability for version 2.0 (MVVM GUI)
     
 
+> _Picture in `pictures/composants.png`._
 > _Source file: `diagrams/composants.puml`_
 
 ---
@@ -201,6 +211,8 @@ These diagrams helped to:
 - Structure the overall software design
     
 - Prepare for a GUI-based version (2.0) using MVVM architecture
+
+- The diagrams will be modified for each new major version (or minor modification for V1).
     
 
 👉 All diagrams are created with **PlantUML** and stored in the `/diagrams` folder.
