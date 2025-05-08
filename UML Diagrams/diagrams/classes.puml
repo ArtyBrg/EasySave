@@ -1,0 +1,77 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' Logger
+class Logger {
+  + Log(message: string): void
+  + LogError(errorMessage: string): void
+}
+
+' StateWriter
+class StateWriter {
+  + UpdateState(jobName: string, status: string, progress: double): void
+}
+
+' FileSystem
+class FileSystem {
+  + GetAllFiles(path: string) : IEnumerable<string>
+  + GetModifiedFilesSince(path: string, since: DateTime) : IEnumerable<string>
+  + CopyFile(source: string, target: string): void
+}
+
+' BackupJob
+class BackupJob {
+  + Id: int
+  + Name: string
+  + SourcePath: string
+  + TargetPath: string
+  + Type: string
+  + Execute(): void
+  - ExecuteCompleteBackup(): void
+  - ExecuteDifferentialBackup(): void
+  - GetLastCompleteBackupDate() : DateTime
+  - UpdateLastCompleteBackupDate(): void
+}
+
+' BackupManager
+class BackupManager {
+  - List<BackupJob> _jobs
+  - _nextId: int
+  + CreateJob(name: string, source: string, target: string, type: string) : BackupJob
+  + ExecuteJobs(jobIds: IEnumerable<int>): void
+  + GetAllJobs() : IEnumerable<BackupJob>
+}
+
+' LanguageManager
+class LanguageManager {
+  - _currentLanguage: string
+  + SetLanguage(language: string): void
+  + GetCurrentLanguage() : string
+}
+
+' ConsoleApp
+class ConsoleApp {
+  - LanguageManager _languageManager
+  - BackupManager _backupManager
+  + Run(): void
+  - InitializeLanguage(): void
+  - MainMenuLoop(): void
+  - DisplayMainMenu(): void
+  - CreateBackupJob(): void
+  - ExecuteBackupJobs(): void
+  - ListBackupJobs(): void
+  - GetUserInput(prompt: string) : string
+}
+
+' Relations
+ConsoleApp --> LanguageManager
+ConsoleApp --> BackupManager
+BackupManager --> BackupJob
+BackupJob --> FileSystem
+BackupJob --> StateWriter
+BackupJob --> Logger
+BackupManager --> Logger
+ConsoleApp --> Logger
+LanguageManager --> Logger
+Program --> ConsoleApp
+@enduml
