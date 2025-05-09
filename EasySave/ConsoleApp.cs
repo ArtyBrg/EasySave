@@ -92,6 +92,13 @@ namespace EasySave
         {
             Console.WriteLine("\n=== Create Backup Job ===");
 
+            var existingJobs = _backupManager.GetAllJobs().ToList();
+            if (existingJobs.Count >= 5)
+            {
+                Console.WriteLine("You have reached the maximum number of backup jobs (5).");
+                return;
+            }
+
             string name = GetUserInput("Enter job name:");
             string source = GetUserInput("Enter source path:");
             string target = GetUserInput("Enter target path:");
