@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
+using System.Diagnostics;
 
 // Gestionnaire de sauvegarde
 
@@ -17,15 +19,6 @@ namespace EasySave
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Job name cannot be null or empty", nameof(name));
 
-            if (string.IsNullOrWhiteSpace(source))
-                throw new ArgumentException("Source path cannot be null or empty", nameof(source));
-
-            if (string.IsNullOrWhiteSpace(target))
-                throw new ArgumentException("Target path cannot be null or empty", nameof(target));
-
-            if (string.IsNullOrWhiteSpace(type) || (type != "Complete" && type != "Differential"))
-                throw new ArgumentException("Type must be either 'Complete' or 'Differential'", nameof(type));
-
             var job = new BackupJob
             {
                 Id = _nextId++,
@@ -36,33 +29,27 @@ namespace EasySave
             };
 
             _jobs.Add(job);
-            Logger.Log($"Created new backup job: {name} (ID: {job.Id})");
             StateWriter.UpdateState(name, "Created", 0);
+            Logger.Log($"Created new backup job: {name} (ID: {job.Id})");
 
             return job;
         }
 
         public void ExecuteJobs(IEnumerable<int> jobIds)
         {
-            if (jobIds == null)
-                throw new ArgumentNullException(nameof(jobIds));
-
             foreach (var id in jobIds)
             {
                 var job = _jobs.FirstOrDefault(j => j.Id == id);
-                if (job == null)
+                if (job != null)
                 {
-                    Logger.LogError($"Backup job with ID {id} not found");
-                    continue;
-                }
-
-                try
-                {
-                    job.Execute();
-                }
-                catch (Exception ex)
-                {
-                    Logger.LogError($"Failed to execute backup job {job.Name}: {ex.Message}");
+                    try
+                    {
+                        job.Execute();
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogError($"Failed to execute backup job {job.Name}: {ex.Message}");
+                    }
                 }
             }
         }
