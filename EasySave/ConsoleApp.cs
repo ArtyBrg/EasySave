@@ -214,7 +214,7 @@ namespace EasySave
 
             try
             {
-                _backupManager.ExecuteJobs(jobIds);
+                _backupManager.ExecuteJobs(selectedIds.ToList());
                 Console.WriteLine(_languagemManager.GetString("Execute backup execution completed"));
             }
             catch (Exception ex)

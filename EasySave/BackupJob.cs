@@ -91,7 +91,7 @@ namespace EasySave
 
         private void ExecuteDifferentialBackup()
         {
-            DateTime lastBackup = GetLastBackupDate();
+            DateTime lastBackup = GetLastCompleteBackupDate();
             Logger.Log($"Last complete backup was at {lastBackup}");
 
             var modifiedFiles = FileSystem.GetModifiedFilesSince(SourcePath, lastBackup).ToList();
