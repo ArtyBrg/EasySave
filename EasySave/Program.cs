@@ -9,7 +9,7 @@ namespace EasySave
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Console.WriteLine("=== EasySave Backup Application ===");
             Console.WriteLine("Version 1.0\n");
