@@ -1,24 +1,26 @@
-﻿using System;
+﻿using System.Globalization;
+using System.Resources;
+using System.Threading;
 
-// Gestionnaire de langue
-
-namespace EasySave
+public class LanguageManager
 {
-    public class LanguageManager
+    private static ResourceManager _resourceManager = new("EasySave.Resources", typeof(LanguageManager).Assembly);
+
+    public void SetLanguage(string languageCode)
     {
-        private string _currentLanguage = "EN";
-
-        public void SetLanguage(string language)
+        var culture = languageCode.ToUpper() switch
         {
-            _currentLanguage = language.ToUpper() switch
-            {
-                "FR" => "FR",
-                "EN" => "EN",
-                _ => throw new ArgumentException("Unsupported language")
-            };
-            Logger.Log($"Language set to: {_currentLanguage}");
-        }
+            "EN" => new CultureInfo("en"),
+            "FR" => new CultureInfo("fr"),
+            _ => throw new ArgumentException("Invalid language. Please enter EN or FR.")
+        };
 
-        public string GetCurrentLanguage() => _currentLanguage;
+        Thread.CurrentThread.CurrentCulture = culture;
+        Thread.CurrentThread.CurrentUICulture = culture;
+    }
+
+    public string GetString(string key)
+    {
+        return _resourceManager.GetString(key) ?? $"[{key}]";
     }
 }

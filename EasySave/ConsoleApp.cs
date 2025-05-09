@@ -14,7 +14,7 @@ namespace EasySave
         {
             try
             {
-                InitializeLanguage();
+                _languageManager.SetLanguage("EN");
                 MainMenuLoop();
             }
             catch (Exception ex)
@@ -26,14 +26,14 @@ namespace EasySave
 
         private void InitializeLanguage()
         {
-            Console.WriteLine("Select your preferred language (EN/FR):");
+            Console.WriteLine(_languageManager.GetString("\nTo select your language enter 'FR' or 'EN'"));
             string? input;
             do
             {
                 input = Console.ReadLine()?.Trim();
                 if (string.IsNullOrEmpty(input))
                 {
-                    Console.WriteLine("Language cannot be empty. Please enter EN or FR:");
+                    Console.WriteLine(_languageManager.GetString("LanguageEmptyError"));
                     continue;
                 }
 
@@ -45,10 +45,11 @@ namespace EasySave
                 catch (ArgumentException ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Console.WriteLine("Please enter EN or FR:");
+                    Console.WriteLine(_languageManager.GetString("SelectLanguage"));
                 }
             } while (true);
         }
+
 
         private void MainMenuLoop()
         {
@@ -71,6 +72,9 @@ namespace EasySave
                     case "4":
                         Environment.Exit(0);
                         break;
+                    case "5":
+                        InitializeLanguage();
+                        break;
                     default:
                         Console.WriteLine("Invalid option. Please try again.");
                         break;
@@ -80,21 +84,37 @@ namespace EasySave
 
         private void DisplayMainMenu()
         {
-            Console.WriteLine("\n=== EasySave Backup ===");
-            Console.WriteLine("1. Create backup job");
-            Console.WriteLine("2. Execute backup jobs");
-            Console.WriteLine("3. List backup jobs");
-            Console.WriteLine("4. Exit");
-            Console.Write("Select an option: ");
+            Console.WriteLine("\n");
+            Console.WriteLine(_languageManager.GetString("Title"));
+            Console.WriteLine(_languageManager.GetString("Main menu create"));
+            Console.WriteLine(_languageManager.GetString("Main menu execute"));
+            Console.WriteLine(_languageManager.GetString("Main menu list"));
+            Console.WriteLine(_languageManager.GetString("Main menu exit"));
+            Console.WriteLine(_languageManager.GetString("Main menu select language"));
+            Console.WriteLine(_languageManager.GetString("Main menu select option"));
+
         }
 
         private void CreateBackupJob()
         {
-            Console.WriteLine("\n=== Create Backup Job ===");
+            Console.WriteLine("\n");
+            Console.WriteLine(_languageManager.GetString("Create Backup Job"));
 
-            string name = GetUserInput("Enter job name:");
-            string source = GetUserInput("Enter source path:");
-            string target = GetUserInput("Enter target path:");
+            var existingJobs = _backupManager.GetAllJobs().ToList();
+            if (existingJobs.Count >= 5)
+            {
+                Console.WriteLine(_languageManager.GetString("Maximum job create"));
+                return;
+            }
+
+            string name = GetUserInput(_languageManager.GetString("Create job name"));
+            if (existingJobs.Any(job => job.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
+            {
+                Console.WriteLine(_languageManager.GetString("Job name already exists"));
+                return;
+            }
+            string source = GetUserInput(_languageManager.GetString("Create job path"));
+            string target = GetUserInput(_languageManager.GetString("Create job target"));
 
             string type;
             do
@@ -117,6 +137,36 @@ namespace EasySave
             }
         }
 
+        private static HashSet<int> ParseJobSelection(string input)
+        {
+            var ids = new HashSet<int>();
+            var parts = input.Split(';', StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var part in parts)
+            {
+                if (part.Contains('-'))
+                {
+                    var range = part.Split('-', StringSplitOptions.RemoveEmptyEntries);
+                    if (range.Length == 2 &&
+                        int.TryParse(range[0], out int start) &&
+                        int.TryParse(range[1], out int end))
+                    {
+                        for (int i = start; i <= end; i++)
+                        {
+                            ids.Add(i);
+                        }
+                    }
+                }
+                else if (int.TryParse(part, out int id))
+                {
+                    ids.Add(id);
+                }
+            }
+
+            return ids;
+        }
+
+
         private void ExecuteBackupJobs()
         {
             Console.WriteLine("\n=== Execute Backup Jobs ===");
@@ -134,7 +184,7 @@ namespace EasySave
                 Console.WriteLine($"{job.Id}: {job.Name} ({job.Type})");
             }
 
-            Console.WriteLine("Enter job IDs to execute (comma separated):");
+            Console.WriteLine("Enter job IDs to execute (e.g., 1-3;5):");
             var input = Console.ReadLine()?.Trim();
 
             if (string.IsNullOrWhiteSpace(input))
@@ -143,12 +193,9 @@ namespace EasySave
                 return;
             }
 
-            var jobIds = input.Split(',')
-                .Select(idStr => int.TryParse(idStr.Trim(), out int id) ? id : -1)
-                .Where(id => id > 0)
-                .ToList();
+            var selectedIds = ParseJobSelection(input);
 
-            if (!jobIds.Any())
+            if (!selectedIds.Any())
             {
                 Console.WriteLine("No valid job IDs entered.");
                 return;
@@ -156,7 +203,7 @@ namespace EasySave
 
             try
             {
-                _backupManager.ExecuteJobs(jobIds);
+                _backupManager.ExecuteJobs(selectedIds.ToList());
                 Console.WriteLine("Backup jobs execution completed.");
             }
             catch (Exception ex)
@@ -164,6 +211,7 @@ namespace EasySave
                 Console.WriteLine($"Error executing backup jobs: {ex.Message}");
             }
         }
+
 
         private void ListBackupJobs()
         {
