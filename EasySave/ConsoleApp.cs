@@ -115,7 +115,6 @@ namespace EasySave
             }
             string source = GetUserInput(_languageManager.GetString("Create job path"));
             string target = GetUserInput(_languageManager.GetString("Create job target"));
-            string target = GetUserInput("Enter target path:");
 
             string type;
             do
