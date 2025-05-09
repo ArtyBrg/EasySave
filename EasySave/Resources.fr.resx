@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Execute backup execution completed" xml:space="preserve">
+    <value>Execution du travail de sauvegarde terminé</value>
+  </data>
   <data name="Create backup job" xml:space="preserve">
     <value>=== Créer un travail de sauvegarde ===</value>
   </data>
@@ -129,8 +132,38 @@
   <data name="Create job target" xml:space="preserve">
     <value>Entrez le chemin du fichier ciblé</value>
   </data>
+  <data name="Create job type" xml:space="preserve">
+    <value>Entrez le type de sauvegarde (Complete/Differentiel)</value>
+  </data>
+  <data name="Execute backup enter job id" xml:space="preserve">
+    <value>Entrez l'id des travaux de sauvegarde pour executer (séparés par des virgules):</value>
+  </data>
+  <data name="Execute backup job" xml:space="preserve">
+    <value>=== Executer un travail de sauvegarde ===</value>
+  </data>
+  <data name="Execute backup no available" xml:space="preserve">
+    <value>Aucun travail de sauvegarde disponible</value>
+  </data>
+  <data name="Execute backup no job select" xml:space="preserve">
+    <value>Aucun travail sélectionné</value>
+  </data>
+  <data name="Execute backup no valid id" xml:space="preserve">
+    <value>Aucun id valide de travail entré</value>
+  </data>
+  <data name="Execute backup print list" xml:space="preserve">
+    <value>Travaux de sauvegarde disponibles:</value>
+  </data>
   <data name="Job name already exists" xml:space="preserve">
     <value>Nom de travail déjà existant</value>
+  </data>
+  <data name="job type complete" xml:space="preserve">
+    <value>Complete</value>
+  </data>
+  <data name="job type differential" xml:space="preserve">
+    <value>Differentiel</value>
+  </data>
+  <data name="job type error" xml:space="preserve">
+    <value>Type invalide. Entrez 'Complete' ou 'Differentiel'</value>
   </data>
   <data name="Main menu create" xml:space="preserve">
     <value>1. Créer un travail de sauvegarde</value>
@@ -145,7 +178,7 @@
     <value>3. Lister les travaux de sauvegarde</value>
   </data>
   <data name="Main menu select language" xml:space="preserve">
-    <value>5. Selectionner la langue FR/EN</value>
+    <value>5. Sélectionner la langue FR/EN</value>
   </data>
   <data name="Main menu select option" xml:space="preserve">
     <value>Sélectionnez une option : </value>
@@ -153,7 +186,22 @@
   <data name="Maximum job create" xml:space="preserve">
     <value>Vous avez atteins le nombre maximum de travaux de sauvegarde (5).</value>
   </data>
+  <data name="Select language" xml:space="preserve">
+    <value>Pour sélectionner la langue entrez 'FR' ou 'EN'</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>=== EasySave Menu Principal ===</value>
+  </data>
+  <data name="Execute backup executing error" xml:space="preserve">
+    <value>Erreur d'execution du travail de sauvegarde</value>
+  </data>
+  <data name="List job title" xml:space="preserve">
+    <value>=== Liste des travaux de sauvegarde ===</value>
+  </data>
+  <data name="List job no backup available" xml:space="preserve">
+    <value>Aucun travail de sauvegarde disponible</value>
+  </data>
+  <data name="List job input empty" xml:space="preserve">
+    <value>L'entrée ne peut pas être vide. Essayez encore:</value>
   </data>
 </root>
