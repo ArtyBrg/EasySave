@@ -8,23 +8,23 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Utilisateur\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\SIGNAL SYSTEMS\\.nuget\\packages\\": {},
+    "D:\\C# Installation\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\Génie Logiciel\\Projet\\EasySave\\EasySave.csproj",
+      "projectUniqueName": "C:\\Users\\SIGNAL SYSTEMS\\Desktop\\EasySave\\EasySave\\EasySave\\EasySave.csproj",
       "projectName": "EasySave",
-      "projectPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\Génie Logiciel\\Projet\\EasySave\\EasySave.csproj",
-      "packagesPath": "C:\\Users\\Utilisateur\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\Génie Logiciel\\Projet\\EasySave\\obj\\",
+      "projectPath": "C:\\Users\\SIGNAL SYSTEMS\\Desktop\\EasySave\\EasySave\\EasySave\\EasySave.csproj",
+      "packagesPath": "C:\\Users\\SIGNAL SYSTEMS\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\SIGNAL SYSTEMS\\Desktop\\EasySave\\EasySave\\EasySave\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "D:\\C# Installation\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Utilisateur\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\SIGNAL SYSTEMS\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
