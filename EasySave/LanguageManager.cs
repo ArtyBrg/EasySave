@@ -10,16 +10,12 @@ namespace EasySave
 
         public void SetLanguage(string language)
         {
-            if (string.IsNullOrWhiteSpace(language))
-                throw new ArgumentException("Language cannot be null or empty", nameof(language));
-
             _currentLanguage = language.ToUpper() switch
             {
                 "FR" => "FR",
                 "EN" => "EN",
-                _ => throw new ArgumentException("Unsupported language", nameof(language))
+                _ => throw new ArgumentException("Unsupported language")
             };
-
             Logger.Log($"Language set to: {_currentLanguage}");
         }
 
