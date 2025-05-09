@@ -115,7 +115,6 @@ namespace EasySave
             }
             string source = GetUserInput(_languageManager.GetString("Create job path"));
             string target = GetUserInput(_languageManager.GetString("Create job target"));
-            string target = GetUserInput("Enter target path:");
 
             string type;
             do
@@ -138,6 +137,36 @@ namespace EasySave
             }
         }
 
+        private static HashSet<int> ParseJobSelection(string input)
+        {
+            var ids = new HashSet<int>();
+            var parts = input.Split(';', StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var part in parts)
+            {
+                if (part.Contains('-'))
+                {
+                    var range = part.Split('-', StringSplitOptions.RemoveEmptyEntries);
+                    if (range.Length == 2 &&
+                        int.TryParse(range[0], out int start) &&
+                        int.TryParse(range[1], out int end))
+                    {
+                        for (int i = start; i <= end; i++)
+                        {
+                            ids.Add(i);
+                        }
+                    }
+                }
+                else if (int.TryParse(part, out int id))
+                {
+                    ids.Add(id);
+                }
+            }
+
+            return ids;
+        }
+
+
         private void ExecuteBackupJobs()
         {
             Console.WriteLine("\n=== Execute Backup Jobs ===");
@@ -155,7 +184,7 @@ namespace EasySave
                 Console.WriteLine($"{job.Id}: {job.Name} ({job.Type})");
             }
 
-            Console.WriteLine("Enter job IDs to execute (comma separated):");
+            Console.WriteLine("Enter job IDs to execute (e.g., 1-3;5):");
             var input = Console.ReadLine()?.Trim();
 
             if (string.IsNullOrWhiteSpace(input))
@@ -164,12 +193,9 @@ namespace EasySave
                 return;
             }
 
-            var jobIds = input.Split(',')
-                .Select(idStr => int.TryParse(idStr.Trim(), out int id) ? id : -1)
-                .Where(id => id > 0)
-                .ToList();
+            var selectedIds = ParseJobSelection(input);
 
-            if (!jobIds.Any())
+            if (!selectedIds.Any())
             {
                 Console.WriteLine("No valid job IDs entered.");
                 return;
@@ -177,7 +203,7 @@ namespace EasySave
 
             try
             {
-                _backupManager.ExecuteJobs(jobIds);
+                _backupManager.ExecuteJobs(selectedIds.ToList());
                 Console.WriteLine("Backup jobs execution completed.");
             }
             catch (Exception ex)
@@ -185,6 +211,7 @@ namespace EasySave
                 Console.WriteLine($"Error executing backup jobs: {ex.Message}");
             }
         }
+
 
         private void ListBackupJobs()
         {
