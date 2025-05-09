@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text.Json;
+using System.Diagnostics;
 
 // Logger DLL (externe)
 

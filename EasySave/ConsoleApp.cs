@@ -114,6 +114,7 @@ namespace EasySave
                 Console.WriteLine(_languagemManager.GetString("Job name already exists"));
                 return;
             }
+
             string source = GetUserInput(_languagemManager.GetString("Create job path"));
             string target = GetUserInput(_languagemManager.GetString("Create job target"));
 
@@ -146,6 +147,36 @@ namespace EasySave
                 }
         }
 
+        private static HashSet<int> ParseJobSelection(string input)
+        {
+            var ids = new HashSet<int>();
+            var parts = input.Split(';', StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var part in parts)
+            {
+                if (part.Contains('-'))
+                {
+                    var range = part.Split('-', StringSplitOptions.RemoveEmptyEntries);
+                    if (range.Length == 2 &&
+                        int.TryParse(range[0], out int start) &&
+                        int.TryParse(range[1], out int end))
+                    {
+                        for (int i = start; i <= end; i++)
+                        {
+                            ids.Add(i);
+                        }
+                    }
+                }
+                else if (int.TryParse(part, out int id))
+                {
+                    ids.Add(id);
+                }
+            }
+
+            return ids;
+        }
+
+
         private void ExecuteBackupJobs()
         {
             Console.WriteLine("\n");
@@ -173,12 +204,9 @@ namespace EasySave
                 return;
             }
 
-            var jobIds = input.Split(',')
-                .Select(idStr => int.TryParse(idStr.Trim(), out int id) ? id : -1)
-                .Where(id => id > 0)
-                .ToList();
+            var selectedIds = ParseJobSelection(input);
 
-            if (!jobIds.Any())
+            if (!selectedIds.Any())
             {
                 Console.WriteLine(_languagemManager.GetString("Execute backup no valid id"));
                 return;
@@ -195,6 +223,7 @@ namespace EasySave
                 Console.WriteLine($"{ex.Message}");
             }
         }
+
 
         private void ListBackupJobs()
         {

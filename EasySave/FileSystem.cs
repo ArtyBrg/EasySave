@@ -45,5 +45,14 @@ namespace EasySave
             File.Copy(source, target, true);
             Logger.Log($"File copied from {source} to {target}");
         }
+
+        public static long GetDirectorySize(string path)
+        {
+            if (!Directory.Exists(path))
+                return 0;
+
+            return Directory.GetFiles(path, "*", SearchOption.AllDirectories)
+                          .Sum(file => new FileInfo(file).Length);
+        }
     }
 }
