@@ -7,14 +7,14 @@ namespace EasySave
 {
     public class ConsoleApp
     {
-        private readonly LanguageManager _languageManager = new();
+        private readonly LanguageManager _languagemManager = new();
         private readonly BackupManager _backupManager = new();
 
         public void Run()
         {
             try
             {
-                _languageManager.SetLanguage("EN");
+                _languagemManager.SetLanguage("EN");
                 MainMenuLoop();
             }
             catch (Exception ex)
@@ -26,26 +26,27 @@ namespace EasySave
 
         private void InitializeLanguage()
         {
-            Console.WriteLine(_languageManager.GetString("\nTo select your language enter 'FR' or 'EN'"));
+            Console.WriteLine("\n");
+            Console.WriteLine(_languagemManager.GetString("Select language"));
             string? input;
             do
             {
                 input = Console.ReadLine()?.Trim();
                 if (string.IsNullOrEmpty(input))
                 {
-                    Console.WriteLine(_languageManager.GetString("LanguageEmptyError"));
+                    Console.WriteLine(_languagemManager.GetString("LanguageEmptyError"));
                     continue;
                 }
 
                 try
                 {
-                    _languageManager.SetLanguage(input);
+                    _languagemManager.SetLanguage(input);
                     break;
                 }
                 catch (ArgumentException ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Console.WriteLine(_languageManager.GetString("SelectLanguage"));
+                    Console.WriteLine(_languagemManager.GetString("Select language"));
                 }
             } while (true);
         }
@@ -85,56 +86,65 @@ namespace EasySave
         private void DisplayMainMenu()
         {
             Console.WriteLine("\n");
-            Console.WriteLine(_languageManager.GetString("Title"));
-            Console.WriteLine(_languageManager.GetString("Main menu create"));
-            Console.WriteLine(_languageManager.GetString("Main menu execute"));
-            Console.WriteLine(_languageManager.GetString("Main menu list"));
-            Console.WriteLine(_languageManager.GetString("Main menu exit"));
-            Console.WriteLine(_languageManager.GetString("Main menu select language"));
-            Console.WriteLine(_languageManager.GetString("Main menu select option"));
+            Console.WriteLine(_languagemManager.GetString("Title"));
+            Console.WriteLine(_languagemManager.GetString("Main menu create"));
+            Console.WriteLine(_languagemManager.GetString("Main menu execute"));
+            Console.WriteLine(_languagemManager.GetString("Main menu list"));
+            Console.WriteLine(_languagemManager.GetString("Main menu exit"));
+            Console.WriteLine(_languagemManager.GetString("Main menu select language"));
+            Console.WriteLine(_languagemManager.GetString("Main menu select option"));
 
         }
 
         private void CreateBackupJob()
         {
             Console.WriteLine("\n");
-            Console.WriteLine(_languageManager.GetString("Create Backup Job"));
+            Console.WriteLine(_languagemManager.GetString("Create backup job"));
 
             var existingJobs = _backupManager.GetAllJobs().ToList();
             if (existingJobs.Count >= 5)
             {
-                Console.WriteLine(_languageManager.GetString("Maximum job create"));
+                Console.WriteLine(_languagemManager.GetString("Maximum job create"));
                 return;
             }
 
-            string name = GetUserInput(_languageManager.GetString("Create job name"));
+            string name = GetUserInput(_languagemManager.GetString("Create job name"));
             if (existingJobs.Any(job => job.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
             {
-                Console.WriteLine(_languageManager.GetString("Job name already exists"));
+                Console.WriteLine(_languagemManager.GetString("Job name already exists"));
                 return;
             }
-            string source = GetUserInput(_languageManager.GetString("Create job path"));
-            string target = GetUserInput(_languageManager.GetString("Create job target"));
+
+            string source = GetUserInput(_languagemManager.GetString("Create job path"));
+            string target = GetUserInput(_languagemManager.GetString("Create job target"));
 
             string type;
             do
             {
-                type = GetUserInput("Enter backup type (Complete/Differential):").Trim();
-                if (type != "Complete" && type != "Differential")
+                type = GetUserInput(_languagemManager.GetString("Create job type")).Trim();
+                if (type != (_languagemManager.GetString("job type complete")) && type != (_languagemManager.GetString("job type differential")))
                 {
-                    Console.WriteLine("Invalid type. Please enter 'Complete' or 'Differential'");
+                        Console.WriteLine(_languagemManager.GetString("job type error"));
+
                 }
-            } while (type != "Complete" && type != "Differential");
+            } while (type != (_languagemManager.GetString("job type complete")) && type != (_languagemManager.GetString("job type differential")));
+
+            if (type == (_languagemManager.GetString("job type complete"))){
+                type = "Complete";
+            }
+            else if (type == (_languagemManager.GetString("job type differential"))){
+                type = "Differential";
+            };
 
             try
-            {
-                _backupManager.CreateJob(name, source, target, type);
-                Console.WriteLine($"Backup job '{name}' created successfully!");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error creating backup job: {ex.Message}");
-            }
+                {
+                    _backupManager.CreateJob(name, source, target, type);
+                    Console.WriteLine($"Backup job '{name}' created successfully!");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error creating backup job: {ex.Message}");
+                }
         }
 
         private static HashSet<int> ParseJobSelection(string input)
@@ -169,27 +179,28 @@ namespace EasySave
 
         private void ExecuteBackupJobs()
         {
-            Console.WriteLine("\n=== Execute Backup Jobs ===");
+            Console.WriteLine("\n");
+            Console.WriteLine(_languagemManager.GetString("Execute backup job"));
             var jobs = _backupManager.GetAllJobs().ToList();
 
             if (!jobs.Any())
             {
-                Console.WriteLine("No backup jobs available.");
+                Console.WriteLine(_languagemManager.GetString("Execute backup no available"));
                 return;
             }
 
-            Console.WriteLine("Available backup jobs:");
+            Console.WriteLine(_languagemManager.GetString("Execute backup print list"));
             foreach (var job in jobs)
             {
                 Console.WriteLine($"{job.Id}: {job.Name} ({job.Type})");
             }
 
-            Console.WriteLine("Enter job IDs to execute (e.g., 1-3;5):");
+            Console.WriteLine(_languagemManager.GetString("Execute backup enter job id"));
             var input = Console.ReadLine()?.Trim();
 
             if (string.IsNullOrWhiteSpace(input))
             {
-                Console.WriteLine("No jobs selected.");
+                Console.WriteLine(_languagemManager.GetString("Execute backup no job select"));
                 return;
             }
 
@@ -197,30 +208,32 @@ namespace EasySave
 
             if (!selectedIds.Any())
             {
-                Console.WriteLine("No valid job IDs entered.");
+                Console.WriteLine(_languagemManager.GetString("Execute backup no valid id"));
                 return;
             }
 
             try
             {
-                _backupManager.ExecuteJobs(selectedIds.ToList());
-                Console.WriteLine("Backup jobs execution completed.");
+                _backupManager.ExecuteJobs(jobIds);
+                Console.WriteLine(_languagemManager.GetString("Execute backup execution completed"));
             }
             catch (Exception ex)
-            {
-                Console.WriteLine($"Error executing backup jobs: {ex.Message}");
+            { 
+                Console.WriteLine(_languagemManager.GetString("Execute backup executing error"));
+                Console.WriteLine($"{ex.Message}");
             }
         }
 
 
         private void ListBackupJobs()
         {
-            Console.WriteLine("\n=== Backup Jobs List ===");
+            Console.WriteLine("\n");
+            Console.WriteLine(_languagemManager.GetString("List job title"));
             var jobs = _backupManager.GetAllJobs().ToList();
 
             if (!jobs.Any())
             {
-                Console.WriteLine("No backup jobs available.");
+                Console.WriteLine(_languagemManager.GetString("List job no backup available"));
                 return;
             }
 
@@ -235,7 +248,7 @@ namespace EasySave
             }
         }
 
-        private static string GetUserInput(string prompt)
+        private string GetUserInput(string prompt)
         {
             Console.WriteLine(prompt);
             string? input;
@@ -244,7 +257,7 @@ namespace EasySave
                 input = Console.ReadLine()?.Trim();
                 if (string.IsNullOrEmpty(input))
                 {
-                    Console.WriteLine("Input cannot be empty. Please try again:");
+                    Console.WriteLine(_languagemManager.GetString("List job input empty"));
                 }
             } while (string.IsNullOrEmpty(input));
 

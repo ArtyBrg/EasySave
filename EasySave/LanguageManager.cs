@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Resources;
 using System.Threading;
+using EasySave;
 
 public class LanguageManager
 {
