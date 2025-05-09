@@ -14,7 +14,7 @@ namespace EasySave
         {
             try
             {
-                InitializeLanguage();
+                _languageManager.SetLanguage("EN");
                 MainMenuLoop();
             }
             catch (Exception ex)
@@ -26,14 +26,14 @@ namespace EasySave
 
         private void InitializeLanguage()
         {
-            Console.WriteLine("Select your preferred language (EN/FR):");
+            Console.WriteLine(_languageManager.GetString("\nTo select your language enter 'FR' or 'EN'"));
             string? input;
             do
             {
                 input = Console.ReadLine()?.Trim();
                 if (string.IsNullOrEmpty(input))
                 {
-                    Console.WriteLine("Language cannot be empty. Please enter EN or FR:");
+                    Console.WriteLine(_languageManager.GetString("LanguageEmptyError"));
                     continue;
                 }
 
@@ -45,10 +45,11 @@ namespace EasySave
                 catch (ArgumentException ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Console.WriteLine("Please enter EN or FR:");
+                    Console.WriteLine(_languageManager.GetString("SelectLanguage"));
                 }
             } while (true);
         }
+
 
         private void MainMenuLoop()
         {
@@ -71,6 +72,9 @@ namespace EasySave
                     case "4":
                         Environment.Exit(0);
                         break;
+                    case "5":
+                        InitializeLanguage();
+                        break;
                     default:
                         Console.WriteLine("Invalid option. Please try again.");
                         break;
@@ -80,27 +84,37 @@ namespace EasySave
 
         private void DisplayMainMenu()
         {
-            Console.WriteLine("\n=== EasySave Backup ===");
-            Console.WriteLine("1. Create backup job");
-            Console.WriteLine("2. Execute backup jobs");
-            Console.WriteLine("3. List backup jobs");
-            Console.WriteLine("4. Exit");
-            Console.Write("Select an option: ");
+            Console.WriteLine("\n");
+            Console.WriteLine(_languageManager.GetString("Title"));
+            Console.WriteLine(_languageManager.GetString("Main menu create"));
+            Console.WriteLine(_languageManager.GetString("Main menu execute"));
+            Console.WriteLine(_languageManager.GetString("Main menu list"));
+            Console.WriteLine(_languageManager.GetString("Main menu exit"));
+            Console.WriteLine(_languageManager.GetString("Main menu select language"));
+            Console.WriteLine(_languageManager.GetString("Main menu select option"));
+
         }
 
         private void CreateBackupJob()
         {
-            Console.WriteLine("\n=== Create Backup Job ===");
+            Console.WriteLine("\n");
+            Console.WriteLine(_languageManager.GetString("Create Backup Job"));
 
             var existingJobs = _backupManager.GetAllJobs().ToList();
             if (existingJobs.Count >= 5)
             {
-                Console.WriteLine("You have reached the maximum number of backup jobs (5).");
+                Console.WriteLine(_languageManager.GetString("Maximum job create"));
                 return;
             }
 
-            string name = GetUserInput("Enter job name:");
-            string source = GetUserInput("Enter source path:");
+            string name = GetUserInput(_languageManager.GetString("Create job name"));
+            if (existingJobs.Any(job => job.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
+            {
+                Console.WriteLine(_languageManager.GetString("Job name already exists"));
+                return;
+            }
+            string source = GetUserInput(_languageManager.GetString("Create job path"));
+            string target = GetUserInput(_languageManager.GetString("Create job target"));
             string target = GetUserInput("Enter target path:");
 
             string type;
