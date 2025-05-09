@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using LoggerLib;
+using System.Diagnostics;
+
 
 // Travail de sauvegarde
 
@@ -14,6 +17,8 @@ namespace EasySave
         public required string SourcePath { get; set; }
         public required string TargetPath { get; set; }
         public required string Type { get; set; } // "Complete" ou "Differential"
+
+        private readonly DailyJsonLogger jsonLogger = new DailyJsonLogger("Logs"); // le dossier où seront les logs
 
         public void Execute()
         {
@@ -54,10 +59,11 @@ namespace EasySave
 
             for (int i = 0; i < files.Count; i++)
             {
-                string relativePath = files[i][SourcePath.Length..].TrimStart(Path.DirectorySeparatorChar);
+                string sourceFile = files[i];
+                string relativePath = sourceFile[SourcePath.Length..].TrimStart(Path.DirectorySeparatorChar);
                 string targetFile = Path.Combine(TargetPath, relativePath);
 
-                FileSystem.CopyFile(files[i], targetFile);
+                double transferTime = CopyAndLog(sourceFile, targetFile);
 
                 double progress = (i + 1) * 100.0 / files.Count;
                 StateWriter.UpdateState(Name, "InProgress", progress);
@@ -74,14 +80,55 @@ namespace EasySave
 
             for (int i = 0; i < modifiedFiles.Count; i++)
             {
-                string relativePath = modifiedFiles[i][SourcePath.Length..].TrimStart(Path.DirectorySeparatorChar);
+                string sourceFile = modifiedFiles[i];
+                string relativePath = sourceFile[SourcePath.Length..].TrimStart(Path.DirectorySeparatorChar);
                 string targetFile = Path.Combine(TargetPath, relativePath);
 
-                FileSystem.CopyFile(modifiedFiles[i], targetFile);
+                double transferTime = CopyAndLog(sourceFile, targetFile);
 
                 double progress = (i + 1) * 100.0 / modifiedFiles.Count;
                 StateWriter.UpdateState(Name, "InProgress", progress);
             }
+        }
+
+        private double CopyAndLog(string sourceFile, string targetFile)
+        {
+            double timeMs = -1;
+            long fileSize = 0;
+
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(targetFile)!);
+
+                Stopwatch sw = Stopwatch.StartNew();
+                FileSystem.CopyFile(sourceFile, targetFile);
+                sw.Stop();
+
+                timeMs = sw.Elapsed.TotalMilliseconds;
+                fileSize = new FileInfo(sourceFile).Length;
+
+                jsonLogger.LogFileTransfer(
+                    backupName: Name,
+                    sourcePath: Path.GetFullPath(sourceFile),
+                    targetPath: Path.GetFullPath(targetFile),
+                    size: fileSize,
+                    transferTimeMs: timeMs
+                );
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError($"Failed to copy file {sourceFile}: {ex.Message}");
+
+                jsonLogger.LogFileTransfer(
+                    backupName: Name,
+                    sourcePath: Path.GetFullPath(sourceFile),
+                    targetPath: Path.GetFullPath(targetFile),
+                    size: 0,
+                    transferTimeMs: -1
+                );
+            }
+
+            return timeMs;
         }
 
         private DateTime GetLastCompleteBackupDate()
@@ -116,3 +163,4 @@ namespace EasySave
         }
     }
 }
+
