@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
-// Programme principal
+using EasySave.Views;
+using EasySave.ViewModels;
+using EasySave.Services;
 
 namespace EasySave
 {
@@ -11,17 +9,31 @@ namespace EasySave
     {
         static void Main()
         {
+            
+
             Console.WriteLine("=== EasySave Backup Application ===");
-            Console.WriteLine("Version 1.0\n");
+            Console.WriteLine("Version 1.1 MVVM\n");
 
             try
             {
-                var app = new ConsoleApp();
-                app.Run();
+                // Initialiser les services
+                var loggerService = new LoggerService();
+                var stateService = new StateService(loggerService);
+                var fileSystemService = new FileSystemService(loggerService);
+                var languageService = new LanguageService();
+                languageService.LoadLanguageFromSettings();
+
+                // Initialiser les ViewModels
+                var backupManagerViewModel = new BackupManagerViewModel(fileSystemService, loggerService, stateService);
+                var mainViewModel = new MainViewModel(backupManagerViewModel, languageService);
+
+                // Initialiser et démarrer la vue
+                var consoleView = new ConsoleView(mainViewModel);
+                consoleView.Run();
             }
             catch (Exception ex)
             {
-                Logger.LogError($"Application crashed: {ex}");
+                Console.WriteLine($"Application crashed: {ex.Message}");
                 Console.WriteLine("A critical error occurred. The application will now close.");
                 Console.WriteLine("Error details have been logged.");
             }
