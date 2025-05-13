@@ -9,8 +9,10 @@ namespace EasySave
     {
         static void Main()
         {
+            
+
             Console.WriteLine("=== EasySave Backup Application ===");
-            Console.WriteLine("Version 1.0 MVVM\n");
+            Console.WriteLine("Version 1.1 MVVM\n");
 
             try
             {
@@ -19,6 +21,7 @@ namespace EasySave
                 var stateService = new StateService(loggerService);
                 var fileSystemService = new FileSystemService(loggerService);
                 var languageService = new LanguageService();
+                languageService.LoadLanguageFromSettings();
 
                 // Initialiser les ViewModels
                 var backupManagerViewModel = new BackupManagerViewModel(fileSystemService, loggerService, stateService);

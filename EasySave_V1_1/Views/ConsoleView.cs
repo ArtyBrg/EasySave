@@ -18,7 +18,6 @@ namespace EasySave.Views
         {
             try
             {
-                _viewModel.SetLanguage("EN");
                 MainMenuLoop();
             }
             catch (Exception ex)
