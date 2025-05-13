@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Diagnostics;
 
-// Logger DLL (externe)
+// Logger
 
 namespace EasySave
 {

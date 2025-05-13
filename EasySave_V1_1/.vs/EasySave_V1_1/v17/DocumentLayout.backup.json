@@ -1,0 +1,249 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\services\\languageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:services\\languageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\resources\\resources.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:resources\\resources.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\services\\filesystemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:services\\filesystemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\views\\consoleview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:views\\consoleview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\viewmodels\\backupmanagerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:viewmodels\\backupmanagerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\viewmodels\\backupjobviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:viewmodels\\backupjobviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\services\\stateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:services\\stateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\services\\loggerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:services\\loggerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\models\\jsonlogentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:models\\jsonlogentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\models\\backupstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:models\\backupstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\models\\backupjob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:models\\backupjob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Resources.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Resources\\Resources.Designer.cs",
+              "RelativeDocumentMoniker": "Resources\\Resources.Designer.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Resources\\Resources.Designer.cs",
+              "RelativeToolTip": "Resources\\Resources.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:46:31.492Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MainViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\ViewModels\\MainViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\MainViewModel.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\ViewModels\\MainViewModel.cs",
+              "RelativeToolTip": "ViewModels\\MainViewModel.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAgwDUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:33:28.635Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ConsoleView.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Views\\ConsoleView.cs",
+              "RelativeDocumentMoniker": "Views\\ConsoleView.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Views\\ConsoleView.cs",
+              "RelativeToolTip": "Views\\ConsoleView.cs",
+              "ViewState": "AgIAAPEAAAAAAAAAAAAgwAwBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:33:38.564Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAuwCYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:32:03.203Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "BackupManagerViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\ViewModels\\BackupManagerViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\BackupManagerViewModel.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\ViewModels\\BackupManagerViewModel.cs",
+              "RelativeToolTip": "ViewModels\\BackupManagerViewModel.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAcwEUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:36:37.565Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "BackupJobViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\ViewModels\\BackupJobViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\BackupJobViewModel.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\ViewModels\\BackupJobViewModel.cs",
+              "RelativeToolTip": "ViewModels\\BackupJobViewModel.cs",
+              "ViewState": "AgIAAKUAAAAAAAAAAAAgwMAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:33:29.895Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "LanguageService.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Services\\LanguageService.cs",
+              "RelativeDocumentMoniker": "Services\\LanguageService.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Services\\LanguageService.cs",
+              "RelativeToolTip": "Services\\LanguageService.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAgwAsAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:33:36.212Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FileSystemService.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Services\\FileSystemService.cs",
+              "RelativeDocumentMoniker": "Services\\FileSystemService.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Services\\FileSystemService.cs",
+              "RelativeToolTip": "Services\\FileSystemService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:33:32.371Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "StateService.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Services\\StateService.cs",
+              "RelativeDocumentMoniker": "Services\\StateService.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Services\\StateService.cs",
+              "RelativeToolTip": "Services\\StateService.cs",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAgwGcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:33:34.447Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "LoggerService.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Services\\LoggerService.cs",
+              "RelativeDocumentMoniker": "Services\\LoggerService.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Services\\LoggerService.cs",
+              "RelativeToolTip": "Services\\LoggerService.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAAAgwEsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:33:33.36Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "JsonLogEntry.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Models\\JsonLogEntry.cs",
+              "RelativeDocumentMoniker": "Models\\JsonLogEntry.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Models\\JsonLogEntry.cs",
+              "RelativeToolTip": "Models\\JsonLogEntry.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:33:18.77Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "BackupState.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Models\\BackupState.cs",
+              "RelativeDocumentMoniker": "Models\\BackupState.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Models\\BackupState.cs",
+              "RelativeToolTip": "Models\\BackupState.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:33:17.439Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "BackupJob.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Models\\BackupJob.cs",
+              "RelativeDocumentMoniker": "Models\\BackupJob.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Models\\BackupJob.cs",
+              "RelativeToolTip": "Models\\BackupJob.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABRAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:33:16.493Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
