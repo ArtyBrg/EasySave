@@ -1,0 +1,22 @@
+[
+  {
+    "Name": "Bruno",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "a",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  }
+]

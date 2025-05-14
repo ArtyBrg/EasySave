@@ -1,0 +1,28 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "EASYSAVE_V2_0/1.0.0": {
+        "runtime": {
+          "EASYSAVE_V2_0.dll": {}
+        },
+        "resources": {
+          "fr/EASYSAVE_V2_0.resources.dll": {
+            "locale": "fr"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "EASYSAVE_V2_0/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
