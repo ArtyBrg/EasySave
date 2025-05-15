@@ -3,12 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:EasySave_WPF"
              xmlns:converters="clr-namespace:EasySave_WPF.Converters"
-             StartupUri="Views/MainWindow.xaml">
+             >
     <Application.Resources>
         <ResourceDictionary>
             <converters:RadioButtonCheckedConverter x:Key="RadioButtonCheckedConverter" />
             <converters:JobStatusConverter x:Key="JobStatusConverter" />
             <converters:LanguageButtonColorConverter x:Key="LanguageButtonColorConverter" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -18,6 +18,7 @@ namespace EasySave.ViewModels
 
         private bool _isRunning;
         private double _progress;
+        private bool _isPaused;
 
         public BackupJobViewModel(BackupJob backupJob,
                                 FileSystemService fileSystemService,
@@ -30,6 +31,9 @@ namespace EasySave.ViewModels
             _stateService = stateService;
 
             ExecuteCommand = new RelayCommand(async param => await ExecuteAsync(), param => !IsRunning);
+
+            PauseCommand = new RelayCommand(PauseJob, param => IsRunning && !IsPaused);
+            StopCommand = new RelayCommand(StopJob, param => IsRunning);
         }
 
         // Expose les propriétés du modèle
@@ -38,6 +42,31 @@ namespace EasySave.ViewModels
         public string SourcePath => _backupJob.SourcePath;
         public string TargetPath => _backupJob.TargetPath;
         public string Type => _backupJob.Type;
+
+
+        private void PauseJob(object param)
+        {
+            IsPaused = !IsPaused;
+            _loggerService.Log($"Backup job {Name} {(IsPaused ? "paused" : "resumed")}");
+
+            // Reset command can execute
+            ((RelayCommand)PauseCommand).RaiseCanExecuteChanged();
+        }
+
+        private void StopJob(object param)
+        {
+            IsRunning = false;
+            IsPaused = false;
+            _loggerService.Log($"Backup job {Name} stopped");
+
+            // Mettre à jour l'état dans StateService
+            _stateService.UpdateState(Name, "Stopped", Progress);
+
+            // Reset commands can execute
+            ((RelayCommand)ExecuteCommand).RaiseCanExecuteChanged();
+            ((RelayCommand)PauseCommand).RaiseCanExecuteChanged();
+            ((RelayCommand)StopCommand).RaiseCanExecuteChanged();
+        }
 
         public bool IsRunning
         {
@@ -51,7 +80,17 @@ namespace EasySave.ViewModels
             private set => SetProperty(ref _progress, value);
         }
 
+        public bool IsPaused
+        {
+            get => _isPaused;
+            private set => SetProperty(ref _isPaused, value);
+        }
+
+        public RelayCommand PauseCommand { get; }
+        public RelayCommand StopCommand { get; }
+
         public RelayCommand ExecuteCommand { get; }
+
 
         public async Task ExecuteAsync()
         {
