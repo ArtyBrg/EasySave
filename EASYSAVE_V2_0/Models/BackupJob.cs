@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EasySave.Models
+﻿namespace EasySave.Models
 {
     public class BackupJob
     {
@@ -9,5 +7,6 @@ namespace EasySave.Models
         public required string SourcePath { get; set; }
         public required string TargetPath { get; set; }
         public required string Type { get; set; } // "Complete" ou "Differential"
+        public bool IsSelected { get; set; }
     }
 }

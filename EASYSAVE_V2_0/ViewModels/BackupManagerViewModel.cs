@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 using EasySave.Models;
 using EasySave.Services;
@@ -13,121 +13,111 @@ namespace EasySave.ViewModels
     public class BackupManagerViewModel : ViewModelBase
     {
         private readonly ObservableCollection<BackupJobViewModel> _jobs = new();
-        private int _nextId = 1;
         private readonly FileSystemService _fileSystemService;
         private readonly LoggerService _loggerService;
         private readonly StateService _stateService;
+        private readonly PersistenceService _persistenceService;
 
+        private int _nextId = 1;
         private BackupJobViewModel _selectedJob;
-        private bool _isExecutingJobs;
+        private bool _showEditDialog;
+        private BackupJobViewModel _jobToEdit;
 
-        private bool _showDeleteConfirmation;
-        private BackupJobViewModel _jobToDelete;
-
-        public bool ShowDeleteConfirmation
-        {
-            get => _showDeleteConfirmation;
-            set => SetProperty(ref _showDeleteConfirmation, value);
-        }
-
-        public BackupJobViewModel JobToDelete
-        {
-            get => _jobToDelete;
-            set => SetProperty(ref _jobToDelete, value);
-        }
-
-        public ICommand DeleteJobCommand { get; }
-        public ICommand ConfirmDeleteCommand { get; }
-        public ICommand CancelDeleteCommand { get; }
-
-
-        public BackupManagerViewModel(FileSystemService fileSystemService,
-                                     LoggerService loggerService,
-                                     StateService stateService)
+        public BackupManagerViewModel(
+            FileSystemService fileSystemService,
+            LoggerService loggerService,
+            StateService stateService,
+            PersistenceService persistenceService)
         {
             _fileSystemService = fileSystemService;
             _loggerService = loggerService;
             _stateService = stateService;
+            _persistenceService = persistenceService;
 
-            CreateJobCommand = new RelayCommand(param => CreateJob(param as string[] ?? Array.Empty<string>()),
-                param => CanCreateJob());
+            LoadInitialJobs();
 
-            ExecuteSelectedJobCommand = new RelayCommand(
-                async param => await ExecuteSelectedJobAsync(),
-                param => SelectedJob != null && !SelectedJob.IsRunning && !IsExecutingJobs);
-
-            ExecuteAllJobsCommand = new RelayCommand(
-                async param => await ExecuteAllJobsAsync(),
-                param => _jobs.Count > 0 && !IsExecutingJobs && !_jobs.Any(j => j.IsRunning));
-
-            DeleteJobCommand = new RelayCommand(
-                param => RequestDeleteJob(param as BackupJobViewModel),
-                param => param is BackupJobViewModel job && !job.IsRunning);
-
-            ConfirmDeleteCommand = new RelayCommand(
-                param => DeleteJob(),
-                param => JobToDelete != null);
-
-            CancelDeleteCommand = new RelayCommand(
-                param => CancelDelete());
-        }
-
-
-        private void RequestDeleteJob(BackupJobViewModel job)
-        {
-            if (job == null) return;
-
-            JobToDelete = job;
-            ShowDeleteConfirmation = true;
-        }
-
-        private void DeleteJob()
-        {
-            if (JobToDelete == null) return;
-
-            _loggerService.Log($"Deleted backup job: {JobToDelete.Name} (ID: {JobToDelete.Id})");
-            _jobs.Remove(JobToDelete);
-
-            ShowDeleteConfirmation = false;
-            JobToDelete = null;
-        }
-
-        private void CancelDelete()
-        {
-            ShowDeleteConfirmation = false;
-            JobToDelete = null;
+            CreateJobCommand = new RelayCommand(CreateJob, CanCreateJob);
+            ExecuteSelectedJobCommand = new RelayCommand(async _ => await ExecuteSelectedJobAsync(), _ => SelectedJob != null && !SelectedJob.IsRunning);
+            ExecuteAllJobsCommand = new RelayCommand(async _ => await ExecuteAllJobsAsync(), _ => _jobs.Count > 0 && !_jobs.Any(j => j.IsRunning));
+            DeleteSelectedJobsCommand = new RelayCommand(_ => DeleteSelectedJobs(), _ => _jobs.Any(j => j.IsSelected));
+            EditSelectedJobCommand = new RelayCommand(_ => RequestEditJob(), _ => SelectedJob != null && !SelectedJob.IsRunning);
+            ConfirmEditCommand = new RelayCommand(_ => ConfirmEdit());
+            CancelEditCommand = new RelayCommand(_ => CancelEdit());
+            BrowseSourceCommand = new RelayCommand(_ => BrowseSource());
+            BrowseTargetCommand = new RelayCommand(_ => BrowseTarget());
         }
 
         public ObservableCollection<BackupJobViewModel> Jobs => _jobs;
-
         public BackupJobViewModel SelectedJob
         {
             get => _selectedJob;
             set => SetProperty(ref _selectedJob, value);
         }
 
-        public bool IsExecutingJobs
+        public bool ShowEditDialog
         {
-            get => _isExecutingJobs;
-            private set => SetProperty(ref _isExecutingJobs, value);
+            get => _showEditDialog;
+            set => SetProperty(ref _showEditDialog, value);
         }
+
+        public BackupJobViewModel JobToEdit
+        {
+            get => _jobToEdit;
+            set => SetProperty(ref _jobToEdit, value);
+        }
+
+        public int SelectedJobsCount => _jobs.Count(j => j.IsSelected);
 
         public ICommand CreateJobCommand { get; }
         public ICommand ExecuteSelectedJobCommand { get; }
         public ICommand ExecuteAllJobsCommand { get; }
+        public ICommand DeleteSelectedJobsCommand { get; }
+        public ICommand EditSelectedJobCommand { get; }
+        public ICommand ConfirmEditCommand { get; }
+        public ICommand CancelEditCommand { get; }
+        public ICommand BrowseSourceCommand { get; }
+        public ICommand BrowseTargetCommand { get; }
 
-        public BackupJobViewModel CreateJob(string[] parameters)
+        private void LoadInitialJobs()
         {
-            if (parameters.Length < 4)
-                throw new ArgumentException("Missing job parameters");
+            var savedJobs = _persistenceService.LoadJobs();
+            foreach (var job in savedJobs)
+            {
+                _jobs.Add(new BackupJobViewModel(job, _fileSystemService, _loggerService, _stateService));
+                _nextId = Math.Max(_nextId, job.Id + 1);
+            }
+        }
 
-            string name = parameters[0];
-            string source = parameters[1];
-            string target = parameters[2];
-            string type = parameters[3];
+        public void SaveJobs()
+        {
+            _persistenceService.SaveJobs(_jobs.Select(j => j.GetBackupJob()));
+        }
+
+        public bool JobNameExists(string name)
+        {
+            return _jobs.Any(j => j.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public bool CanCreateJob(object _)
+        {
+            return _jobs.Count < 5;
+        }
+
+        public void CreateJob(object parameters)
+        {
+            if (parameters is not string[] jobParams || jobParams.Length < 4)
+                throw new ArgumentException("Invalid job parameters");
+
+            string name = jobParams[0];
+            string source = jobParams[1];
+            string target = jobParams[2];
+            string type = jobParams[3];
 
             if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Job name cannot be null or empty", nameof(name));
+                throw new ArgumentException("Job name cannot be empty");
+
+            if (JobNameExists(name))
+                throw new ArgumentException("Job name already exists");
 
             var job = new BackupJob
             {
@@ -142,72 +132,77 @@ namespace EasySave.ViewModels
             _jobs.Add(jobViewModel);
             _stateService.UpdateState(name, "Created", 0);
             _loggerService.Log($"Created new backup job: {name} (ID: {jobViewModel.Id})");
-
-            return jobViewModel;
+            SaveJobs();
         }
 
-        public async Task ExecuteSelectedJobAsync()
+        private async Task ExecuteSelectedJobAsync()
         {
-            if (SelectedJob == null || SelectedJob.IsRunning)
-                return;
-
+            if (SelectedJob == null || SelectedJob.IsRunning) return;
             await SelectedJob.ExecuteAsync();
         }
 
-        public async Task ExecuteAllJobsAsync()
+        private async Task ExecuteAllJobsAsync()
         {
-            if (IsExecutingJobs || _jobs.Count == 0)
-                return;
-
-            IsExecutingJobs = true;
-
-            try
+            foreach (var job in _jobs.Where(j => !j.IsRunning))
             {
-                foreach (var job in _jobs)
-                {
-                    await job.ExecuteAsync();
-                }
-            }
-            finally
-            {
-                IsExecutingJobs = false;
+                await job.ExecuteAsync();
             }
         }
 
-        public async Task ExecuteJobsAsync(IEnumerable<int> jobIds)
+        private void DeleteSelectedJobs()
         {
-            if (IsExecutingJobs)
-                return;
-
-            IsExecutingJobs = true;
-
-            try
+            var jobsToDelete = _jobs.Where(j => j.IsSelected).ToList();
+            foreach (var job in jobsToDelete)
             {
-                foreach (var id in jobIds)
-                {
-                    var job = _jobs.FirstOrDefault(j => j.Id == id);
-                    if (job != null)
-                    {
-                        await job.ExecuteAsync();
-                    }
-                }
+                _loggerService.Log($"Deleted backup job: {job.Name} (ID: {job.Id})");
+                _stateService.UpdateState(job.Name, "Deleted", 0);
+                _jobs.Remove(job);
             }
-            finally
+            SaveJobs();
+        }
+
+        private void RequestEditJob()
+        {
+            if (SelectedJob == null) return;
+            JobToEdit = SelectedJob;
+            ShowEditDialog = true;
+        }
+
+        private void ConfirmEdit()
+        {
+            if (JobToEdit == null) return;
+            _loggerService.Log($"Edited backup job: {JobToEdit.Name} (ID: {JobToEdit.Id})");
+            _stateService.UpdateState(JobToEdit.Name, "Modified", JobToEdit.Progress);
+            ShowEditDialog = false;
+            SaveJobs();
+        }
+
+        private void CancelEdit()
+        {
+            ShowEditDialog = false;
+            JobToEdit = null;
+        }
+
+        private void BrowseSource()
+        {
+            if (JobToEdit == null) return;
+
+            var dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
-                IsExecutingJobs = false;
+                JobToEdit.SourcePath = dialog.SelectedPath;
             }
         }
 
-        public bool CanCreateJob()
+        private void BrowseTarget()
         {
-            return _jobs.Count < 5;
+            if (JobToEdit == null) return;
+
+            var dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                JobToEdit.TargetPath = dialog.SelectedPath;
+            }
         }
-
-        public bool JobNameExists(string name)
-        {
-            return _jobs.Any(job => job.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-        }
-
-
     }
 }
