@@ -102,11 +102,6 @@ namespace EasySave.Views
             Console.WriteLine("\n");
             Console.WriteLine(_viewModel.GetTranslation("Create backup job"));
 
-            if (!_viewModel.CanCreateJob())
-            {
-                Console.WriteLine(_viewModel.GetTranslation("Maximum job create"));
-                return;
-            }
 
             string name = GetUserInput(_viewModel.GetTranslation("Create job name"));
             if (_viewModel.JobNameExists(name))

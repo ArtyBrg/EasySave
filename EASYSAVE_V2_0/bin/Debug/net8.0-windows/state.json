@@ -50,13 +50,123 @@
     "Progress": 0
   },
   {
-    "Name": "TEst",
-    "SourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\usecase.puml",
-    "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\usecase.puml",
-    "State": "END",
-    "TotalFiles": 8,
-    "TotalSize": 325634,
+    "Name": "azaza",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
     "FilesRemaining": 0,
-    "Progress": 100
+    "Progress": 0
+  },
+  {
+    "Name": "zazaza",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "zazazaz",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "ezzeezez",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "ez",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "1",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "ERROR",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "2",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "ERROR",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "\u003E3",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "ERROR",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "4",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "ERROR",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "5",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "ERROR",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "56",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "ERROR",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "ddc",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
   }
 ]

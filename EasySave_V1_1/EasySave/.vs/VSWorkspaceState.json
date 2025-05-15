@@ -1,7 +1,16 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\bin",
+    "\\bin\\Debug",
+    "\\bin\\Debug\\net8.0",
+    "\\Models",
+    "\\obj",
+    "\\Resources",
+    "\\Services",
+    "\\ViewModels",
+    "\\Views"
   ],
-  "SelectedNode": "\\Program.cs",
+  "SelectedNode": "\\Services\\LanguageService.cs",
   "PreviewInSolutionExplorer": false
 }

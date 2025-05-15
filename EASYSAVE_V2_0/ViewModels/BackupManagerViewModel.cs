@@ -29,8 +29,7 @@ namespace EasySave.ViewModels
             _loggerService = loggerService;
             _stateService = stateService;
 
-            CreateJobCommand = new RelayCommand(param => CreateJob(param as string[] ?? Array.Empty<string>()),
-                param => CanCreateJob());
+            CreateJobCommand = new RelayCommand(param => CreateJob(param as string[] ?? Array.Empty<string>()));
 
             ExecuteSelectedJobCommand = new RelayCommand(
                 async param => await ExecuteSelectedJobAsync(),
@@ -141,10 +140,6 @@ namespace EasySave.ViewModels
             }
         }
 
-        public bool CanCreateJob()
-        {
-            return _jobs.Count < 5;
-        }
 
         public bool JobNameExists(string name)
         {

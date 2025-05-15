@@ -191,8 +191,7 @@ namespace EasySave.ViewModels
         {
             return !string.IsNullOrWhiteSpace(NewJobName) &&
                    !string.IsNullOrWhiteSpace(NewJobSourcePath) &&
-                   !string.IsNullOrWhiteSpace(NewJobTargetPath) &&
-                   _backupManagerViewModel.CanCreateJob();
+                   !string.IsNullOrWhiteSpace(NewJobTargetPath);
         }
 
         private void BrowseSourcePath()
