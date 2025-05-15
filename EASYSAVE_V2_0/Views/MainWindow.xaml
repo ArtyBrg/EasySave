@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasySave_WPF"
         xmlns:views="clr-namespace:EasySave_WPF.Views"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="EasySave - Backup Manager" Height="600" Width="900">
 
-    <!-- 🔧 Animation du Popup -->
     <Window.Resources>
         <Style x:Key="PopupFadeInStyle" TargetType="Border">
             <Setter Property="Opacity" Value="0"/>
@@ -97,8 +97,10 @@
                                 <!-- Format de log -->
                                 <TextBlock Text="Format de logs" FontWeight="Bold" Margin="0,0,0,5" Foreground="#1ABC9C"/>
                                 <ComboBox SelectedItem="{Binding SelectedLogFormat, Mode=TwoWay}" Width="90" Margin="0,0,0,10">
-                                    <ComboBoxItem Content="JSON"/>
-                                    <ComboBoxItem Content="XML"/>
+                                    <ComboBox.Items>
+                                        <sys:String>JSON</sys:String>
+                                        <sys:String>XML</sys:String>
+                                    </ComboBox.Items>
                                 </ComboBox>
 
                                 <!-- Apply -->

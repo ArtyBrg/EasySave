@@ -58,6 +58,9 @@ namespace EasySave.ViewModels
             if (IsRunning)
                 return;
 
+            var settings = SettingsService.Load();
+            _loggerService.SetLogFormat(settings.LogFormat);
+
             IsRunning = true;
             Progress = 0;
 
