@@ -15,7 +15,10 @@ namespace EasySave_WPF
             PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Error;
 
             // Initialisation des services
-            var loggerService = new LoggerService(Path.Combine(AppContext.BaseDirectory, "Logs"));
+            string baseDir = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\\..\\..\\"));
+            string logDir = Path.Combine(baseDir, "Logs");
+            var loggerService = new LoggerService(logDir);
+
             var fileSystemService = new FileSystemService(loggerService);
             var stateService = new StateService(loggerService);
             var languageService = new LanguageService();

@@ -1,84 +1,64 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using LoggerLib; // LoggerLib.dll
 using EasySave.Models;
 
 namespace EasySave.Services
 {
     public class LoggerService
     {
-        private readonly string _logDirectory;
+        private readonly DailyLogger _dailyLogger;
 
-        // Événement pour notification UI
+        // Pour notifier l'interface WPF
         public event EventHandler<string> LogMessageAdded;
 
-        public LoggerService(string logDirectory = "Logs")
+        public LoggerService(string logDirectory = "Logs", LogFormat format = LogFormat.Json)
         {
-            _logDirectory = logDirectory;
-            Directory.CreateDirectory(_logDirectory);
+            _dailyLogger = new DailyLogger(logDirectory, format);
         }
 
+        /// <summary>
+        /// Change dynamiquement le format (JSON ou XML)
+        /// </summary>
+        public void SetLogFormat(LogFormat format)
+        {
+            _dailyLogger.SetLogFormat(format);
+            Log($"Log format switched to {format}");
+        }
+
+        /// <summary>
+        /// Écriture d'un message générique dans l'interface
+        /// </summary>
         public void Log(string message)
         {
             var logMessage = $"[LOG] {DateTime.Now:yyyy-MM-dd HH:mm:ss}: {message}";
             LogMessageAdded?.Invoke(this, logMessage);
         }
 
+        /// <summary>
+        /// Écriture d'un message d'erreur dans l'interface
+        /// </summary>
         public void LogError(string errorMessage)
         {
             var logMessage = $"[ERROR] {DateTime.Now:yyyy-MM-dd HH:mm:ss}: {errorMessage}";
             LogMessageAdded?.Invoke(this, logMessage);
         }
 
+        /// <summary>
+        /// Écriture d'une ligne de log dans le fichier (et dans l'UI)
+        /// </summary>
         public void LogFileTransfer(string backupName, string sourcePath, string targetPath, long size, double transferTimeMs)
         {
-            var entry = new JsonLogEntry
-            {
-                Name = backupName,
-                FileSource = sourcePath,
-                FileTarget = targetPath,
-                FileSize = size,
-                FileTransferTime = transferTimeMs,
-                Time = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
-            };
-
-            LogJsonEntry(entry);
+            _dailyLogger.LogFileTransfer(
+                backupName,
+                Path.GetFullPath(sourcePath),
+                Path.GetFullPath(targetPath),
+                size,
+                transferTimeMs
+            );
 
             var message = $"[TRANSFER] {DateTime.Now:yyyy-MM-dd HH:mm:ss}: {backupName} - {sourcePath} -> {targetPath}";
             LogMessageAdded?.Invoke(this, message);
-        }
-
-        private void LogJsonEntry(JsonLogEntry entry)
-        {
-            string logFilePath = Path.Combine(_logDirectory, $"{DateTime.Now:yyyy-MM-dd}.json");
-
-            List<JsonLogEntry> logEntries = new();
-
-            if (File.Exists(logFilePath))
-            {
-                string existingContent = File.ReadAllText(logFilePath);
-                try
-                {
-                    logEntries = JsonSerializer.Deserialize<List<JsonLogEntry>>(existingContent) ?? new();
-                }
-                catch
-                {
-                    // fichier mal formé → réinitialisation
-                    logEntries = new();
-                }
-            }
-
-            logEntries.Add(entry);
-
-            var options = new JsonSerializerOptions
-            {
-                WriteIndented = true,
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-            };
-
-            File.WriteAllText(logFilePath, JsonSerializer.Serialize(logEntries, options));
         }
     }
 }

@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "EASYSAVE_V2_0/1.0.0": {
         "dependencies": {
+          "LoggerLib": "1.0.0",
           "Microsoft.Windows.Compatibility": "10.0.0-preview.4.25258.110"
         },
         "runtime": {
@@ -1037,6 +1038,14 @@
             "fileVersion": "10.0.25.25910"
           }
         }
+      },
+      "LoggerLib/1.0.0": {
+        "runtime": {
+          "LoggerLib.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -1465,6 +1474,11 @@
       "sha512": "sha512-XTfk65FxG3mUv02lQS0tHpRpSc8iO8mKYvl5RxfV9c9tZrzVNnPwqzxBOGg21GM6RY3alP+QE22eGzuFdz9pHQ==",
       "path": "system.windows.extensions/10.0.0-preview.4.25258.110",
       "hashPath": "system.windows.extensions.10.0.0-preview.4.25258.110.nupkg.sha512"
+    },
+    "LoggerLib/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

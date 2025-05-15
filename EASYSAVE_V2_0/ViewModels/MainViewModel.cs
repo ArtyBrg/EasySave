@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using EasySave.Services;
 using System.Windows.Forms;
+using LoggerLib;
 
 namespace EasySave.ViewModels
 {
@@ -216,6 +217,25 @@ namespace EasySave.ViewModels
         public string GetLocalizedString(string key)
         {
             return _languageService.GetString(key);
+        }
+
+        private string _selectedLogFormat = "JSON";
+        public string SelectedLogFormat
+        {
+            get => _selectedLogFormat;
+            set
+            {
+                if (SetProperty(ref _selectedLogFormat, value))
+                {
+                    LogFormat format = value.ToUpper() switch
+                    {
+                        "XML" => LogFormat.Xml,
+                        _ => LogFormat.Json
+                    };
+
+                    _loggerService.SetLogFormat(format);
+                }
+            }
         }
     }
 }

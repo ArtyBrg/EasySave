@@ -188,3 +188,5 @@ C:\Users\Utilisateur\Arthur\Cours\A3\Génie Logiciel\Projet\EASYSAVE_V2_0\obj\De
 C:\Users\Utilisateur\Arthur\Cours\A3\Génie Logiciel\Projet\EASYSAVE_V2_0\obj\Debug\net8.0-windows\EASYSAVE_V2_0.pdb
 C:\Users\Utilisateur\Arthur\Cours\A3\Génie Logiciel\Projet\EASYSAVE_V2_0\obj\Debug\net8.0-windows\EASYSAVE_V2_0.genruntimeconfig.cache
 C:\Users\Utilisateur\Arthur\Cours\A3\Génie Logiciel\Projet\EASYSAVE_V2_0\obj\Debug\net8.0-windows\ref\EASYSAVE_V2_0.dll
+C:\Users\Utilisateur\Arthur\Cours\A3\Génie Logiciel\Projet\EASYSAVE_V2_0\bin\Debug\net8.0-windows\LoggerLib.dll
+C:\Users\Utilisateur\Arthur\Cours\A3\Génie Logiciel\Projet\EASYSAVE_V2_0\bin\Debug\net8.0-windows\LoggerLib.pdb
