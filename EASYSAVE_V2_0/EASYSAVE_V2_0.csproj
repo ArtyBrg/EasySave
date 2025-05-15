@@ -38,4 +38,8 @@
 		<FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\LoggerLib\LoggerLib.csproj" />
+	</ItemGroup>
+
 </Project>
