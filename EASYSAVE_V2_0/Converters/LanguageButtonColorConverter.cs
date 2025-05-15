@@ -11,7 +11,7 @@ namespace EasySave_WPF.Converters
         {
             if (value is string currentLanguage && parameter is string buttonLanguage)
             {
-                return currentLanguage == buttonLanguage ? new SolidColorBrush(Colors.Orange) : new SolidColorBrush(Colors.Transparent);
+                return currentLanguage == buttonLanguage ? new SolidColorBrush(Colors.Orange) : new SolidColorBrush(Colors.White);
             }
             return new SolidColorBrush(Colors.Transparent);
         }
