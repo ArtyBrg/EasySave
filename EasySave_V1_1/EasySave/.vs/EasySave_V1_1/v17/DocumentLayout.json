@@ -1,62 +1,62 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\",
+  "WorkspaceRootPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Services\\LanguageService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Services\\LanguageService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\easysave\\services\\languageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:services\\languageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\easysave\\services\\loggerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:services\\loggerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Services\\Settings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Services\\Settings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\easysave\\models\\backupjob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:models\\backupjob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Views\\ConsoleView.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Views\\ConsoleView.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\easysave\\resources\\resources.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:resources\\resources.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Services\\FileSystemService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Services\\FileSystemService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\easysave\\views\\consoleview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:views\\consoleview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Services\\LoggerService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Services\\LoggerService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\easysave\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Services\\StateService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Services\\StateService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\easysave\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Resources\\Resources.Designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Resources\\Resources.Designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\easysave\\viewmodels\\backupmanagerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:viewmodels\\backupmanagerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\ViewModels\\MainViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ViewModels\\MainViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\easysave\\viewmodels\\backupjobviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:viewmodels\\backupjobviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\ViewModels\\BackupManagerViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ViewModels\\BackupManagerViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\easysave\\services\\stateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:services\\stateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\ViewModels\\BackupJobViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ViewModels\\BackupJobViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\easysave\\services\\filesystemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:services\\filesystemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Models\\JsonLogEntry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Models\\JsonLogEntry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\easysave\\models\\jsonlogentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:models\\jsonlogentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Models\\BackupState.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Models\\BackupState.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\easysave\\models\\backupstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:models\\backupstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Models\\BackupJob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Models\\BackupJob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|c:\\users\\utilisateur\\arthur\\cours\\a3\\g\u00E9nie logiciel\\projet\\easysave_v1_1\\easysave\\services\\settings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8A6D12B1-34CA-4408-9CA8-2E040CA52E5B}|EasySave_V1_1.csproj|solutionrelative:services\\settings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -66,7 +66,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -78,150 +78,148 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Settings.json",
-              "DocumentMoniker": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Services\\Settings.json",
-              "RelativeDocumentMoniker": "Services\\Settings.json",
-              "ToolTip": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Services\\Settings.json",
-              "RelativeToolTip": "Services\\Settings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-05-13T10:16:56.404Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ConsoleView.cs",
-              "DocumentMoniker": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Views\\ConsoleView.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Views\\ConsoleView.cs",
               "RelativeDocumentMoniker": "Views\\ConsoleView.cs",
-              "ToolTip": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Views\\ConsoleView.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Views\\ConsoleView.cs",
               "RelativeToolTip": "Views\\ConsoleView.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAPAAAAAAAAAAAAAqwPsAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-13T09:33:38.564Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T09:32:03.203Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 7,
               "Title": "BackupManagerViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\ViewModels\\BackupManagerViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\ViewModels\\BackupManagerViewModel.cs",
               "RelativeDocumentMoniker": "ViewModels\\BackupManagerViewModel.cs",
-              "ToolTip": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\ViewModels\\BackupManagerViewModel.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\ViewModels\\BackupManagerViewModel.cs",
               "RelativeToolTip": "ViewModels\\BackupManagerViewModel.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAcwEUAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAAAmwEUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-13T09:36:37.565Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "BackupJobViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\ViewModels\\BackupJobViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\BackupJobViewModel.cs",
-              "ToolTip": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\ViewModels\\BackupJobViewModel.cs",
-              "RelativeToolTip": "ViewModels\\BackupJobViewModel.cs",
-              "ViewState": "AgIAAKUAAAAAAAAAAAAgwMAAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T09:33:29.895Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "LanguageService.cs",
-              "DocumentMoniker": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Services\\LanguageService.cs",
-              "RelativeDocumentMoniker": "Services\\LanguageService.cs",
-              "ToolTip": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Services\\LanguageService.cs",
-              "RelativeToolTip": "Services\\LanguageService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T09:33:36.212Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "FileSystemService.cs",
-              "DocumentMoniker": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Services\\FileSystemService.cs",
-              "RelativeDocumentMoniker": "Services\\FileSystemService.cs",
-              "ToolTip": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Services\\FileSystemService.cs",
-              "RelativeToolTip": "Services\\FileSystemService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD8AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T09:33:32.371Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "StateService.cs",
-              "DocumentMoniker": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Services\\StateService.cs",
-              "RelativeDocumentMoniker": "Services\\StateService.cs",
-              "ToolTip": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Services\\StateService.cs",
-              "RelativeToolTip": "Services\\StateService.cs",
-              "ViewState": "AgIAAEwAAAAAAAAAAAAgwGcAAAABAAAAAAAAAA==",
+              "Title": "MainViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\ViewModels\\MainViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\MainViewModel.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\ViewModels\\MainViewModel.cs",
+              "RelativeToolTip": "ViewModels\\MainViewModel.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAcwDUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T09:33:34.447Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-13T09:33:28.635Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAuwCkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:32:03.203Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Resources.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Resources\\Resources.Designer.cs",
+              "RelativeDocumentMoniker": "Resources\\Resources.Designer.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Resources\\Resources.Designer.cs",
+              "RelativeToolTip": "Resources\\Resources.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:46:31.492Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BackupJob.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Models\\BackupJob.cs",
+              "RelativeDocumentMoniker": "Models\\BackupJob.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Models\\BackupJob.cs",
+              "RelativeToolTip": "Models\\BackupJob.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:33:16.493Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "LoggerService.cs",
-              "DocumentMoniker": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Services\\LoggerService.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Services\\LoggerService.cs",
               "RelativeDocumentMoniker": "Services\\LoggerService.cs",
-              "ToolTip": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Services\\LoggerService.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Services\\LoggerService.cs",
               "RelativeToolTip": "Services\\LoggerService.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAAAEsAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAuwEsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-13T09:33:33.36Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "MainViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\ViewModels\\MainViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\MainViewModel.cs",
-              "ToolTip": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\ViewModels\\MainViewModel.cs",
-              "RelativeToolTip": "ViewModels\\MainViewModel.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAgwDUAAAABAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "LanguageService.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Services\\LanguageService.cs",
+              "RelativeDocumentMoniker": "Services\\LanguageService.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Services\\LanguageService.cs",
+              "RelativeToolTip": "Services\\LanguageService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T09:33:28.635Z"
+              "WhenOpened": "2025-05-13T09:33:36.212Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Resources.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Resources\\Resources.Designer.cs",
-              "RelativeDocumentMoniker": "Resources\\Resources.Designer.cs",
-              "ToolTip": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Resources\\Resources.Designer.cs",
-              "RelativeToolTip": "Resources\\Resources.Designer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAEAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "BackupJobViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\ViewModels\\BackupJobViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\BackupJobViewModel.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\ViewModels\\BackupJobViewModel.cs",
+              "RelativeToolTip": "ViewModels\\BackupJobViewModel.cs",
+              "ViewState": "AgIAAKUAAAAAAAAAAAAqwMAAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T09:46:31.492Z"
+              "WhenOpened": "2025-05-13T09:33:29.895Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "StateService.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Services\\StateService.cs",
+              "RelativeDocumentMoniker": "Services\\StateService.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Services\\StateService.cs",
+              "RelativeToolTip": "Services\\StateService.cs",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAqwGcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:33:34.447Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "FileSystemService.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Services\\FileSystemService.cs",
+              "RelativeDocumentMoniker": "Services\\FileSystemService.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Services\\FileSystemService.cs",
+              "RelativeToolTip": "Services\\FileSystemService.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAqwD8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T09:33:32.371Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
               "Title": "JsonLogEntry.cs",
-              "DocumentMoniker": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Models\\JsonLogEntry.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Models\\JsonLogEntry.cs",
               "RelativeDocumentMoniker": "Models\\JsonLogEntry.cs",
-              "ToolTip": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Models\\JsonLogEntry.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Models\\JsonLogEntry.cs",
               "RelativeToolTip": "Models\\JsonLogEntry.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -231,9 +229,9 @@
               "$type": "Document",
               "DocumentIndex": 12,
               "Title": "BackupState.cs",
-              "DocumentMoniker": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Models\\BackupState.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Models\\BackupState.cs",
               "RelativeDocumentMoniker": "Models\\BackupState.cs",
-              "ToolTip": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Models\\BackupState.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Models\\BackupState.cs",
               "RelativeToolTip": "Models\\BackupState.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -242,14 +240,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 13,
-              "Title": "BackupJob.cs",
-              "DocumentMoniker": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Models\\BackupJob.cs",
-              "RelativeDocumentMoniker": "Models\\BackupJob.cs",
-              "ToolTip": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\Models\\BackupJob.cs",
-              "RelativeToolTip": "Models\\BackupJob.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABRAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T09:33:16.493Z"
+              "Title": "Settings.json",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Services\\Settings.json",
+              "RelativeDocumentMoniker": "Services\\Settings.json",
+              "ToolTip": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\EasySave\\Services\\Settings.json",
+              "RelativeToolTip": "Services\\Settings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-13T10:16:56.404Z"
             }
           ]
         }

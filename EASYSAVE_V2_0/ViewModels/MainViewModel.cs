@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using EasySave.Services;
+using System.Windows.Forms;
 
 namespace EasySave.ViewModels
 {
@@ -124,6 +125,7 @@ namespace EasySave.ViewModels
         {
             if (parameter is string viewName)
             {
+                Console.WriteLine($">>> Switching to view: {viewName}");
                 SelectedViewName = viewName;
                 ErrorMessage = string.Empty; // Réinitialiser les messages d'erreur lors de la navigation
             }
@@ -153,6 +155,14 @@ namespace EasySave.ViewModels
 
             try
             {
+                if (string.IsNullOrWhiteSpace(NewJobName) ||
+                    string.IsNullOrWhiteSpace(NewJobSourcePath) ||
+                    string.IsNullOrWhiteSpace(NewJobTargetPath))
+                {
+                    ErrorMessage = "All fields must be filled.";
+                    return;
+                }
+
                 if (_backupManagerViewModel.JobNameExists(NewJobName))
                 {
                     ErrorMessage = "A job with this name already exists";
@@ -162,21 +172,19 @@ namespace EasySave.ViewModels
                 string[] jobParams = { NewJobName, NewJobSourcePath, NewJobTargetPath, NewJobType };
                 var job = _backupManagerViewModel.CreateJob(jobParams);
 
-                // Réinitialiser les champs après création
                 NewJobName = string.Empty;
                 NewJobSourcePath = string.Empty;
                 NewJobTargetPath = string.Empty;
                 NewJobType = "Complete";
-
-                // Navigation optionnelle vers la liste des jobs
                 SelectedViewName = "JobsList";
             }
             catch (Exception ex)
             {
                 ErrorMessage = $"Error creating job: {ex.Message}";
-                _loggerService.LogError($"Failed to create job: {ex.Message}");
+                _loggerService.LogError($"Exception: {ex}");
             }
         }
+
 
         private bool CanCreateJob(object parameter)
         {
@@ -188,16 +196,20 @@ namespace EasySave.ViewModels
 
         private void BrowseSourcePath()
         {
-            // Utiliser une méthode déléguée pour permettre l'interaction avec Windows Forms
-            // Cette méthode sera appelée depuis la vue via le Command Binding
-            // La vue devra gérer l'affichage du FolderBrowserDialog
-            NewJobSourcePath = "C:\\Temp"; // Simulation - à remplacer par l'intégration réelle
+            using var dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                NewJobSourcePath = dialog.SelectedPath;
+            }
         }
 
         private void BrowseTargetPath()
         {
-            // Comme pour BrowseSourcePath
-            NewJobTargetPath = "D:\\Backup"; // Simulation - à remplacer par l'intégration réelle  
+            using var dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                NewJobTargetPath = dialog.SelectedPath;
+            }
         }
 
         // Méthodes auxiliaires pour la traduction
