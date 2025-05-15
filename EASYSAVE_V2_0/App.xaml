@@ -8,6 +8,7 @@
             <converters:RadioButtonCheckedConverter x:Key="RadioButtonCheckedConverter" />
             <converters:JobStatusConverter x:Key="JobStatusConverter" />
             <converters:LanguageButtonColorConverter x:Key="LanguageButtonColorConverter" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

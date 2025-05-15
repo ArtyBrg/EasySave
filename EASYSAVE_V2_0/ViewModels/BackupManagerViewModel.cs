@@ -21,6 +21,26 @@ namespace EasySave.ViewModels
         private BackupJobViewModel _selectedJob;
         private bool _isExecutingJobs;
 
+        private bool _showDeleteConfirmation;
+        private BackupJobViewModel _jobToDelete;
+
+        public bool ShowDeleteConfirmation
+        {
+            get => _showDeleteConfirmation;
+            set => SetProperty(ref _showDeleteConfirmation, value);
+        }
+
+        public BackupJobViewModel JobToDelete
+        {
+            get => _jobToDelete;
+            set => SetProperty(ref _jobToDelete, value);
+        }
+
+        public ICommand DeleteJobCommand { get; }
+        public ICommand ConfirmDeleteCommand { get; }
+        public ICommand CancelDeleteCommand { get; }
+
+
         public BackupManagerViewModel(FileSystemService fileSystemService,
                                      LoggerService loggerService,
                                      StateService stateService)
@@ -39,6 +59,43 @@ namespace EasySave.ViewModels
             ExecuteAllJobsCommand = new RelayCommand(
                 async param => await ExecuteAllJobsAsync(),
                 param => _jobs.Count > 0 && !IsExecutingJobs && !_jobs.Any(j => j.IsRunning));
+
+            DeleteJobCommand = new RelayCommand(
+                param => RequestDeleteJob(param as BackupJobViewModel),
+                param => param is BackupJobViewModel job && !job.IsRunning);
+
+            ConfirmDeleteCommand = new RelayCommand(
+                param => DeleteJob(),
+                param => JobToDelete != null);
+
+            CancelDeleteCommand = new RelayCommand(
+                param => CancelDelete());
+        }
+
+
+        private void RequestDeleteJob(BackupJobViewModel job)
+        {
+            if (job == null) return;
+
+            JobToDelete = job;
+            ShowDeleteConfirmation = true;
+        }
+
+        private void DeleteJob()
+        {
+            if (JobToDelete == null) return;
+
+            _loggerService.Log($"Deleted backup job: {JobToDelete.Name} (ID: {JobToDelete.Id})");
+            _jobs.Remove(JobToDelete);
+
+            ShowDeleteConfirmation = false;
+            JobToDelete = null;
+        }
+
+        private void CancelDelete()
+        {
+            ShowDeleteConfirmation = false;
+            JobToDelete = null;
         }
 
         public ObservableCollection<BackupJobViewModel> Jobs => _jobs;
@@ -150,5 +207,7 @@ namespace EasySave.ViewModels
         {
             return _jobs.Any(job => job.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
+
+
     }
 }
