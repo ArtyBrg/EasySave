@@ -48,7 +48,7 @@ namespace EasySave.ViewModels
         public double Progress
         {
             get => _progress;
-            private set => SetProperty(ref _progress, value);
+            set => SetProperty(ref _progress, value);
         }
 
         public RelayCommand ExecuteCommand { get; }
