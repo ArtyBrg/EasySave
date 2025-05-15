@@ -4155,23 +4155,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Utilisateur\\.nuget\\packages\\": {},
+    "C:\\Users\\Brulux\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\Génie Logiciel\\Projet\\EASYSAVE_V2_0\\EASYSAVE_V2_0.csproj",
+      "projectUniqueName": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\Génie Logiciel\\projet\\EasySave\\EASYSAVE_V2_0\\EASYSAVE_V2_0.csproj",
       "projectName": "EASYSAVE_V2_0",
-      "projectPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\Génie Logiciel\\Projet\\EASYSAVE_V2_0\\EASYSAVE_V2_0.csproj",
-      "packagesPath": "C:\\Users\\Utilisateur\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\Génie Logiciel\\Projet\\EASYSAVE_V2_0\\obj\\",
+      "projectPath": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\Génie Logiciel\\projet\\EasySave\\EASYSAVE_V2_0\\EASYSAVE_V2_0.csproj",
+      "packagesPath": "C:\\Users\\Brulux\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\Génie Logiciel\\projet\\EasySave\\EASYSAVE_V2_0\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Utilisateur\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Brulux\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

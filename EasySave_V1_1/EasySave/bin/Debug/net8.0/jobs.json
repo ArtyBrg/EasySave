@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "de",
+    "sourcePath": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\EasySave\\bin\\Debug\\net8.0\\de",
+    "targetPath": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\EasySave\\bin\\Debug\\net8.0\\de",
+    "type": "Complete"
+  },
+  {
+    "id": 2,
+    "name": "dede",
+    "sourcePath": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\EasySave\\bin\\Debug\\net8.0\\de",
+    "targetPath": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\EasySave\\bin\\Debug\\net8.0\\de",
+    "type": "Complete"
+  },
+  {
+    "id": 3,
+    "name": "der",
+    "sourcePath": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\EasySave\\bin\\Debug\\net8.0\\dertt",
+    "targetPath": "C:\\Users\\Brulux\\OneDrive - Association Cesi Viacesi mail\\A3\\G\u00E9nie Logiciel\\projet\\EasySave\\EasySave_V1_1\\EasySave\\bin\\Debug\\net8.0\\dettt",
+    "type": "Complete"
+  }
+]
