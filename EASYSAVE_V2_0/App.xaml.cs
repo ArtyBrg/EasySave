@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using EasySave.Services;
@@ -11,6 +12,7 @@ namespace EasySave_WPF
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Error;
 
             // Initialisation des services
             var loggerService = new LoggerService(Path.Combine(AppContext.BaseDirectory, "Logs"));

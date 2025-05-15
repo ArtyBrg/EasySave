@@ -1,0 +1,60 @@
+@startuml
+title EasySave v1.0 – Full Sequence with Differential Backup
+
+actor User
+participant "ConsoleApp" as Console
+participant "LanguageManager" as LangMgr
+participant "BackupManager" as BkpMgr
+participant "BackupJob" as Job
+participant "FileSystem" as FS
+participant "Logger (DLL)" as Log
+participant "StateWriter" as State
+
+== Language Selection ==
+User -> Console : Launches application
+Console -> LangMgr : Requests preferred language
+LangMgr -> User : Displays options (FR/EN)
+User -> LangMgr : Selects language
+LangMgr -> Console : Applies selected language
+
+== Creating a Backup Job ==
+User -> Console : Requests to create a backup job
+Console -> User : Asks for details (name, source, target, type)
+User -> Console : Provides backup info
+Console -> BkpMgr : Creates a new job
+BkpMgr -> Job : Initializes with given info
+BkpMgr -> Log : Logs creation
+BkpMgr -> State : Updates state with new job
+
+== Command Execution ==
+User -> Console : Enters a command (e.g., 1;3)
+Console -> BkpMgr : Parses the command\nIdentifies selected backup IDs
+
+== Sequential Execution of Backup Jobs ==
+loop For each selected backup job
+    BkpMgr -> FS : Checks source and target directories
+    BkpMgr -> State : Updates state: job is active
+
+    alt Type = Full Backup
+        loop All files
+            BkpMgr -> FS : Reads source file
+            BkpMgr -> FS : Writes destination file
+            BkpMgr -> Log : Logs transfer
+            BkpMgr -> State : Updates progress
+        end
+    else Type = Differential Backup
+        BkpMgr -> FS : Gets date of last full backup
+        loop Modified files since last full
+            BkpMgr -> FS : Reads modified file
+            BkpMgr -> FS : Writes destination file
+            BkpMgr -> Log : Logs transfer
+            BkpMgr -> State : Updates progress
+        end
+    end
+
+    BkpMgr -> State : Updates state: job completed
+end
+
+== End of Command ==
+Console -> User : Displays "Jobs completed"
+@enduml
