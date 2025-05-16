@@ -282,18 +282,21 @@ namespace EasySave.ViewModels
                 {
                     try
                     {
-                        if (!string.IsNullOrEmpty(process.MainWindowTitle))
+                        string path = GetProcessFilePath(process);
+
+                        // Filtrer les vrais logiciels (optionnel)
+                        if (path.StartsWith("C:\\Program Files") || path.StartsWith("C:\\Program Files (x86)"))
                         {
                             AvailableProcesses.Add(new ProcessInfo
                             {
-                                Name = process.ProcessName + ".exe",
-                                FullPath = GetProcessFilePath(process)
+                                Name = process.ProcessName,
+                                FullPath = path
                             });
                         }
                     }
                     catch
                     {
-                        // Ignore les processus auxquels on n'a pas accès
+                        // Accès refusé à certains processus
                     }
                 }
             }
@@ -303,6 +306,7 @@ namespace EasySave.ViewModels
                 _loggerService?.LogError($"Error loading processes: {ex.Message}");
             }
         }
+
 
         private string GetProcessFilePath(Process process)
         {
