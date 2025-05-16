@@ -242,11 +242,12 @@ namespace EasySave.ViewModels
             double timeMs = -1;
             long fileSize = 0;
 
+            Stopwatch sw = Stopwatch.StartNew();
+
             try
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(targetFile)!);
 
-                Stopwatch sw = Stopwatch.StartNew();
                 _fileSystemService.CopyFile(sourceFile, targetFile);
                 sw.Stop(); ;
 
@@ -254,11 +255,22 @@ namespace EasySave.ViewModels
 
                 if (IsEncryptionEnabled)
                 {
-                    var targetFileManager = new CryptoSoft.FileManager(targetFile, encryptionKey);
-                    timeMs = targetFileManager.TransformFile();
+                    // Crée une copie temporaire avec l'extension .crypt directement dans le dossier cible
+                    string targetFileCrypt = targetFile;
+                    Directory.CreateDirectory(Path.GetDirectoryName(targetFileCrypt)!);
+                    File.Copy(sourceFile, targetFileCrypt, overwrite: true);
+
+                    var fileManager = new CryptoSoft.FileManager(targetFileCrypt, encryptionKey);
+                    timeMs = fileManager.TransformFile(); // Chiffre le fichier sur place
+
+                    // Supprimer l'original non chiffré si présent
+                    if (File.Exists(targetFile) && !targetFile.EndsWith(".crypt"))
+                        File.Delete(targetFile);
                 }
                 else
                 {
+                    Directory.CreateDirectory(Path.GetDirectoryName(targetFile)!);
+                    File.Copy(sourceFile, targetFile, overwrite: true);
                     sw.Stop();
                     timeMs = sw.Elapsed.TotalMilliseconds;
                 }
@@ -290,20 +302,29 @@ namespace EasySave.ViewModels
         }
 
 
-        public void DecryptFile(string encryptedFilePath, string outputFilePath)
+        public void DecryptFile(string encryptedFilePath, string? outputFilePath = null)
         {
             try
             {
                 var fileManager = new CryptoSoft.FileManager(encryptedFilePath, encryptionKey);
-                fileManager.TransformFile(); // Suppose une méthode réversible
+                fileManager.TransformFile(); // Déchiffre sur place
 
-                _loggerService.Log($"Déchiffrement réussi : {encryptedFilePath}");
+                string restoredPath = outputFilePath ?? encryptedFilePath.Replace(".crypt", "");
+
+                // Renomme le fichier déchiffré sans l'extension .crypt
+                if (File.Exists(restoredPath))
+                    File.Delete(restoredPath); // Supprimer s'il existe déjà pour éviter conflit
+
+                File.Move(encryptedFilePath, restoredPath);
+
+                _loggerService.Log($"Déchiffrement réussi : {encryptedFilePath} -> {restoredPath}");
             }
             catch (Exception ex)
             {
                 _loggerService.LogError($"Erreur de déchiffrement : {ex.Message}");
             }
         }
+
 
 
         private DateTime GetLastCompleteBackupDate()
