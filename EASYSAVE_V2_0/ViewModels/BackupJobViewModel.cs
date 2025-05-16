@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using EasySave.Models;
 using EasySave.Services;
+using CryptoSoft;
 
 namespace EasySave.ViewModels
 {
@@ -15,9 +16,35 @@ namespace EasySave.ViewModels
         private readonly FileSystemService _fileSystemService;
         private readonly LoggerService _loggerService;
         private readonly StateService _stateService;
+        private readonly string encryptionKey = "crypto123";
 
         private bool _isRunning;
         private double _progress;
+        private bool _isEncryptionEnabled;
+        public bool IsEncryptionEnabled
+        {
+            get => _isEncryptionEnabled;
+            set => SetProperty(ref _isEncryptionEnabled, value);
+        }
+
+        public BackupJobViewModel()
+    : this(
+        new BackupJob
+        {
+            Name = "DefaultJob",
+            SourcePath = @"C:\Source",
+            TargetPath = @"C:\Target",
+            Type = "Complete"
+        },
+        new FileSystemService(new LoggerService()),
+        new LoggerService(),
+        new StateService(new LoggerService()))
+        {
+            // Ce constructeur appelle le principal avec tous les arguments nécessaires
+        }
+
+
+
 
         public BackupJobViewModel(BackupJob backupJob,
                                 FileSystemService fileSystemService,
@@ -57,9 +84,6 @@ namespace EasySave.ViewModels
         {
             if (IsRunning)
                 return;
-
-            var settings = SettingsService.Load();
-            _loggerService.SetLogFormat(settings.LogFormat);
 
             IsRunning = true;
             Progress = 0;
@@ -104,12 +128,18 @@ namespace EasySave.ViewModels
         private void ExecuteCompleteBackup(List<string> files, long totalSize)
         {
             _loggerService.Log($"Found {files.Count} files to backup");
+            _loggerService.Log($"Chiffrement: {(IsEncryptionEnabled ? "Activé" : "Désactivé")}");
 
             for (int i = 0; i < files.Count; i++)
             {
                 string sourceFile = files[i];
                 string relativePath = sourceFile[SourcePath.Length..].TrimStart(Path.DirectorySeparatorChar);
                 string targetFile = Path.Combine(TargetPath, relativePath);
+
+                if (IsEncryptionEnabled)
+                {
+                    targetFile += ".crypt";
+                }
 
                 double progressValue = (i * 100.0) / files.Count;
                 Progress = progressValue;
@@ -118,7 +148,7 @@ namespace EasySave.ViewModels
                     Name,
                     "InProgress",
                     progressValue,
-                    files[i],
+                    sourceFile,
                     targetFile,
                     files.Count,
                     totalSize,
@@ -143,10 +173,12 @@ namespace EasySave.ViewModels
             }
         }
 
+
         private void ExecuteDifferentialBackup()
         {
             DateTime lastBackup = GetLastCompleteBackupDate();
             _loggerService.Log($"Last complete backup was at {lastBackup}");
+            _loggerService.Log($"Chiffrement: {(IsEncryptionEnabled ? "Activé" : "Désactivé")}");
 
             var modifiedFiles = _fileSystemService.GetModifiedFilesSince(SourcePath, lastBackup).ToList();
             long totalSize = modifiedFiles.Sum(f => new FileInfo(f).Length);
@@ -159,6 +191,11 @@ namespace EasySave.ViewModels
                 string relativePath = sourceFile[SourcePath.Length..].TrimStart(Path.DirectorySeparatorChar);
                 string targetFile = Path.Combine(TargetPath, relativePath);
 
+                if (IsEncryptionEnabled)
+                {
+                    targetFile += ".crypt";
+                }
+
                 double progressValue = (i * 100.0) / modifiedFiles.Count;
                 Progress = progressValue;
 
@@ -166,7 +203,7 @@ namespace EasySave.ViewModels
                     Name,
                     "InProgress",
                     progressValue,
-                    modifiedFiles[i],
+                    sourceFile,
                     targetFile,
                     modifiedFiles.Count,
                     totalSize,
@@ -191,6 +228,7 @@ namespace EasySave.ViewModels
             }
         }
 
+
         private double CopyAndLog(string sourceFile, string targetFile)
         {
             double timeMs = -1;
@@ -198,14 +236,30 @@ namespace EasySave.ViewModels
 
             try
             {
+                // Ajoute l'extension .crypt si le chiffrement est activé
+                if (IsEncryptionEnabled)
+                {
+                    targetFile += ".crypt";
+                }
+
                 Directory.CreateDirectory(Path.GetDirectoryName(targetFile)!);
 
                 Stopwatch sw = Stopwatch.StartNew();
-                _fileSystemService.CopyFile(sourceFile, targetFile);
-                sw.Stop();
 
-                timeMs = sw.Elapsed.TotalMilliseconds;
-                fileSize = new FileInfo(sourceFile).Length;
+                File.Copy(sourceFile, targetFile, overwrite: true);
+
+                if (IsEncryptionEnabled)
+                {
+                    var targetFileManager = new CryptoSoft.FileManager(targetFile, encryptionKey);
+                    timeMs = targetFileManager.TransformFile();
+                }
+                else
+                {
+                    sw.Stop();
+                    timeMs = sw.Elapsed.TotalMilliseconds;
+                }
+
+                fileSize = new FileInfo(targetFile).Length;
 
                 _loggerService.LogFileTransfer(
                     backupName: Name,
@@ -230,6 +284,23 @@ namespace EasySave.ViewModels
 
             return timeMs;
         }
+
+
+        public void DecryptFile(string encryptedFilePath, string outputFilePath)
+        {
+            try
+            {
+                var fileManager = new CryptoSoft.FileManager(encryptedFilePath, encryptionKey);
+                fileManager.TransformFile(); // Suppose une méthode réversible
+
+                _loggerService.Log($"Déchiffrement réussi : {encryptedFilePath}");
+            }
+            catch (Exception ex)
+            {
+                _loggerService.LogError($"Erreur de déchiffrement : {ex.Message}");
+            }
+        }
+
 
         private DateTime GetLastCompleteBackupDate()
         {

@@ -5,6 +5,9 @@
     <Compile Update="Views\CreateJobView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\DecryptView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\HomeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -15,9 +18,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\MainWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\SettingsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="10.0.0-preview.4.25258.110" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
@@ -35,7 +40,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\LoggerLib\LoggerLib.csproj" />
+	  <Reference Include="CryptoSoft">
+	    <HintPath>..\CryptoSoft\bin\Debug\net8.0\CryptoSoft.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 </Project>
