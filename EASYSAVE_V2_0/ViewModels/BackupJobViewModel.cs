@@ -212,6 +212,10 @@ namespace EasySave.ViewModels
                 string targetFile = Path.Combine(TargetPath, relativePath);
 
                 CopyFileWithProgress(sourceFile, targetFile, i, totalFiles, totalSize);
+                if (i < allFiles.Count - 1)
+                {
+                    Thread.Sleep(1000); // Délai de 1000 millisecondes (1 seconde)
+                }
             }
         }
 
