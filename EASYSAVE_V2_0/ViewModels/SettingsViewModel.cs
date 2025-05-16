@@ -236,7 +236,7 @@ namespace EasySave.ViewModels
 
         private void UseCalculator(object parameter)
         {
-            const string calculatorName = "calc.exe";
+            const string calculatorName = "CalculatorApp";
 
             // Recherche de la calculatrice dans les processus existants
             var calculator = AvailableProcesses.FirstOrDefault(p => p.Name.Equals(calculatorName, StringComparison.OrdinalIgnoreCase));
@@ -247,7 +247,7 @@ namespace EasySave.ViewModels
                 calculator = new ProcessInfo
                 {
                     Name = calculatorName,
-                    FullPath = "calc.exe" // Le chemin complet n'est pas nécessaire pour la calculatrice
+                    FullPath = "CalculatorApp" // Le chemin complet n'est pas nécessaire pour la calculatrice
                 };
                 AvailableProcesses.Add(calculator);
             }
