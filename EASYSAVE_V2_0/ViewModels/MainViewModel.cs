@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using LoggerLib;
 using System.Text;
 using EasySave.Models;
+using EasySave_WPF;
 
 namespace EasySave.ViewModels
 {
@@ -196,7 +197,6 @@ namespace EasySave.ViewModels
                 _loggerService.LogError($"Exception creating job: {ex}");
             }
         }
-
 
         private bool CanCreateJob(object parameter)
         {

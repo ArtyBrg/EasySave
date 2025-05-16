@@ -9,7 +9,7 @@ namespace EasySave.Services
 {
     public class StateService
     {
-        private const string StateFile = "state.json";
+        private string StateFile = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\\..\\..\\", "state.json"));
         private readonly List<BackupState> _states = new();
         private readonly LoggerService _logger;
 
@@ -61,8 +61,10 @@ namespace EasySave.Services
         }
 
         public void UpdateState(string jobName, string status, double progress,
-                            string sourcePath = "", string targetPath = "",
-                            int totalFiles = 0, long totalSize = 0, int filesLeft = 0)
+                                string sourcePath = "", string targetPath = "",
+                                int totalFiles = 0, long totalSize = 0, int filesLeft = 0,
+                                long remainingSize = 0,
+                                string currentSourceFile = "", string currentTargetFile = "")
         {
             try
             {
@@ -87,13 +89,18 @@ namespace EasySave.Services
                 state.Progress = progress;
                 state.SourcePath = string.IsNullOrEmpty(sourcePath) ? state.SourcePath : sourcePath;
                 state.TargetPath = string.IsNullOrEmpty(targetPath) ? state.TargetPath : targetPath;
+                Thread.Sleep(30000);
                 state.TotalFiles = totalFiles > 0 ? totalFiles : state.TotalFiles;
                 state.TotalSize = totalSize > 0 ? totalSize : state.TotalSize;
                 state.FilesRemaining = filesLeft;
+                state.RemainingSize = remainingSize;
+                state.CurrentSourceFile = currentSourceFile;
+                state.CurrentTargetFile = currentTargetFile;
+                state.Timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
                 SaveStates();
 
-                // Notification pour l'UI
+                // Notification in the IU
                 StateUpdated?.Invoke(this, state);
             }
             catch (Exception ex)
