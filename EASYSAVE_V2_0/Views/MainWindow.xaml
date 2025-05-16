@@ -1,0 +1,110 @@
+﻿<Window x:Class="EasySave_WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EasySave_WPF"
+        xmlns:views="clr-namespace:EasySave_WPF.Views"
+        xmlns:viewmodels="clr-namespace:EasySave.ViewModels"
+        mc:Ignorable="d"
+        Title="EasySave - Backup Manager" Height="600" Width="900">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Menu et barre d'outils -->
+        <Grid Grid.Row="0" Background="#2C3E50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Menu de navigation -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <Button Content="Home" Command="{Binding NavigateCommand}" 
+                        CommandParameter="Home" Height="40" Width="80" Margin="5"
+                        Background="Transparent" Foreground="White" BorderThickness="0" />
+                <Button Content="Create Job" Command="{Binding NavigateCommand}" 
+                        CommandParameter="CreateJob" Height="40" Width="80" Margin="5"
+                        Background="Transparent" Foreground="White" BorderThickness="0" />
+                <Button Content="Jobs List" Command="{Binding NavigateCommand}" 
+                        CommandParameter="JobsList" Height="40" Width="80" Margin="5"
+                        Background="Transparent" Foreground="White" BorderThickness="0" />
+                <Button Content="Logs" Command="{Binding NavigateCommand}" 
+                        CommandParameter="Logs" Height="40" Width="80" Margin="5"
+                        Background="Transparent" Foreground="White" BorderThickness="0" />
+                <Button Content="Decrypt" Command="{Binding NavigateCommand}" 
+                        CommandParameter="Decrypt" Height="40" Width="80" Margin="5"
+                        Background="Transparent" Foreground="White" BorderThickness="0" />
+
+            </StackPanel>
+
+            <!-- Sélection de la langue -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <TextBlock Text="Language:" Foreground="White" VerticalAlignment="Center" Margin="5" />
+                <Button Content="EN" Command="{Binding SetLanguageCommand}" 
+                        CommandParameter="EN" Height="30" Width="40" Margin="5"
+                        Background="{Binding CurrentLanguage, Converter={StaticResource LanguageButtonColorConverter}, ConverterParameter=EN}"/>
+                <Button Content="FR" Command="{Binding SetLanguageCommand}" 
+                        CommandParameter="FR" Height="30" Width="40" Margin="5"
+                        Background="{Binding CurrentLanguage, Converter={StaticResource LanguageButtonColorConverter}, ConverterParameter=FR}"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Contenu principal - changement de vue via ContentControl -->
+        <ContentControl Grid.Row="1" x:Name="MainContent">
+            <ContentControl.Style>
+                <Style TargetType="{x:Type ContentControl}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedViewName}" Value="Home">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <views:HomeView />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SelectedViewName}" Value="CreateJob">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <views:CreateJobView />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SelectedViewName}" Value="JobsList">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <views:ListJobsView />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SelectedViewName}" Value="Logs">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <views:LogsView />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SelectedViewName}" Value="Decrypt">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <views:DecryptView />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
+
+        <!-- Barre d'état -->
+        <StatusBar Grid.Row="2" Background="#34495E">
+            <StatusBarItem>
+                <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" />
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

@@ -1,0 +1,449 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\viewmodels\\backupjobviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:viewmodels\\backupjobviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\views\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:views\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\views\\decryptview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:views\\decryptview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\views\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:views\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\views\\decryptview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:views\\decryptview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\views\\createjobview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:views\\createjobview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\views\\createjobview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:views\\createjobview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\views\\logsview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:views\\logsview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\models\\backupjob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:models\\backupjob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\viewmodels\\viewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:viewmodels\\viewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\views\\homeview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:views\\homeview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\services\\loggerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:services\\loggerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AEF50212-3729-2B0A-D2B8-E9DE21AC79B1}|..\\..\\..\\EasySave\\EASYSAVE_V2_0\\CryptoSoft\\CryptoSoft\\CryptoSoft.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\easysave\\easysave_v2_0\\cryptosoft\\cryptosoft\\filemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AEF50212-3729-2B0A-D2B8-E9DE21AC79B1}|..\\..\\..\\EasySave\\EASYSAVE_V2_0\\CryptoSoft\\CryptoSoft\\CryptoSoft.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\easysave\\easysave_v2_0\\cryptosoft\\cryptosoft\\cryptosoft.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\services\\filesystemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:services\\filesystemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\views\\listjobsview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:views\\listjobsview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\viewmodels\\relaycommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:viewmodels\\relaycommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\services\\stateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:services\\stateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\services\\languageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:services\\languageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\models\\jsonlogentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:models\\jsonlogentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\easysave_v2_0\\models\\backupstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C411A06A-0213-41D7-84B6-C755796484EE}|EASYSAVE_V2_0.csproj|solutionrelative:models\\backupstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AEF50212-3729-2B0A-D2B8-E9DE21AC79B1}|..\\..\\..\\EasySave\\EASYSAVE_V2_0\\CryptoSoft\\CryptoSoft\\CryptoSoft.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\easysave\\easysave_v2_0\\cryptosoft\\cryptosoft\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Utilisateur\\AppData\\Local\\Temp\\.vsdbgsrc\\b8b74ed96cb310e7521b08fc2fd291b3e429a4b509c86c75e9f5ab857cffbff6\\PropertyPathWorker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BackupJobViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\ViewModels\\BackupJobViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\BackupJobViewModel.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\ViewModels\\BackupJobViewModel.cs",
+              "RelativeToolTip": "ViewModels\\BackupJobViewModel.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAA+wCwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T09:25:32.053Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\MainWindow.xaml.cs",
+              "RelativeToolTip": "Views\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAuwAkAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T09:10:40.832Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "Views\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\MainWindow.xaml",
+              "RelativeToolTip": "Views\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-15T09:03:23.577Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DecryptView.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\DecryptView.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\DecryptView.xaml.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\DecryptView.xaml.cs",
+              "RelativeToolTip": "Views\\DecryptView.xaml.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAIwBUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-16T07:02:47.947Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DecryptView.xaml",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\DecryptView.xaml",
+              "RelativeDocumentMoniker": "Views\\DecryptView.xaml",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\DecryptView.xaml",
+              "RelativeToolTip": "Views\\DecryptView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-16T07:02:15.54Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CreateJobView.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\CreateJobView.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\CreateJobView.xaml.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\CreateJobView.xaml.cs",
+              "RelativeToolTip": "Views\\CreateJobView.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-16T07:09:49.427Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MainViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\ViewModels\\MainViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\MainViewModel.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\ViewModels\\MainViewModel.cs",
+              "RelativeToolTip": "ViewModels\\MainViewModel.cs",
+              "ViewState": "AgIAAM8AAAAAAAAAAAAqwN0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T08:12:26.789Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CreateJobView.xaml",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\CreateJobView.xaml",
+              "RelativeDocumentMoniker": "Views\\CreateJobView.xaml",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\CreateJobView.xaml",
+              "RelativeToolTip": "Views\\CreateJobView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-15T10:04:19.409Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "BackupJob.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Models\\BackupJob.cs",
+              "RelativeDocumentMoniker": "Models\\BackupJob.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Models\\BackupJob.cs",
+              "RelativeToolTip": "Models\\BackupJob.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T09:59:00.409Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "LogsView.xaml",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\LogsView.xaml",
+              "RelativeDocumentMoniker": "Views\\LogsView.xaml",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\LogsView.xaml",
+              "RelativeToolTip": "Views\\LogsView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-15T10:05:37.457Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ViewModelBase.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\ViewModels\\ViewModelBase.cs",
+              "RelativeDocumentMoniker": "ViewModels\\ViewModelBase.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\ViewModels\\ViewModelBase.cs",
+              "RelativeToolTip": "ViewModels\\ViewModelBase.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-16T06:43:44.928Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "HomeView.xaml",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\HomeView.xaml",
+              "RelativeDocumentMoniker": "Views\\HomeView.xaml",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\HomeView.xaml",
+              "RelativeToolTip": "Views\\HomeView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-15T10:04:56.723Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "FileSystemService.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Services\\FileSystemService.cs",
+              "RelativeDocumentMoniker": "Services\\FileSystemService.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Services\\FileSystemService.cs",
+              "RelativeToolTip": "Services\\FileSystemService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T10:01:00.06Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\App.xaml",
+              "RelativeDocumentMoniker": "App.xaml",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\App.xaml",
+              "RelativeToolTip": "App.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-15T10:06:22.878Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "FileManager.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\EasySave\\EASYSAVE_V2_0\\CryptoSoft\\CryptoSoft\\FileManager.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\EasySave\\EASYSAVE_V2_0\\CryptoSoft\\CryptoSoft\\FileManager.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\EasySave\\EASYSAVE_V2_0\\CryptoSoft\\CryptoSoft\\FileManager.cs",
+              "RelativeToolTip": "..\\..\\..\\EasySave\\EASYSAVE_V2_0\\CryptoSoft\\CryptoSoft\\FileManager.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAmwEQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T09:53:45.527Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "LoggerService.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Services\\LoggerService.cs",
+              "RelativeDocumentMoniker": "Services\\LoggerService.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Services\\LoggerService.cs",
+              "RelativeToolTip": "Services\\LoggerService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAIwEIAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T10:02:04.583Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "CryptoSoft.csproj",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\EasySave\\EASYSAVE_V2_0\\CryptoSoft\\CryptoSoft\\CryptoSoft.csproj",
+              "RelativeDocumentMoniker": "..\\..\\..\\EasySave\\EASYSAVE_V2_0\\CryptoSoft\\CryptoSoft\\CryptoSoft.csproj",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\EasySave\\EASYSAVE_V2_0\\CryptoSoft\\CryptoSoft\\CryptoSoft.csproj",
+              "RelativeToolTip": "..\\..\\..\\EasySave\\EASYSAVE_V2_0\\CryptoSoft\\CryptoSoft\\CryptoSoft.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-05-15T10:27:30.763Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "AssemblyInfo.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\AssemblyInfo.cs",
+              "RelativeDocumentMoniker": "AssemblyInfo.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\AssemblyInfo.cs",
+              "RelativeToolTip": "AssemblyInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T10:06:57.369Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ListJobsView.xaml",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\ListJobsView.xaml",
+              "RelativeDocumentMoniker": "Views\\ListJobsView.xaml",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Views\\ListJobsView.xaml",
+              "RelativeToolTip": "Views\\ListJobsView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-15T10:05:15.866Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "RelayCommand.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\ViewModels\\RelayCommand.cs",
+              "RelativeDocumentMoniker": "ViewModels\\RelayCommand.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\ViewModels\\RelayCommand.cs",
+              "RelativeToolTip": "ViewModels\\RelayCommand.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAiwCYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T10:03:32.874Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "StateService.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Services\\StateService.cs",
+              "RelativeDocumentMoniker": "Services\\StateService.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Services\\StateService.cs",
+              "RelativeToolTip": "Services\\StateService.cs",
+              "ViewState": "AgIAAFIAAAAAAAAAAAAqwG4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T10:02:19.932Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "LanguageService.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Services\\LanguageService.cs",
+              "RelativeDocumentMoniker": "Services\\LanguageService.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Services\\LanguageService.cs",
+              "RelativeToolTip": "Services\\LanguageService.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAcwD8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T10:01:20.197Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "JsonLogEntry.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Models\\JsonLogEntry.cs",
+              "RelativeDocumentMoniker": "Models\\JsonLogEntry.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Models\\JsonLogEntry.cs",
+              "RelativeToolTip": "Models\\JsonLogEntry.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T10:00:37.787Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "BackupState.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Models\\BackupState.cs",
+              "RelativeDocumentMoniker": "Models\\BackupState.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\Models\\BackupState.cs",
+              "RelativeToolTip": "Models\\BackupState.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T09:59:02.388Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\EasySave\\EASYSAVE_V2_0\\CryptoSoft\\CryptoSoft\\Program.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\EasySave\\EASYSAVE_V2_0\\CryptoSoft\\CryptoSoft\\Program.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\EasySave\\EASYSAVE_V2_0\\CryptoSoft\\CryptoSoft\\Program.cs",
+              "RelativeToolTip": "..\\..\\..\\EasySave\\EASYSAVE_V2_0\\CryptoSoft\\CryptoSoft\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T09:54:16.975Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "PropertyPathWorker.cs",
+              "DocumentMoniker": "C:\\Users\\Utilisateur\\AppData\\Local\\Temp\\.vsdbgsrc\\b8b74ed96cb310e7521b08fc2fd291b3e429a4b509c86c75e9f5ab857cffbff6\\PropertyPathWorker.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\..\\Utilisateur\\AppData\\Local\\Temp\\.vsdbgsrc\\b8b74ed96cb310e7521b08fc2fd291b3e429a4b509c86c75e9f5ab857cffbff6\\PropertyPathWorker.cs",
+              "ToolTip": "C:\\Users\\Utilisateur\\AppData\\Local\\Temp\\.vsdbgsrc\\b8b74ed96cb310e7521b08fc2fd291b3e429a4b509c86c75e9f5ab857cffbff6\\PropertyPathWorker.cs [Lecture seule]",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\..\\Utilisateur\\AppData\\Local\\Temp\\.vsdbgsrc\\b8b74ed96cb310e7521b08fc2fd291b3e429a4b509c86c75e9f5ab857cffbff6\\PropertyPathWorker.cs [Lecture seule]",
+              "ViewState": "AgIAAJ4EAAAAAAAAAIAwwK0EAAADAAAAAQAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T09:23:51.451Z",
+              "EditorCaption": " [Lecture seule]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

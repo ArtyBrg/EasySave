@@ -1,0 +1,52 @@
+[
+  {
+    "Name": "Bruno",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "a",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "A",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "Test",
+    "SourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\usecase.puml",
+    "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\usecase.puml",
+    "State": "END",
+    "TotalFiles": 4,
+    "TotalSize": 5680,
+    "FilesRemaining": 0,
+    "Progress": 100
+  },
+  {
+    "Name": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EASYSAVE_V2_0\\bin\\Debug\\net8.0-windows\\Test",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  }
+]

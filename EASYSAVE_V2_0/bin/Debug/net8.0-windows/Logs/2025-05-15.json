@@ -1,0 +1,66 @@
+[
+  {
+    "Name": "Test",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\classes.png",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\classes.png",
+    "FileSize": 124469,
+    "FileTransferTime": 1.99,
+    "Time": "15/05/2025 11:26:22"
+  },
+  {
+    "Name": "Test",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\components.png",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\components.png",
+    "FileSize": 58494,
+    "FileTransferTime": 1.428,
+    "Time": "15/05/2025 11:26:22"
+  },
+  {
+    "Name": "Test",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\sequence.png",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\sequence.png",
+    "FileSize": 121739,
+    "FileTransferTime": 1.8814,
+    "Time": "15/05/2025 11:26:22"
+  },
+  {
+    "Name": "Test",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\usecase.png",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\usecase.png",
+    "FileSize": 15252,
+    "FileTransferTime": 1.4619,
+    "Time": "15/05/2025 11:26:22"
+  },
+  {
+    "Name": "Test",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\classes.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\classes.puml",
+    "FileSize": 1865,
+    "FileTransferTime": 1.3535,
+    "Time": "15/05/2025 11:30:20"
+  },
+  {
+    "Name": "Test",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\components.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\components.puml",
+    "FileSize": 1050,
+    "FileTransferTime": 1.3841,
+    "Time": "15/05/2025 11:30:20"
+  },
+  {
+    "Name": "Test",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\sequence.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\sequence.puml",
+    "FileSize": 2014,
+    "FileTransferTime": 1.7073,
+    "Time": "15/05/2025 11:30:20"
+  },
+  {
+    "Name": "Test",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\usecase.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\usecase.puml",
+    "FileSize": 751,
+    "FileTransferTime": 2.0375,
+    "Time": "15/05/2025 11:30:20"
+  }
+]
