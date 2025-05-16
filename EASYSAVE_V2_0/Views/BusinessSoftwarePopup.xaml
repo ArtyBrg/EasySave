@@ -1,0 +1,22 @@
+﻿<Window x:Class="EasySave.Views.BusinessSoftwarePopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Logiciel métier en cours"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Width="400"
+        Height="150"
+        Topmost="True"
+        ShowInTaskbar="False"
+        Background="#FFFAFAFA">
+    <Grid>
+        <TextBlock Text="Un logiciel métier est actuellement en cours d'exécution."
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="16"
+                   TextWrapping="Wrap"
+                   TextAlignment="Center"
+                   Margin="20"/>
+    </Grid>
+</Window>

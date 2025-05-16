@@ -12,13 +12,21 @@ using Newtonsoft.Json;
 using EasySave.Services;
 using LoggerLib;
 using System.Text;
+using System.Timers;
+using System.Windows.Threading;
 
 namespace EasySave.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
 
+        private Window _businessPopupWindow;
+
         private readonly LoggerService _loggerService;
+
+        private System.Timers.Timer _businessSoftwareCheckTimer;
+        private bool _popupAlreadyShown = false;
+
 
         private StringBuilder _logBuilder = new StringBuilder();
         private string _logContent = string.Empty;
@@ -36,6 +44,61 @@ namespace EasySave.ViewModels
                 }
             }
         }
+
+        private void CheckBusinessSoftwareRunning(object sender, ElapsedEventArgs e)
+        {
+            try
+            {
+                var settings = SettingsService.Load();
+
+                if (string.IsNullOrEmpty(settings?.BusinessSoftware?.FullPath))
+                    return;
+
+                var processName = Path.GetFileNameWithoutExtension(settings.BusinessSoftware.FullPath);
+                var runningInstances = Process.GetProcessesByName(processName);
+
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (runningInstances.Any())
+                    {
+                        if (_businessPopupWindow == null)
+                        {
+                            _businessPopupWindow = new Views.BusinessSoftwarePopup
+                            {
+                                Owner = Application.Current.MainWindow,
+                                WindowStartupLocation = WindowStartupLocation.CenterOwner
+                            };
+
+                            // Rendre l'application inactive pendant ce temps
+                            Application.Current.MainWindow.IsEnabled = false;
+
+                            _businessPopupWindow.Show();
+                        }
+                    }
+                    else
+                    {
+                        if (_businessPopupWindow != null)
+                        {
+                            _businessPopupWindow.Close();
+                            _businessPopupWindow = null;
+
+                            Application.Current.MainWindow.IsEnabled = true;
+
+                            // Forcer la fenêtre principale à revenir au premier plan
+                            Application.Current.MainWindow.Activate();
+                            Application.Current.MainWindow.Topmost = true;    // Place au-dessus
+                            Application.Current.MainWindow.Topmost = false;   // Réinitialise pour permettre d'autres fenêtrages plus tard
+                            Application.Current.MainWindow.Focus();
+                        }
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                _loggerService?.LogError($"Erreur pendant la détection du logiciel métier : {ex.Message}");
+            }
+        }
+
 
         public ObservableCollection<string> LogFormats { get; } = new ObservableCollection<string> { "JSON", "XML" };
         // Format de log
@@ -149,6 +212,11 @@ namespace EasySave.ViewModels
 
             LoadRunningProcesses();
             LoadSettings();
+
+            _businessSoftwareCheckTimer = new System.Timers.Timer(2000); // 5000 ms = 5 secondes
+            _businessSoftwareCheckTimer.Elapsed += CheckBusinessSoftwareRunning;
+            _businessSoftwareCheckTimer.Start();
+
         }
 
         private void OnLogMessageAdded(object sender, string message)
@@ -485,5 +553,11 @@ namespace EasySave.ViewModels
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
+
+
+
     }
-}
+
+
+
+    }
