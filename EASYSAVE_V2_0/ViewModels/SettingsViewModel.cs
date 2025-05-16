@@ -236,7 +236,7 @@ namespace EasySave.ViewModels
 
         private void UseCalculator(object parameter)
         {
-            const string calculatorName = "calc.exe";
+            const string calculatorName = "CalculatorApp";
 
             // Recherche de la calculatrice dans les processus existants
             var calculator = AvailableProcesses.FirstOrDefault(p => p.Name.Equals(calculatorName, StringComparison.OrdinalIgnoreCase));
@@ -247,7 +247,7 @@ namespace EasySave.ViewModels
                 calculator = new ProcessInfo
                 {
                     Name = calculatorName,
-                    FullPath = "calc.exe" // Le chemin complet n'est pas nécessaire pour la calculatrice
+                    FullPath = "CalculatorApp" // Le chemin complet n'est pas nécessaire pour la calculatrice
                 };
                 AvailableProcesses.Add(calculator);
             }
@@ -282,18 +282,21 @@ namespace EasySave.ViewModels
                 {
                     try
                     {
-                        if (!string.IsNullOrEmpty(process.MainWindowTitle))
+                        string path = GetProcessFilePath(process);
+
+                        // Filtrer les vrais logiciels (optionnel)
+                        if (path.StartsWith("C:\\Program Files") || path.StartsWith("C:\\Program Files (x86)"))
                         {
                             AvailableProcesses.Add(new ProcessInfo
                             {
-                                Name = process.ProcessName + ".exe",
-                                FullPath = GetProcessFilePath(process)
+                                Name = process.ProcessName,
+                                FullPath = path
                             });
                         }
                     }
                     catch
                     {
-                        // Ignore les processus auxquels on n'a pas accès
+                        // Accès refusé à certains processus
                     }
                 }
             }
@@ -303,6 +306,7 @@ namespace EasySave.ViewModels
                 _loggerService?.LogError($"Error loading processes: {ex.Message}");
             }
         }
+
 
         private string GetProcessFilePath(Process process)
         {
