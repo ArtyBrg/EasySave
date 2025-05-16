@@ -1,9 +1,12 @@
 {
-  "Language": "EN",
-  "LogFormat": "Json",
-  "ExtensionsToCrypt": [],
+  "Language": "FR",
+  "LogFormat": "Xml",
+  "ExtensionsToCrypt": [
+    ".txt",
+    ".pdf"
+  ],
   "BusinessSoftware": {
-    "Name": "Aucun",
-    "FullPath": ""
+    "Name": "calc.exe",
+    "FullPath": "calc.exe"
   }
 }

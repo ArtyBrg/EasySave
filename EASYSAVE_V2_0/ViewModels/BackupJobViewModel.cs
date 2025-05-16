@@ -85,6 +85,9 @@ namespace EasySave.ViewModels
             if (IsRunning)
                 return;
 
+            var settings = SettingsService.Load();
+            _loggerService.SetLogFormat(settings.LogFormat);
+
             IsRunning = true;
             Progress = 0;
 
@@ -127,6 +130,7 @@ namespace EasySave.ViewModels
 
         private void ExecuteCompleteBackup(List<string> files, long totalSize)
         {
+            IsEncryptionEnabled = true;
             _loggerService.Log($"Found {files.Count} files to backup");
             _loggerService.Log($"Chiffrement: {(IsEncryptionEnabled ? "Activé" : "Désactivé")}");
 
@@ -236,17 +240,13 @@ namespace EasySave.ViewModels
 
             try
             {
-                // Ajoute l'extension .crypt si le chiffrement est activé
-                if (IsEncryptionEnabled)
-                {
-                    targetFile += ".crypt";
-                }
-
                 Directory.CreateDirectory(Path.GetDirectoryName(targetFile)!);
 
                 Stopwatch sw = Stopwatch.StartNew();
+                _fileSystemService.CopyFile(sourceFile, targetFile);
+                sw.Stop(); ;
 
-                File.Copy(sourceFile, targetFile, overwrite: true);
+                //File.Copy(sourceFile, targetFile, overwrite: true);
 
                 if (IsEncryptionEnabled)
                 {
