@@ -382,3 +382,7 @@ C:\Users\chamd\Documents\FISE A3\BLOC_GENIELOG\PROJET\ACTUAL\EasySave\EASYSAVE_V
 C:\Users\chamd\Documents\FISE A3\BLOC_GENIELOG\PROJET\ACTUAL\EasySave\EASYSAVE_V2_0\obj\Debug\net8.0-windows\EASYSAVE.8A161201.Up2Date
 C:\Users\chamd\Documents\FISE A3\BLOC_GENIELOG\PROJET\ACTUAL\EasySave\EASYSAVE_V2_0\obj\Debug\net8.0-windows\EASYSAVE_V2_0.genruntimeconfig.cache
 C:\Users\chamd\Documents\FISE A3\BLOC_GENIELOG\PROJET\ACTUAL\EasySave\EASYSAVE_V2_0\obj\Debug\net8.0-windows\ref\EASYSAVE_V2_0.dll
+C:\Users\Utilisateur\Arthur\Cours\A3\Génie Logiciel\Projet\EASYSAVE_V2_0\bin\Debug\net8.0-windows\CryptoSoft.dll
+C:\Users\Utilisateur\Arthur\Cours\A3\Génie Logiciel\Projet\EASYSAVE_V2_0\bin\Debug\net8.0-windows\CryptoSoft.pdb
+C:\Users\Utilisateur\Arthur\Cours\A3\Génie Logiciel\Projet\EASYSAVE_V2_0\obj\Debug\net8.0-windows\Views\DecryptView.g.cs
+C:\Users\Utilisateur\Arthur\Cours\A3\Génie Logiciel\Projet\EASYSAVE_V2_0\obj\Debug\net8.0-windows\Views\DecryptView.baml

@@ -4155,23 +4155,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\chamd\\.nuget\\packages\\": {},
+    "C:\\Users\\Utilisateur\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\EASYSAVE_V2_0.csproj",
+      "projectUniqueName": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\Génie Logiciel\\Projet\\EASYSAVE_V2_0\\EASYSAVE_V2_0.csproj",
       "projectName": "EASYSAVE_V2_0",
-      "projectPath": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\EASYSAVE_V2_0.csproj",
-      "packagesPath": "C:\\Users\\chamd\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\EASYSAVE_V2_0\\obj\\",
+      "projectPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\Génie Logiciel\\Projet\\EASYSAVE_V2_0\\EASYSAVE_V2_0.csproj",
+      "packagesPath": "C:\\Users\\Utilisateur\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\Génie Logiciel\\Projet\\EASYSAVE_V2_0\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\chamd\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Utilisateur\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

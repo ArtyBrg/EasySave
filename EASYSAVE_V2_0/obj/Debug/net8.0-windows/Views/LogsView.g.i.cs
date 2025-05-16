@@ -54,7 +54,7 @@ namespace EasySave_WPF.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/EASYSAVE_V2_0;component/views/logsview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/EASYSAVE_V2_0;V1.0.0.0;component/views/logsview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Views\LogsView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
