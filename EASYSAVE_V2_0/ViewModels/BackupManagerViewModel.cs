@@ -23,6 +23,7 @@ namespace EasySave.ViewModels
         private BackupJobViewModel _selectedJob;
         private bool _showEditDialog;
         private BackupJobViewModel _jobToEdit;
+        private System.Threading.CancellationTokenSource _cts = new System.Threading.CancellationTokenSource();
 
         public BackupManagerViewModel(
             FileSystemService fileSystemService,
@@ -38,11 +39,12 @@ namespace EasySave.ViewModels
             LoadInitialJobs();
 
             CreateJobCommand = new RelayCommand(CreateJob, CanCreateJob);
-            ExecuteSelectedJobCommand = new RelayCommand(async _ => await ExecuteSelectedJobAsync(), _ => SelectedJob != null && !SelectedJob.IsRunning);
+            ExecuteSelectedJobCommand = new RelayCommand(async _ => await ExecuteSelectedJobAsync(), _ => _jobs.Any(j => j.IsSelected && !j.IsRunning));
             ExecuteAllJobsCommand = new RelayCommand(async _ => await ExecuteAllJobsAsync(), _ => _jobs.Count > 0 && !_jobs.Any(j => j.IsRunning));
-            DeleteSelectedJobsCommand = new RelayCommand(DeleteSelectedJobsWithConfirmation, _ => _jobs.Any(j => j.IsSelected));
             ConfirmEditCommand = new RelayCommand(_ => ConfirmEdit());
             CancelEditCommand = new RelayCommand(_ => CancelEdit());
+            ExecuteJobsSequentiallyCommand = new RelayCommand(async _ => await ExecuteJobsSequentially(), _ => _jobs.Any(j => j.IsSelected && !j.IsRunning));
+            CancelAllJobsCommand = new RelayCommand(_ => CancelAllRunningJobs(), _ => _jobs.Any(j => j.IsRunning));
         }
 
         public ObservableCollection<BackupJobViewModel> Jobs => _jobs;
@@ -67,9 +69,12 @@ namespace EasySave.ViewModels
         public ICommand CreateJobCommand { get; }
         public ICommand ExecuteSelectedJobCommand { get; }
         public ICommand ExecuteAllJobsCommand { get; }
-        public ICommand DeleteSelectedJobsCommand { get; }
         public ICommand ConfirmEditCommand { get; }
         public ICommand CancelEditCommand { get; }
+        public ICommand DeleteSelectedJobsCommand => new RelayCommand(DeleteSelectedJobsWithConfirmation);
+        public ICommand RequestEditJobCommand => new RelayCommand(parameter => RequestEditJob(parameter as BackupJobViewModel));
+        public ICommand ExecuteJobsSequentiallyCommand { get; }
+        public ICommand CancelAllJobsCommand { get; }
 
         private void LoadInitialJobs()
         {
@@ -130,34 +135,53 @@ namespace EasySave.ViewModels
 
         private async Task ExecuteSelectedJobAsync()
         {
-            if (SelectedJob == null || SelectedJob.IsRunning) return;
-            await SelectedJob.ExecuteAsync();
+            var selectedJobs = _jobs.Where(j => j.IsSelected && !j.IsRunning).ToList();
+            if (!selectedJobs.Any()) return;
+
+            // Créez une liste de tâches pour tous les jobs sélectionnés
+            var tasks = new List<Task>();
+
+            foreach (var job in selectedJobs)
+            {
+                tasks.Add(Task.Run(async () =>
+                {
+                    try
+                    {
+                        await job.ExecuteAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        _loggerService.LogError($"Error executing job {job.Name}: {ex.Message}");
+                    }
+                }));
+            }
+
+            await Task.WhenAll(tasks);
         }
 
         private async Task ExecuteAllJobsAsync()
         {
             var tasks = _jobs.Where(j => !j.IsRunning)
-                           .Select(job => Task.Run(() => job.ExecuteAsync()))
-                           .ToList();
+                                 .Select(job => Task.Run(() => job.ExecuteAsync()))
+                                 .ToList();
             await Task.WhenAll(tasks);
         }
 
-        private void DeleteSelectedJobsWithConfirmation(object _)
+        private void DeleteSelectedJobsWithConfirmation(object parameter)
         {
-            var jobsToDelete = _jobs.Where(j => j.IsSelected).ToList();
-            if (!jobsToDelete.Any()) return;
+            var selectedJobs = Jobs.Where(j => j.IsSelected).ToList();
+            if (!selectedJobs.Any()) return;
 
-            var message = $"Are you sure you want to delete {jobsToDelete.Count} selected job(s)?";
-            var result = MessageBox.Show(message, "Confirm Deletion",
-                                      MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            var message = $"Voulez-vous vraiment supprimer {selectedJobs.Count} job(s) sélectionné(s) ?";
+            var result = MessageBox.Show(message, "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
             if (result == MessageBoxResult.Yes)
             {
-                foreach (var job in jobsToDelete)
+                foreach (var job in selectedJobs.ToList()) // ToList() pour éviter la modification pendant l'itération
                 {
-                    _loggerService.Log($"Deleted backup job: {job.Name} (ID: {job.Id})");
+                    _loggerService.Log($"Job supprimé : {job.Name} (ID: {job.Id})");
                     _stateService.UpdateState(job.Name, "Deleted", 0);
-                    _jobs.Remove(job);
+                    Jobs.Remove(job);
                 }
                 SaveJobs();
             }
@@ -165,6 +189,9 @@ namespace EasySave.ViewModels
 
         public void RequestEditJob(BackupJobViewModel job)
         {
+            if (job == null) return;
+
+            // Crée une copie du job à éditer
             JobToEdit = new BackupJobViewModel(
                 new BackupJob
                 {
@@ -178,6 +205,7 @@ namespace EasySave.ViewModels
                 _fileSystemService,
                 _loggerService,
                 _stateService);
+
             ShowEditDialog = true;
         }
 
@@ -203,6 +231,32 @@ namespace EasySave.ViewModels
         private void CancelEdit()
         {
             ShowEditDialog = false;
+        }
+
+        public async Task ExecuteJobsSequentially()
+        {
+            var selectedJobs = Jobs.Where(j => j.IsSelected && !j.IsRunning).ToList();
+            if (!selectedJobs.Any()) return;
+
+            _cts = new System.Threading.CancellationTokenSource();
+
+            foreach (var job in selectedJobs)
+            {
+                if (_cts.Token.IsCancellationRequested)
+                    break;
+
+                await job.ExecuteAsync();
+            }
+        }
+
+        private void CancelAllRunningJobs()
+        {
+            _cts?.Cancel();
+            foreach (var job in Jobs.Where(j => j.IsRunning))
+            {
+                job.StopJob();
+            }
+            _cts = new System.Threading.CancellationTokenSource(); // Reset the cancellation token
         }
     }
 }

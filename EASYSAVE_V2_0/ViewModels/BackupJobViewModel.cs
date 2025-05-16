@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,12 +20,12 @@ namespace EasySave.ViewModels
         private bool _isRunning;
         private double _progress;
         private bool _isPaused;
-        private CancellationTokenSource _cts;
+        private CancellationTokenSource _cts = new CancellationTokenSource();
 
         public BackupJobViewModel(BackupJob backupJob,
-                        FileSystemService fileSystemService,
-                        LoggerService loggerService,
-                        StateService stateService)
+                                        FileSystemService fileSystemService,
+                                        LoggerService loggerService,
+                                        StateService stateService)
         {
             _backupJob = backupJob ?? throw new ArgumentNullException(nameof(backupJob));
             _fileSystemService = fileSystemService ?? throw new ArgumentNullException(nameof(fileSystemService));
@@ -37,8 +38,8 @@ namespace EasySave.ViewModels
         }
 
         public int Id => _backupJob.Id;
-        
-        public string Name 
+
+        public string Name
         {
             get => _backupJob.Name;
             set
@@ -50,8 +51,8 @@ namespace EasySave.ViewModels
                 }
             }
         }
-        
-        public string SourcePath 
+
+        public string SourcePath
         {
             get => _backupJob.SourcePath;
             set
@@ -63,8 +64,8 @@ namespace EasySave.ViewModels
                 }
             }
         }
-        
-        public string TargetPath 
+
+        public string TargetPath
         {
             get => _backupJob.TargetPath;
             set
@@ -76,8 +77,8 @@ namespace EasySave.ViewModels
                 }
             }
         }
-        
-        public string Type 
+
+        public string Type
         {
             get => _backupJob.Type;
             set
@@ -133,18 +134,22 @@ namespace EasySave.ViewModels
             _loggerService.Log($"Backup job {Name} {(IsPaused ? "paused" : "resumed")}");
         }
 
-        private void StopJob()
+        public void StopJob()
         {
             _cts?.Cancel();
             IsRunning = false;
             IsPaused = false;
-            _loggerService.Log($"Backup job {Name} stopped");
+            _loggerService.Log($"Arrêt demandé pour le job {Name}");
             _stateService.UpdateState(Name, "Stopped", Progress);
         }
 
         public async Task ExecuteAsync()
         {
-            if (IsRunning) return;
+            if (IsRunning)
+            {
+                _loggerService.Log($"Le job {Name} est déjà en cours d'exécution");
+                return;
+            }
 
             IsRunning = true;
             IsPaused = false;
@@ -156,17 +161,12 @@ namespace EasySave.ViewModels
                 _loggerService.Log($"Starting backup job {Id} - {Name}");
                 _stateService.UpdateState(Name, "Active", 0, SourcePath, TargetPath);
 
-                await Task.Run(async () =>
+                await Task.Run(() =>
                 {
-                    if (!Directory.Exists(SourcePath))
-                        throw new DirectoryNotFoundException($"Source directory not found: {SourcePath}");
-
-                    Directory.CreateDirectory(TargetPath);
-
                     if (Type == "Complete")
-                        await ExecuteCompleteBackupAsync();
+                        ExecuteCompleteBackup();
                     else
-                        await ExecuteDifferentialBackupAsync();
+                        ExecuteDifferentialBackup();
                 }, _cts.Token);
 
                 _stateService.UpdateState(Name, "Completed", 100);
@@ -174,12 +174,12 @@ namespace EasySave.ViewModels
             }
             catch (OperationCanceledException)
             {
-                _loggerService.Log($"Backup job {Name} was cancelled");
+                _loggerService.Log($"Job {Name} annulé");
                 _stateService.UpdateState(Name, "Cancelled", Progress);
             }
             catch (Exception ex)
             {
-                _loggerService.LogError($"Error in backup job {Name}: {ex.Message}");
+                _loggerService.LogError($"Erreur dans le job {Name}: {ex.Message}");
                 _stateService.UpdateState(Name, "Failed", Progress);
             }
             finally
@@ -190,7 +190,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        private async Task ExecuteCompleteBackupAsync()
+        private void ExecuteCompleteBackup()
         {
             var allFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories).ToList();
             long totalSize = allFiles.Sum(f => new FileInfo(f).Length);
@@ -201,26 +201,26 @@ namespace EasySave.ViewModels
             for (int i = 0; i < allFiles.Count; i++)
             {
                 _cts.Token.ThrowIfCancellationRequested();
-                
+
                 while (IsPaused && !_cts.IsCancellationRequested)
                 {
-                    await Task.Delay(500, _cts.Token);
+                    Thread.Sleep(500);
                 }
 
                 string sourceFile = allFiles[i];
                 string relativePath = sourceFile.Substring(SourcePath.Length).TrimStart(Path.DirectorySeparatorChar);
                 string targetFile = Path.Combine(TargetPath, relativePath);
 
-                await CopyFileWithProgressAsync(sourceFile, targetFile, i, totalFiles, totalSize);
+                CopyFileWithProgress(sourceFile, targetFile, i, totalFiles, totalSize);
             }
         }
 
-        private async Task ExecuteDifferentialBackupAsync()
+        private void ExecuteDifferentialBackup()
         {
             DateTime lastBackupDate = GetLastBackupDate();
             var modifiedFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories)
-                                      .Where(f => File.GetLastWriteTime(f) > lastBackupDate)
-                                      .ToList();
+                                         .Where(f => File.GetLastWriteTime(f) > lastBackupDate)
+                                         .ToList();
 
             long totalSize = modifiedFiles.Sum(f => new FileInfo(f).Length);
             int totalFiles = modifiedFiles.Count;
@@ -230,17 +230,17 @@ namespace EasySave.ViewModels
             for (int i = 0; i < modifiedFiles.Count; i++)
             {
                 _cts.Token.ThrowIfCancellationRequested();
-                
+
                 while (IsPaused && !_cts.IsCancellationRequested)
                 {
-                    await Task.Delay(500, _cts.Token);
+                    Thread.Sleep(500);
                 }
 
                 string sourceFile = modifiedFiles[i];
                 string relativePath = sourceFile.Substring(SourcePath.Length).TrimStart(Path.DirectorySeparatorChar);
                 string targetFile = Path.Combine(TargetPath, relativePath);
 
-                await CopyFileWithProgressAsync(sourceFile, targetFile, i, totalFiles, totalSize);
+                CopyFileWithProgress(sourceFile, targetFile, i, totalFiles, totalSize);
             }
         }
 
@@ -251,7 +251,7 @@ namespace EasySave.ViewModels
                 : DateTime.MinValue;
         }
 
-        private async Task CopyFileWithProgressAsync(string sourceFile, string targetFile, int currentIndex, int totalFiles, long totalSize)
+        private void CopyFileWithProgress(string sourceFile, string targetFile, int currentIndex, int totalFiles, long totalSize)
         {
             try
             {
@@ -262,20 +262,23 @@ namespace EasySave.ViewModels
                 }
 
                 var fileInfo = new FileInfo(sourceFile);
-                using (var sourceStream = File.OpenRead(sourceFile))
-                using (var targetStream = File.Create(targetFile))
+
+                // Utilisation de FileStream avec FileShare.Read pour permettre l'accès simultané
+                using (var sourceStream = new FileStream(sourceFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (var targetStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
                     var buffer = new byte[81920];
                     int bytesRead;
                     long totalBytesRead = 0;
 
-                    while ((bytesRead = await sourceStream.ReadAsync(buffer, 0, buffer.Length, _cts.Token)) > 0)
+                    while ((bytesRead = sourceStream.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        await targetStream.WriteAsync(buffer, 0, bytesRead, _cts.Token);
+                        targetStream.Write(buffer, 0, bytesRead);
                         totalBytesRead += bytesRead;
 
+                        // Mise à jour thread-safe de la progression
                         double progress = (currentIndex + (totalBytesRead / (double)fileInfo.Length)) * 100.0 / totalFiles;
-                        Progress = progress;
+                        Application.Current.Dispatcher.Invoke(() => Progress = progress);
                     }
                 }
 
