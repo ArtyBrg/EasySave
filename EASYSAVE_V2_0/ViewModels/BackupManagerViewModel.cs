@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using EasySave.Models;
 using EasySave.Services;
+using System.Windows.Forms; // Add this using directive
 
 namespace EasySave.ViewModels
 {
@@ -43,8 +44,13 @@ namespace EasySave.ViewModels
             ExecuteAllJobsCommand = new RelayCommand(async _ => await ExecuteAllJobsAsync(), _ => _jobs.Count > 0 && !_jobs.Any(j => j.IsRunning));
             ConfirmEditCommand = new RelayCommand(_ => ConfirmEdit());
             CancelEditCommand = new RelayCommand(_ => CancelEdit());
+            DeleteSelectedJobsCommand = new RelayCommand(DeleteSelectedJobsWithConfirmation);
+            RequestEditJobCommand = new RelayCommand(parameter => RequestEditJob(parameter as BackupJobViewModel));
             ExecuteJobsSequentiallyCommand = new RelayCommand(async _ => await ExecuteJobsSequentially(), _ => _jobs.Any(j => j.IsSelected && !j.IsRunning));
             CancelAllJobsCommand = new RelayCommand(_ => CancelAllRunningJobs(), _ => _jobs.Any(j => j.IsRunning));
+
+            BrowseSourceCommand = new RelayCommand(parameter => BrowsePath(parameter as BackupJobViewModel, true));
+            BrowseTargetCommand = new RelayCommand(parameter => BrowsePath(parameter as BackupJobViewModel, false));
         }
 
         public ObservableCollection<BackupJobViewModel> Jobs => _jobs;
@@ -71,10 +77,12 @@ namespace EasySave.ViewModels
         public ICommand ExecuteAllJobsCommand { get; }
         public ICommand ConfirmEditCommand { get; }
         public ICommand CancelEditCommand { get; }
-        public ICommand DeleteSelectedJobsCommand => new RelayCommand(DeleteSelectedJobsWithConfirmation);
-        public ICommand RequestEditJobCommand => new RelayCommand(parameter => RequestEditJob(parameter as BackupJobViewModel));
+        public ICommand DeleteSelectedJobsCommand { get; }
+        public ICommand RequestEditJobCommand { get; }
         public ICommand ExecuteJobsSequentiallyCommand { get; }
         public ICommand CancelAllJobsCommand { get; }
+        public ICommand BrowseSourceCommand { get; }
+        public ICommand BrowseTargetCommand { get; }
 
         private void LoadInitialJobs()
         {
@@ -165,7 +173,8 @@ namespace EasySave.ViewModels
             if (!selectedJobs.Any()) return;
 
             var message = $"Voulez-vous vraiment supprimer {selectedJobs.Count} job(s) sélectionné(s) ?";
-            var result = MessageBox.Show(message, "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            // Update the MessageBox usage to explicitly specify the namespace to resolve ambiguity.
+            var result = System.Windows.MessageBox.Show(message, "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
             if (result == MessageBoxResult.Yes)
             {
@@ -249,6 +258,20 @@ namespace EasySave.ViewModels
                 job.StopJob();
             }
             _cts = new System.Threading.CancellationTokenSource(); // Reset the cancellation token
+        }
+
+        private void BrowsePath(BackupJobViewModel job, bool isSource)
+        {
+            if (job == null) return;
+
+            using var dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                if (isSource)
+                    job.SourcePath = dialog.SelectedPath;
+                else
+                    job.TargetPath = dialog.SelectedPath;
+            }
         }
     }
 }
