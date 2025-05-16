@@ -106,6 +106,15 @@ namespace EasySave_V1_1.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Invalid format, select a good one.
+        /// </summary>
+        internal static string Error_Log {
+            get {
+                return ResourceManager.GetString("Error Log", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Enter job IDs to execute (1 ;3 / 1-3):.
         /// </summary>
         internal static string Execute_backup_enter_job_id {
@@ -286,6 +295,15 @@ namespace EasySave_V1_1.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à 6. Select Logs extension:.
+        /// </summary>
+        internal static string Main_menu_select_log_settings {
+            get {
+                return ResourceManager.GetString("Main menu select log settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Select an option: .
         /// </summary>
         internal static string Main_menu_select_option {
@@ -309,6 +327,15 @@ namespace EasySave_V1_1.Resources {
         internal static string Select_language {
             get {
                 return ResourceManager.GetString("Select language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Enter log format (Json / Xml):.
+        /// </summary>
+        internal static string Select_Log {
+            get {
+                return ResourceManager.GetString("Select Log", resourceCulture);
             }
         }
         
