@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using EasySave.Models;
 using EasySave.Services;
@@ -39,12 +40,9 @@ namespace EasySave.ViewModels
             CreateJobCommand = new RelayCommand(CreateJob, CanCreateJob);
             ExecuteSelectedJobCommand = new RelayCommand(async _ => await ExecuteSelectedJobAsync(), _ => SelectedJob != null && !SelectedJob.IsRunning);
             ExecuteAllJobsCommand = new RelayCommand(async _ => await ExecuteAllJobsAsync(), _ => _jobs.Count > 0 && !_jobs.Any(j => j.IsRunning));
-            DeleteSelectedJobsCommand = new RelayCommand(_ => DeleteSelectedJobs(), _ => _jobs.Any(j => j.IsSelected));
-            EditSelectedJobCommand = new RelayCommand(_ => RequestEditJob(), _ => SelectedJob != null && !SelectedJob.IsRunning);
+            DeleteSelectedJobsCommand = new RelayCommand(DeleteSelectedJobsWithConfirmation, _ => _jobs.Any(j => j.IsSelected));
             ConfirmEditCommand = new RelayCommand(_ => ConfirmEdit());
             CancelEditCommand = new RelayCommand(_ => CancelEdit());
-            BrowseSourceCommand = new RelayCommand(_ => BrowseSource());
-            BrowseTargetCommand = new RelayCommand(_ => BrowseTarget());
         }
 
         public ObservableCollection<BackupJobViewModel> Jobs => _jobs;
@@ -66,17 +64,12 @@ namespace EasySave.ViewModels
             set => SetProperty(ref _jobToEdit, value);
         }
 
-        public int SelectedJobsCount => _jobs.Count(j => j.IsSelected);
-
         public ICommand CreateJobCommand { get; }
         public ICommand ExecuteSelectedJobCommand { get; }
         public ICommand ExecuteAllJobsCommand { get; }
         public ICommand DeleteSelectedJobsCommand { get; }
-        public ICommand EditSelectedJobCommand { get; }
         public ICommand ConfirmEditCommand { get; }
         public ICommand CancelEditCommand { get; }
-        public ICommand BrowseSourceCommand { get; }
-        public ICommand BrowseTargetCommand { get; }
 
         private void LoadInitialJobs()
         {
@@ -96,11 +89,6 @@ namespace EasySave.ViewModels
         public bool JobNameExists(string name)
         {
             return _jobs.Any(j => j.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-        }
-
-        public bool CanCreateJob(object _)
-        {
-            return _jobs.Count < 5;
         }
 
         public void CreateJob(object parameters)
@@ -135,6 +123,11 @@ namespace EasySave.ViewModels
             SaveJobs();
         }
 
+        public bool CanCreateJob(object _)
+        {
+            return _jobs.Count < 5;
+        }
+
         private async Task ExecuteSelectedJobAsync()
         {
             if (SelectedJob == null || SelectedJob.IsRunning) return;
@@ -143,66 +136,73 @@ namespace EasySave.ViewModels
 
         private async Task ExecuteAllJobsAsync()
         {
-            foreach (var job in _jobs.Where(j => !j.IsRunning))
-            {
-                await job.ExecuteAsync();
-            }
+            var tasks = _jobs.Where(j => !j.IsRunning)
+                           .Select(job => Task.Run(() => job.ExecuteAsync()))
+                           .ToList();
+            await Task.WhenAll(tasks);
         }
 
-        private void DeleteSelectedJobs()
+        private void DeleteSelectedJobsWithConfirmation(object _)
         {
             var jobsToDelete = _jobs.Where(j => j.IsSelected).ToList();
-            foreach (var job in jobsToDelete)
+            if (!jobsToDelete.Any()) return;
+
+            var message = $"Are you sure you want to delete {jobsToDelete.Count} selected job(s)?";
+            var result = MessageBox.Show(message, "Confirm Deletion",
+                                      MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if (result == MessageBoxResult.Yes)
             {
-                _loggerService.Log($"Deleted backup job: {job.Name} (ID: {job.Id})");
-                _stateService.UpdateState(job.Name, "Deleted", 0);
-                _jobs.Remove(job);
+                foreach (var job in jobsToDelete)
+                {
+                    _loggerService.Log($"Deleted backup job: {job.Name} (ID: {job.Id})");
+                    _stateService.UpdateState(job.Name, "Deleted", 0);
+                    _jobs.Remove(job);
+                }
+                SaveJobs();
             }
-            SaveJobs();
         }
 
-        private void RequestEditJob()
+        public void RequestEditJob(BackupJobViewModel job)
         {
-            if (SelectedJob == null) return;
-            JobToEdit = SelectedJob;
+            JobToEdit = new BackupJobViewModel(
+                new BackupJob
+                {
+                    Id = job.Id,
+                    Name = job.Name,
+                    SourcePath = job.SourcePath,
+                    TargetPath = job.TargetPath,
+                    Type = job.Type,
+                    IsSelected = job.IsSelected
+                },
+                _fileSystemService,
+                _loggerService,
+                _stateService);
             ShowEditDialog = true;
         }
 
         private void ConfirmEdit()
         {
             if (JobToEdit == null) return;
-            _loggerService.Log($"Edited backup job: {JobToEdit.Name} (ID: {JobToEdit.Id})");
-            _stateService.UpdateState(JobToEdit.Name, "Modified", JobToEdit.Progress);
+
+            var originalJob = _jobs.FirstOrDefault(j => j.Id == JobToEdit.Id);
+            if (originalJob != null)
+            {
+                originalJob.Name = JobToEdit.Name;
+                originalJob.SourcePath = JobToEdit.SourcePath;
+                originalJob.TargetPath = JobToEdit.TargetPath;
+                originalJob.Type = JobToEdit.Type;
+
+                _loggerService.Log($"Edited backup job: {originalJob.Name} (ID: {originalJob.Id})");
+                _stateService.UpdateState(originalJob.Name, "Modified", originalJob.Progress);
+                SaveJobs();
+            }
             ShowEditDialog = false;
-            SaveJobs();
         }
 
         private void CancelEdit()
         {
             ShowEditDialog = false;
-            JobToEdit = null;
-        }
-
-        private void BrowseSource()
-        {
-            if (JobToEdit == null) return;
-
-            var dialog = new FolderBrowserDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                JobToEdit.SourcePath = dialog.SelectedPath;
-            }
-        }
-
-        private void BrowseTarget()
-        {
-            if (JobToEdit == null) return;
-
-            var dialog = new FolderBrowserDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                JobToEdit.TargetPath = dialog.SelectedPath;
-            }
         }
     }
 }

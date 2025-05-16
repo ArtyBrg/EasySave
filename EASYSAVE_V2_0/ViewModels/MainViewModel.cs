@@ -135,34 +135,35 @@ namespace EasySave.ViewModels
         }
 
         private void CreateBackupJob(object _)
-{
-    ErrorMessage = string.Empty;
-
-    try
-    {
-        if (string.IsNullOrWhiteSpace(NewJobName) ||
-            string.IsNullOrWhiteSpace(NewJobSourcePath) ||
-            string.IsNullOrWhiteSpace(NewJobTargetPath))
         {
-            ErrorMessage = "All fields must be filled.";
-            return;
+            ErrorMessage = string.Empty;
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(NewJobName) ||
+                    string.IsNullOrWhiteSpace(NewJobSourcePath) ||
+                    string.IsNullOrWhiteSpace(NewJobTargetPath))
+                {
+                    ErrorMessage = "All fields must be filled.";
+                    return;
+                }
+
+                string[] jobParams = { NewJobName, NewJobSourcePath, NewJobTargetPath, NewJobType };
+                _backupManager.CreateJob(jobParams);
+
+                NewJobName = string.Empty;
+                NewJobSourcePath = string.Empty;
+                NewJobTargetPath = string.Empty;
+                NewJobType = "Complete";
+                SelectedViewName = "JobsList";
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = $"Error creating job: {ex.Message}";
+                _loggerService.LogError($"Exception: {ex}");
+            }
         }
 
-        string[] jobParams = { NewJobName, NewJobSourcePath, NewJobTargetPath, NewJobType };
-        _backupManager.CreateJob(jobParams); // Ne plus attendre de retour
-
-        NewJobName = string.Empty;
-        NewJobSourcePath = string.Empty;
-        NewJobTargetPath = string.Empty;
-        NewJobType = "Complete";
-        SelectedViewName = "JobsList";
-    }
-    catch (Exception ex)
-    {
-        ErrorMessage = $"Error creating job: {ex.Message}";
-        _loggerService.LogError($"Exception: {ex}");
-    }
-}
 
         private bool CanCreateJob(object _)
         {

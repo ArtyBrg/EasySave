@@ -8,31 +8,20 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Stretch">
-            <TextBlock Text="Backup Jobs" FontSize="24" FontWeight="Bold"/>
+        <TextBlock Grid.Row="0" Text="Backup Jobs" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="Execute Selected" Command="{Binding BackupManager.ExecuteSelectedJobCommand}" 
-                       Width="120" Height="30" Margin="10,0" 
-                       Background="#3498DB" Foreground="White"/>
-                <Button Content="Execute All" Command="{Binding BackupManager.ExecuteAllJobsCommand}" 
-                       Width="100" Height="30" Margin="0,0,10,0" 
-                       Background="#27AE60" Foreground="White"/>
-            </StackPanel>
-        </StackPanel>
-
-        <DataGrid Grid.Row="1" ItemsSource="{Binding BackupManager.Jobs}" 
+        <DataGrid Grid.Row="1" ItemsSource="{Binding BackupManager.Jobs}"
                  SelectedItem="{Binding BackupManager.SelectedJob}"
                  AutoGenerateColumns="False" IsReadOnly="True"
                  CanUserAddRows="False" CanUserDeleteRows="False"
-                 AlternatingRowBackground="#F5F5F5" 
+                 AlternatingRowBackground="#F5F5F5"
                  RowHeaderWidth="0" BorderThickness="1" BorderBrush="#DDDDDD"
-                 SelectionMode="Single">
+                 SelectionMode="Extended">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Width="30">
                     <DataGridTemplateColumn.CellTemplate>
@@ -67,10 +56,10 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="Actions" Width="150">
+                <DataGridTemplateColumn Header="Actions" Width="200">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Button Content="▶" Command="{Binding ExecuteCommand}" 
                                        ToolTip="Execute" Width="30" Height="24" Margin="2" 
                                        Background="#27AE60" Foreground="White"/>
@@ -82,6 +71,15 @@
                                 <Button Content="⏹" Command="{Binding StopCommand}" 
                                        ToolTip="Stop" Width="30" Height="24" Margin="2"
                                        Background="#C0392B" Foreground="White"/>
+                                       
+                                <Button Content="✏️" Command="{Binding DataContext.BackupManager.RequestEditJob, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
+                                       CommandParameter="{Binding}"
+                                       ToolTip="Edit" Width="30" Height="24" Margin="2"
+                                       Background="#3498DB" Foreground="White"/>
+                                       
+                                <Button Content="🗑️" Command="{Binding DataContext.BackupManager.DeleteSelectedJobsCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
+                                       ToolTip="Delete" Width="30" Height="24" Margin="2"
+                                       Background="#E74C3C" Foreground="White"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -89,21 +87,16 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Border Grid.Row="2" Background="#EEEEEE" Padding="10" Margin="0,10,0,0">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <Button Content="Delete Selected" Command="{Binding BackupManager.DeleteSelectedJobsCommand}" 
-                       Width="120" Height="30" Margin="0,0,10,0" 
-                       Background="#E74C3C" Foreground="White"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="Execute Selected" Command="{Binding BackupManager.ExecuteSelectedJobCommand}" 
+                   Width="120" Height="30" Margin="5,0" 
+                   Background="#3498DB" Foreground="White"/>
+            <Button Content="Execute All" Command="{Binding BackupManager.ExecuteAllJobsCommand}" 
+                   Width="100" Height="30" Margin="5,0" 
+                   Background="#27AE60" Foreground="White"/>
+        </StackPanel>
 
-                <Button Content="Edit Selected" Command="{Binding BackupManager.EditSelectedJobCommand}" 
-                       Width="100" Height="30" Margin="0,0,10,0" 
-                       Background="#3498DB" Foreground="White"/>
-
-                <TextBlock Text="{Binding BackupManager.SelectedJobsCount, StringFormat={}{0} job(s) selected}" 
-                          VerticalAlignment="Center" Margin="10,0,0,0"/>
-            </StackPanel>
-        </Border>
-
+        <!-- Edit Dialog -->
         <Border Grid.Row="0" Grid.RowSpan="3" Background="#80000000" 
                Visibility="{Binding BackupManager.ShowEditDialog, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Border Background="White" Width="500" Padding="20" CornerRadius="5">
@@ -122,20 +115,12 @@
                                 Margin="0,0,0,10" Padding="5"/>
 
                         <TextBlock Text="Source Path:" Margin="0,0,0,5"/>
-                        <DockPanel>
-                            <TextBox Text="{Binding BackupManager.JobToEdit.SourcePath, Mode=TwoWay}" 
-                                    Margin="0,0,10,10" Padding="5"/>
-                            <Button Content="Browse" Command="{Binding BackupManager.BrowseSourceCommand}" 
-                                    DockPanel.Dock="Right" Width="80" Margin="0,0,0,10"/>
-                        </DockPanel>
+                        <TextBox Text="{Binding BackupManager.JobToEdit.SourcePath, Mode=TwoWay}" 
+                                Margin="0,0,0,10" Padding="5"/>
 
                         <TextBlock Text="Target Path:" Margin="0,0,0,5"/>
-                        <DockPanel>
-                            <TextBox Text="{Binding BackupManager.JobToEdit.TargetPath, Mode=TwoWay}" 
-                                    Margin="0,0,10,10" Padding="5"/>
-                            <Button Content="Browse" Command="{Binding BackupManager.BrowseTargetCommand}" 
-                                    DockPanel.Dock="Right" Width="80" Margin="0,0,0,10"/>
-                        </DockPanel>
+                        <TextBox Text="{Binding BackupManager.JobToEdit.TargetPath, Mode=TwoWay}" 
+                                Margin="0,0,0,10" Padding="5"/>
 
                         <TextBlock Text="Backup Type:" Margin="0,0,0,5"/>
                         <StackPanel Orientation="Horizontal">

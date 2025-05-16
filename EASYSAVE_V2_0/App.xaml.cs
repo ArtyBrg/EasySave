@@ -14,6 +14,7 @@ namespace EasySave_WPF
             var stateService = new StateService(loggerService);
             var fileSystemService = new FileSystemService(loggerService);
             var persistenceService = new PersistenceService(loggerService);
+
             var backupManager = new BackupManagerViewModel(
                 fileSystemService,
                 loggerService,

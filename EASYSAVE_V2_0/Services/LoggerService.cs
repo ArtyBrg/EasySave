@@ -11,13 +11,33 @@ namespace EasySave.Services
     {
         private readonly string _logDirectory;
 
-        // Événement pour notification UI
         public event EventHandler<string> LogMessageAdded;
 
         public LoggerService(string logDirectory = "Logs")
         {
             _logDirectory = logDirectory;
             Directory.CreateDirectory(_logDirectory);
+            LoadExistingLogs();
+        }
+
+        private void LoadExistingLogs()
+        {
+            try
+            {
+                string logFilePath = Path.Combine(_logDirectory, $"{DateTime.Now:yyyy-MM-dd}.json");
+                if (File.Exists(logFilePath))
+                {
+                    string existingContent = File.ReadAllText(logFilePath);
+                    if (!string.IsNullOrWhiteSpace(existingContent))
+                    {
+                        LogMessageAdded?.Invoke(this, $"Loaded existing logs from {logFilePath}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogMessageAdded?.Invoke(this, $"[ERROR] Failed to load existing logs: {ex.Message}");
+            }
         }
 
         public void Log(string message)
@@ -65,7 +85,6 @@ namespace EasySave.Services
                 }
                 catch
                 {
-                    // fichier mal formé → réinitialisation
                     logEntries = new();
                 }
             }
