@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms; // Add this using directive
+using System.Windows.Input;
 using EasySave.Models;
 using EasySave.Services;
 
@@ -23,9 +25,9 @@ namespace EasySave.ViewModels
         private CancellationTokenSource _cts = new CancellationTokenSource();
 
         public BackupJobViewModel(BackupJob backupJob,
-                                        FileSystemService fileSystemService,
-                                        LoggerService loggerService,
-                                        StateService stateService)
+                                    FileSystemService fileSystemService,
+                                    LoggerService loggerService,
+                                    StateService stateService)
         {
             _backupJob = backupJob ?? throw new ArgumentNullException(nameof(backupJob));
             _fileSystemService = fileSystemService ?? throw new ArgumentNullException(nameof(fileSystemService));
@@ -33,8 +35,17 @@ namespace EasySave.ViewModels
             _stateService = stateService ?? throw new ArgumentNullException(nameof(stateService));
 
             ExecuteCommand = new RelayCommand(async _ => await ExecuteAsync(), _ => !IsRunning);
-            PauseCommand = new RelayCommand(_ => PauseJob(), _ => IsRunning && !IsPaused);
-            StopCommand = new RelayCommand(_ => StopJob(), _ => IsRunning);
+            PauseCommand = new RelayCommand(_ => {
+                IsPaused = !IsPaused;
+                _loggerService.Log($"Backup job {Name} {(IsPaused ? "paused" : "resumed")}");
+            }, _ => IsRunning);
+            StopCommand = new RelayCommand(_ => {
+                _cts?.Cancel();
+                IsRunning = false;
+                IsPaused = false;
+                _loggerService.Log($"Job {Name} stopped");
+                _stateService.UpdateState(Name, "Stopped", Progress);
+            }, _ => IsRunning);
         }
 
         public int Id => _backupJob.Id;
@@ -139,11 +150,11 @@ namespace EasySave.ViewModels
             _cts?.Cancel();
             IsRunning = false;
             IsPaused = false;
-            _loggerService.Log($"Arrêt demandé pour le job {Name}");
+            _loggerService.Log($"Job {Name} stopped");
             _stateService.UpdateState(Name, "Stopped", Progress);
         }
 
-        public async Task ExecuteAsync()
+        public async Task ExecuteAsync(CancellationToken cancellationToken = default)
         {
             if (IsRunning)
             {
@@ -154,7 +165,7 @@ namespace EasySave.ViewModels
             IsRunning = true;
             IsPaused = false;
             Progress = 0;
-            _cts = new CancellationTokenSource();
+            _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
             try
             {
@@ -164,9 +175,9 @@ namespace EasySave.ViewModels
                 await Task.Run(() =>
                 {
                     if (Type == "Complete")
-                        ExecuteCompleteBackup();
+                        ExecuteCompleteBackup(_cts.Token);
                     else
-                        ExecuteDifferentialBackup();
+                        ExecuteDifferentialBackup(_cts.Token);
                 }, _cts.Token);
 
                 _stateService.UpdateState(Name, "Completed", 100);
@@ -190,7 +201,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        private void ExecuteCompleteBackup()
+        private void ExecuteCompleteBackup(CancellationToken cancellationToken)
         {
             var allFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories).ToList();
             long totalSize = allFiles.Sum(f => new FileInfo(f).Length);
@@ -200,9 +211,9 @@ namespace EasySave.ViewModels
 
             for (int i = 0; i < allFiles.Count; i++)
             {
-                _cts.Token.ThrowIfCancellationRequested();
+                cancellationToken.ThrowIfCancellationRequested();
 
-                while (IsPaused && !_cts.IsCancellationRequested)
+                while (IsPaused && !cancellationToken.IsCancellationRequested)
                 {
                     Thread.Sleep(500);
                 }
@@ -211,7 +222,7 @@ namespace EasySave.ViewModels
                 string relativePath = sourceFile.Substring(SourcePath.Length).TrimStart(Path.DirectorySeparatorChar);
                 string targetFile = Path.Combine(TargetPath, relativePath);
 
-                CopyFileWithProgress(sourceFile, targetFile, i, totalFiles, totalSize);
+                CopyFileWithProgress(sourceFile, targetFile, i, totalFiles, totalSize, cancellationToken);
                 if (i < allFiles.Count - 1)
                 {
                     Thread.Sleep(1000); // Délai de 1000 millisecondes (1 seconde)
@@ -219,7 +230,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        private void ExecuteDifferentialBackup()
+        private void ExecuteDifferentialBackup(CancellationToken cancellationToken)
         {
             DateTime lastBackupDate = GetLastBackupDate();
             var modifiedFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories)
@@ -233,9 +244,9 @@ namespace EasySave.ViewModels
 
             for (int i = 0; i < modifiedFiles.Count; i++)
             {
-                _cts.Token.ThrowIfCancellationRequested();
+                cancellationToken.ThrowIfCancellationRequested();
 
-                while (IsPaused && !_cts.IsCancellationRequested)
+                while (IsPaused && !cancellationToken.IsCancellationRequested)
                 {
                     Thread.Sleep(500);
                 }
@@ -244,7 +255,11 @@ namespace EasySave.ViewModels
                 string relativePath = sourceFile.Substring(SourcePath.Length).TrimStart(Path.DirectorySeparatorChar);
                 string targetFile = Path.Combine(TargetPath, relativePath);
 
-                CopyFileWithProgress(sourceFile, targetFile, i, totalFiles, totalSize);
+                CopyFileWithProgress(sourceFile, targetFile, i, totalFiles, totalSize, cancellationToken);
+                if (i < modifiedFiles.Count - 1)
+                {
+                    Thread.Sleep(1000); // Délai de 1000 millisecondes (1 seconde)
+                }
             }
         }
 
@@ -255,7 +270,7 @@ namespace EasySave.ViewModels
                 : DateTime.MinValue;
         }
 
-        private void CopyFileWithProgress(string sourceFile, string targetFile, int currentIndex, int totalFiles, long totalSize)
+        private void CopyFileWithProgress(string sourceFile, string targetFile, int currentIndex, int totalFiles, long totalSize, CancellationToken cancellationToken)
         {
             try
             {
@@ -267,7 +282,6 @@ namespace EasySave.ViewModels
 
                 var fileInfo = new FileInfo(sourceFile);
 
-                // Utilisation de FileStream avec FileShare.Read pour permettre l'accès simultané
                 using (var sourceStream = new FileStream(sourceFile, FileMode.Open, FileAccess.Read, FileShare.Read))
                 using (var targetStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
@@ -277,12 +291,13 @@ namespace EasySave.ViewModels
 
                     while ((bytesRead = sourceStream.Read(buffer, 0, buffer.Length)) > 0)
                     {
+                        cancellationToken.ThrowIfCancellationRequested();
                         targetStream.Write(buffer, 0, bytesRead);
                         totalBytesRead += bytesRead;
 
-                        // Mise à jour thread-safe de la progression
                         double progress = (currentIndex + (totalBytesRead / (double)fileInfo.Length)) * 100.0 / totalFiles;
-                        Application.Current.Dispatcher.Invoke(() => Progress = progress);
+                        // Explicitly specify the namespace to resolve ambiguity
+                        System.Windows.Application.Current.Dispatcher.Invoke(() => Progress = progress);
                     }
                 }
 
@@ -294,6 +309,10 @@ namespace EasySave.ViewModels
                 );
 
                 _loggerService.LogFileTransfer(Name, sourceFile, targetFile, fileInfo.Length, 0);
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
             }
             catch (Exception ex)
             {

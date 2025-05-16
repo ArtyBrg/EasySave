@@ -138,25 +138,17 @@ namespace EasySave.ViewModels
             var selectedJobs = _jobs.Where(j => j.IsSelected && !j.IsRunning).ToList();
             if (!selectedJobs.Any()) return;
 
-            // Créez une liste de tâches pour tous les jobs sélectionnés
-            var tasks = new List<Task>();
-
             foreach (var job in selectedJobs)
             {
-                tasks.Add(Task.Run(async () =>
+                try
                 {
-                    try
-                    {
-                        await job.ExecuteAsync();
-                    }
-                    catch (Exception ex)
-                    {
-                        _loggerService.LogError($"Error executing job {job.Name}: {ex.Message}");
-                    }
-                }));
+                    await job.ExecuteAsync();
+                }
+                catch (Exception ex)
+                {
+                    _loggerService.LogError($"Error executing job {job.Name}: {ex.Message}");
+                }
             }
-
-            await Task.WhenAll(tasks);
         }
 
         private async Task ExecuteAllJobsAsync()
@@ -177,7 +169,7 @@ namespace EasySave.ViewModels
 
             if (result == MessageBoxResult.Yes)
             {
-                foreach (var job in selectedJobs.ToList()) // ToList() pour éviter la modification pendant l'itération
+                foreach (var job in selectedJobs.ToList())
                 {
                     _loggerService.Log($"Job supprimé : {job.Name} (ID: {job.Id})");
                     _stateService.UpdateState(job.Name, "Deleted", 0);
@@ -245,7 +237,7 @@ namespace EasySave.ViewModels
                 if (_cts.Token.IsCancellationRequested)
                     break;
 
-                await job.ExecuteAsync();
+                await job.ExecuteAsync(_cts.Token);
             }
         }
 

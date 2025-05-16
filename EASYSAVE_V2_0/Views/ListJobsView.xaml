@@ -26,7 +26,7 @@
                 <DataGridTemplateColumn Width="30">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                            <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -116,12 +116,30 @@
                                  Margin="0,0,0,10" Padding="5"/>
 
                         <TextBlock Text="Source Path:" Margin="0,0,0,5"/>
-                        <TextBox Text="{Binding BackupManager.JobToEdit.SourcePath, Mode=TwoWay}"
-                                 Margin="0,0,0,10" Padding="5"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding BackupManager.JobToEdit.SourcePath, Mode=TwoWay}"
+                                     Margin="0,0,5,10" Padding="5" Grid.Column="0"/>
+                            <Button Content="Browse..." Command="{Binding BackupManager.BrowseSourceCommand}"
+                                    CommandParameter="{Binding BackupManager.JobToEdit}"
+                                    Width="80" Margin="0,0,0,10" Grid.Column="1"/>
+                        </Grid>
 
                         <TextBlock Text="Target Path:" Margin="0,0,0,5"/>
-                        <TextBox Text="{Binding BackupManager.JobToEdit.TargetPath, Mode=TwoWay}"
-                                 Margin="0,0,0,10" Padding="5"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding BackupManager.JobToEdit.TargetPath, Mode=TwoWay}"
+                                     Margin="0,0,5,10" Padding="5" Grid.Column="0"/>
+                            <Button Content="Browse..." Command="{Binding BackupManager.BrowseTargetCommand}"
+                                    CommandParameter="{Binding BackupManager.JobToEdit}"
+                                    Width="80" Margin="0,0,0,10" Grid.Column="1"/>
+                        </Grid>
 
                         <TextBlock Text="Backup Type:" Margin="0,0,0,5"/>
                         <StackPanel Orientation="Horizontal">
