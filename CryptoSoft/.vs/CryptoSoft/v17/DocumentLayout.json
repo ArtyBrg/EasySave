@@ -1,0 +1,78 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\CryptoSoft\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{469BFE89-6C63-4155-B90A-6097F2FC70F0}|CryptoSoft.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\cryptosoft\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{469BFE89-6C63-4155-B90A-6097F2FC70F0}|CryptoSoft.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{469BFE89-6C63-4155-B90A-6097F2FC70F0}|CryptoSoft.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\cryptosoft\\filemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{469BFE89-6C63-4155-B90A-6097F2FC70F0}|CryptoSoft.csproj|solutionrelative:filemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{469BFE89-6C63-4155-B90A-6097F2FC70F0}|CryptoSoft.csproj|c:\\users\\chamd\\documents\\fise a3\\bloc_genielog\\projet\\actual\\easysave\\cryptosoft\\cryptosoft.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{469BFE89-6C63-4155-B90A-6097F2FC70F0}|CryptoSoft.csproj|solutionrelative:cryptosoft.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CryptoSoft",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\CryptoSoft\\CryptoSoft.csproj",
+              "RelativeDocumentMoniker": "CryptoSoft.csproj",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\CryptoSoft\\CryptoSoft.csproj",
+              "RelativeToolTip": "CryptoSoft.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-05-15T09:13:14.174Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\CryptoSoft\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\CryptoSoft\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T08:56:48.511Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FileManager.cs",
+              "DocumentMoniker": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\CryptoSoft\\FileManager.cs",
+              "RelativeDocumentMoniker": "FileManager.cs",
+              "ToolTip": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\CryptoSoft\\FileManager.cs",
+              "RelativeToolTip": "FileManager.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAkwAwAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T08:56:43.341Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

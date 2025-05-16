@@ -2207,16 +2207,6 @@
             "rid": "win"
           }
         }
-      },
-      "CryptoSoft/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v8.0",
-        "compile": {
-          "bin/placeholder/CryptoSoft.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/CryptoSoft.dll": {}
-        }
       }
     }
   },
@@ -4157,16 +4147,10 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
-    },
-    "CryptoSoft/1.0.0": {
-      "type": "project",
-      "path": "../../../EasySave/EASYSAVE_V2_0/CryptoSoft/CryptoSoft/CryptoSoft.csproj",
-      "msbuildProject": "../../../EasySave/EASYSAVE_V2_0/CryptoSoft/CryptoSoft/CryptoSoft.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0-windows7.0": [
-      "CryptoSoft >= 1.0.0",
       "Microsoft.Windows.Compatibility >= 10.0.0-preview.4.25258.110"
     ]
   },
@@ -4202,11 +4186,7 @@
       "frameworks": {
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
-          "projectReferences": {
-            "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\EasySave\\EASYSAVE_V2_0\\CryptoSoft\\CryptoSoft\\CryptoSoft.csproj": {
-              "projectPath": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\EasySave\\EASYSAVE_V2_0\\CryptoSoft\\CryptoSoft\\CryptoSoft.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

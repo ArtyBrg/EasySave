@@ -39,7 +39,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\EasySave\EASYSAVE_V2_0\CryptoSoft\CryptoSoft\CryptoSoft.csproj" />
+	  <Reference Include="CryptoSoft">
+	    <HintPath>..\CryptoSoft\bin\Debug\net8.0\CryptoSoft.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 </Project>

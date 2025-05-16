@@ -1,0 +1,12 @@
+C:\Users\chamd\Documents\FISE A3\BLOC_GENIELOG\PROJET\EasySave\EASYSAVE_V2_0\CryptoSoft\CryptoSoft\bin\Debug\net8.0\CryptoSoft.deps.json
+C:\Users\chamd\Documents\FISE A3\BLOC_GENIELOG\PROJET\EasySave\EASYSAVE_V2_0\CryptoSoft\CryptoSoft\bin\Debug\net8.0\CryptoSoft.dll
+C:\Users\chamd\Documents\FISE A3\BLOC_GENIELOG\PROJET\EasySave\EASYSAVE_V2_0\CryptoSoft\CryptoSoft\bin\Debug\net8.0\CryptoSoft.pdb
+C:\Users\chamd\Documents\FISE A3\BLOC_GENIELOG\PROJET\EasySave\EASYSAVE_V2_0\CryptoSoft\CryptoSoft\obj\Debug\net8.0\CryptoSoft.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chamd\Documents\FISE A3\BLOC_GENIELOG\PROJET\EasySave\EASYSAVE_V2_0\CryptoSoft\CryptoSoft\obj\Debug\net8.0\CryptoSoft.AssemblyInfoInputs.cache
+C:\Users\chamd\Documents\FISE A3\BLOC_GENIELOG\PROJET\EasySave\EASYSAVE_V2_0\CryptoSoft\CryptoSoft\obj\Debug\net8.0\CryptoSoft.AssemblyInfo.cs
+C:\Users\chamd\Documents\FISE A3\BLOC_GENIELOG\PROJET\EasySave\EASYSAVE_V2_0\CryptoSoft\CryptoSoft\obj\Debug\net8.0\CryptoSoft.csproj.CoreCompileInputs.cache
+C:\Users\chamd\Documents\FISE A3\BLOC_GENIELOG\PROJET\EasySave\EASYSAVE_V2_0\CryptoSoft\CryptoSoft\obj\Debug\net8.0\CryptoSoft.sourcelink.json
+C:\Users\chamd\Documents\FISE A3\BLOC_GENIELOG\PROJET\EasySave\EASYSAVE_V2_0\CryptoSoft\CryptoSoft\obj\Debug\net8.0\CryptoSoft.dll
+C:\Users\chamd\Documents\FISE A3\BLOC_GENIELOG\PROJET\EasySave\EASYSAVE_V2_0\CryptoSoft\CryptoSoft\obj\Debug\net8.0\refint\CryptoSoft.dll
+C:\Users\chamd\Documents\FISE A3\BLOC_GENIELOG\PROJET\EasySave\EASYSAVE_V2_0\CryptoSoft\CryptoSoft\obj\Debug\net8.0\CryptoSoft.pdb
+C:\Users\chamd\Documents\FISE A3\BLOC_GENIELOG\PROJET\EasySave\EASYSAVE_V2_0\CryptoSoft\CryptoSoft\obj\Debug\net8.0\ref\CryptoSoft.dll
