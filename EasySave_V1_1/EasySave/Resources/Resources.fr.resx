@@ -204,4 +204,13 @@
   <data name="List job input empty" xml:space="preserve">
     <value>L'entrée ne peut pas être vide. Essayez encore:</value>
   </data>
+  <data name="Main menu select log settings" xml:space="preserve">
+    <value>6. Sélectionner l'extension des Logs</value>
+  </data>
+  <data name="Select Log" xml:space="preserve">
+    <value>Entrer le format pour le log (Json /XML) :</value>
+  </data>
+  <data name="Error Log" xml:space="preserve">
+    <value>Format invalide, choisissez en un valide</value>
+  </data>
 </root>

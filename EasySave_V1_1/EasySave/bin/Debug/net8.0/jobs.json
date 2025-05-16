@@ -26,5 +26,12 @@
     "sourcePath": "C:\\Users\\Brulux\\Pictures\\Screenshots",
     "targetPath": "C:\\Users\\Brulux\\Pictures\\images2",
     "type": "Complete"
+  },
+  {
+    "id": 5,
+    "name": "Test Arthur",
+    "sourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams",
+    "targetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures",
+    "type": "Complete"
   }
 ]
