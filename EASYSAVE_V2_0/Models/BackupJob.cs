@@ -8,7 +8,7 @@ namespace EasySave.Models
         public required string Name { get; set; }
         public required string SourcePath { get; set; }
         public required string TargetPath { get; set; }
-        public required string Type { get; set; } // "Complete" ou "Differential"
+        public required string Type { get; set; }
         public bool IsEncryptionEnabled { get; set; } = false;
 
     }
