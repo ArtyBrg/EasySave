@@ -104,7 +104,7 @@ namespace EasySave.ViewModels
 
                     if (Type == "Complete")
                     {
-                        ExecuteCompleteBackup(files, totalSize);
+                        ExecuteCompleteBackup(files, totalSize, settings.ExtensionsToCrypt);
                     }
                     else if (Type == "Differential")
                     {
@@ -128,17 +128,21 @@ namespace EasySave.ViewModels
             }
         }
 
-        private void ExecuteCompleteBackup(List<string> files, long totalSize)
+        private void ExecuteCompleteBackup(List<string> files, long totalSize, List<string> extensionsToCrypt)
         {
-            IsEncryptionEnabled = true;
             _loggerService.Log($"Found {files.Count} files to backup");
-            _loggerService.Log($"Chiffrement: {(IsEncryptionEnabled ? "Activé" : "Désactivé")}");
+            //_loggerService.Log($"Chiffrement: {(IsEncryptionEnabled ? "Activé" : "Désactivé")}");
 
             for (int i = 0; i < files.Count; i++)
             {
                 string sourceFile = files[i];
+
                 string relativePath = sourceFile[SourcePath.Length..].TrimStart(Path.DirectorySeparatorChar);
                 string targetFile = Path.Combine(TargetPath, relativePath);
+
+                var extension = Path.GetExtension(sourceFile).ToLower();
+                IsEncryptionEnabled = extensionsToCrypt.Any(e => e.Equals(extension, StringComparison.OrdinalIgnoreCase));
+
 
                 if (IsEncryptionEnabled)
                 {
