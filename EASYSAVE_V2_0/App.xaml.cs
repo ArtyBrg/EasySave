@@ -26,6 +26,7 @@ namespace EasySave_WPF
             // Initialisation des ViewModels
             var backupManagerViewModel = new BackupManagerViewModel(fileSystemService, loggerService, stateService);
             var mainViewModel = new MainViewModel(backupManagerViewModel, languageService, loggerService);
+            var settingsViewModel = new SettingsViewModel(loggerService);
 
             // Chargement de la langue des paramètres
             languageService.LoadLanguageFromSettings();
