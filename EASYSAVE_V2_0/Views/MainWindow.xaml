@@ -40,14 +40,12 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!-- Menu et barre d'outils -->
         <Grid Grid.Row="0" Background="#2C3E50">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <!-- Menu de navigation -->
             <StackPanel Grid.Column="0" Orientation="Horizontal">
                 <Button Content="Home" Command="{Binding NavigateCommand}" 
                         CommandParameter="Home" Height="40" Width="80" Margin="5"
@@ -70,36 +68,32 @@
 
             </StackPanel>
 
-            <!-- Paramètres -->
             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0">
                 <Button Width="40" Height="40" Margin="0,0,5,0" Click="SettingsButton_Click" Name="SettingsButton"
-            Background="Transparent" BorderThickness="0" ToolTip="Settings">
+                        Background="Transparent" BorderThickness="0" ToolTip="Settings">
                     <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE713;" FontSize="16" Foreground="#1ABC9C"/>
                 </Button>
 
-                <!-- Popup paramètres -->
                 <Grid>
                     <Popup Name="SettingsPopup"
-               PlacementTarget="{Binding ElementName=SettingsButton}"
-               Placement="Bottom"
-               StaysOpen="False"
-               AllowsTransparency="True"
-               PopupAnimation="Fade">
+                           PlacementTarget="{Binding ElementName=SettingsButton}"
+                           Placement="Bottom"
+                           StaysOpen="False"
+                           AllowsTransparency="True"
+                           PopupAnimation="Fade">
                         <Border Style="{StaticResource PopupFadeInStyle}"
-                    Background="#2C3E50" BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10">
+                                Background="#2C3E50" BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10">
                             <StackPanel>
-                                <!-- Langue -->
                                 <TextBlock Text="Langue" FontWeight="Bold" Margin="0,0,0,5" Foreground="#1ABC9C"/>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
                                     <Button Content="EN" Command="{Binding SetLanguageCommand}" CommandParameter="EN" 
-                                Height="30" Width="40" Margin="5"
-                                Background="{Binding CurrentLanguage, Converter={StaticResource LanguageButtonColorConverter}, ConverterParameter=EN}"/>
+                                            Height="30" Width="40" Margin="5"
+                                            Background="{Binding CurrentLanguage, Converter={StaticResource LanguageButtonColorConverter}, ConverterParameter=EN}"/>
                                     <Button Content="FR" Command="{Binding SetLanguageCommand}" CommandParameter="FR" 
-                                Height="30" Width="40" Margin="5"
-                                Background="{Binding CurrentLanguage, Converter={StaticResource LanguageButtonColorConverter}, ConverterParameter=FR}"/>
+                                            Height="30" Width="40" Margin="5"
+                                            Background="{Binding CurrentLanguage, Converter={StaticResource LanguageButtonColorConverter}, ConverterParameter=FR}"/>
                                 </StackPanel>
 
-                                <!-- Format de log -->
                                 <TextBlock Text="Format de logs" FontWeight="Bold" Margin="0,0,0,5" Foreground="#1ABC9C"/>
                                 <ComboBox SelectedItem="{Binding SelectedLogFormat, Mode=TwoWay}" Width="90" Margin="0,0,0,10">
                                     <ComboBox.Items>
@@ -108,8 +102,7 @@
                                     </ComboBox.Items>
                                 </ComboBox>
 
-                                <!-- Apply -->
-                                <Button Content="Apply" Width="80" HorizontalAlignment="Right"/>
+                                <Button Content="Apply" Width="80" HorizontalAlignment="Right" Command="{Binding ApplySettingsCommand}"/>
                             </StackPanel>
                         </Border>
                     </Popup>
@@ -117,7 +110,6 @@
             </StackPanel>
         </Grid>
 
-        <!-- Contenu principal - changement de vue via ContentControl -->
         <ContentControl Grid.Row="1" x:Name="MainContent">
             <ContentControl.Style>
                 <Style TargetType="{x:Type ContentControl}">
@@ -170,7 +162,6 @@
             </ContentControl.Style>
         </ContentControl>
 
-        <!-- Barre d'état -->
         <StatusBar Grid.Row="2" Background="#34495E">
             <StatusBarItem>
                 <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" />

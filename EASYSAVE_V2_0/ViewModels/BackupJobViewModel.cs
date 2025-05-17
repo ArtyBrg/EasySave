@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -25,7 +26,7 @@ namespace EasySave.ViewModels
         private double _progress;
 
         private bool _isPaused;
-        private bool _stopRequested; 
+        private bool _stopRequested;
         private CancellationTokenSource _cts = new CancellationTokenSource();
 
         private bool _isEncryptionEnabled;
@@ -55,9 +56,9 @@ namespace EasySave.ViewModels
 
 
         public BackupJobViewModel(BackupJob backupJob,
-                                        FileSystemService fileSystemService,
-                                        LoggerService loggerService,
-                                        StateService stateService)
+                                    FileSystemService fileSystemService,
+                                    LoggerService loggerService,
+                                    StateService stateService)
         {
             _backupJob = backupJob ?? throw new ArgumentNullException(nameof(backupJob));
             _fileSystemService = fileSystemService ?? throw new ArgumentNullException(nameof(fileSystemService));
@@ -176,9 +177,9 @@ namespace EasySave.ViewModels
         {
             try
             {
-                StopRequested = true; 
+                StopRequested = true;
                 _loggerService.Log($"Job {Name} stop requested");
-                
+
             }
             catch (Exception ex)
             {
@@ -200,14 +201,14 @@ namespace EasySave.ViewModels
             IsRunning = true;
             IsPaused = false;
             Progress = 0;
-            StopRequested = false; 
+            StopRequested = false;
 
             try
             {
                 _loggerService.Log($"Starting backup job {Id} - {Name}");
                 _stateService.UpdateState(Name, "Active", 0, SourcePath, TargetPath);
 
-                
+
                 await Task.Run(() =>
                 {
                     try
@@ -217,9 +218,6 @@ namespace EasySave.ViewModels
                             ExecuteCompleteBackup(cancellationToken);
                         else
                             ExecuteDifferentialBackup(cancellationToken);
-
-                        ExecuteCompleteBackup(files, totalSize, settings.ExtensionsToCrypt);
-
                     }
                     catch (Exception ex)
                     {
@@ -257,191 +255,20 @@ namespace EasySave.ViewModels
             var allFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories).ToList();
             long totalSize = allFiles.Sum(f => new FileInfo(f).Length);
             int totalFiles = allFiles.Count;
+            var settings = SettingsService.Load();
 
             _stateService.UpdateState(Name, "InProgress", 0, filesRemaining: totalFiles, totalFiles: totalFiles, totalSize: totalSize);
 
-        private void ExecuteCompleteBackup(List<string> files, long totalSize, List<string> extensionsToCrypt)
-        {
-            _loggerService.Log($"Found {files.Count} files to backup");
-           
+            _loggerService.Log($"Found {allFiles.Count} files to backup");
 
-
-            for (int i = 0; i < allFiles.Count && !StopRequested; i++) 
+            for (int i = 0; i < allFiles.Count && !StopRequested; i++)
             {
 
-                
-                if (StopRequested)
-                {
-                    _loggerService.Log($"Job {Name} arrêté par l'utilisateur avant fichier {i + 1}/{totalFiles}");
-                    return; 
-                }
-
-                while (IsPaused && !StopRequested)
-                {
-                    Thread.Sleep(500);
-                }
-
-                if (StopRequested) return; 
-
-                string sourceFile = files[i];
-
-                string relativePath = sourceFile[SourcePath.Length..].TrimStart(Path.DirectorySeparatorChar);
-                string targetFile = Path.Combine(TargetPath, relativePath);
-
-                var extension = Path.GetExtension(sourceFile).ToLower();
-                IsEncryptionEnabled = extensionsToCrypt.Any(e => e.Equals(extension, StringComparison.OrdinalIgnoreCase));
-
-
-                if (IsEncryptionEnabled)
-                {
-                    targetFile += ".crypt";
-                }
-
-                double progressValue = (i * 100.0) / files.Count;
-                Progress = progressValue;
-
-                _stateService.UpdateState(
-                    Name,
-                    "InProgress",
-                    progressValue,
-                    sourceFile,
-                    targetFile,
-                    files.Count,
-                    totalSize,
-                    files.Count - i
-                );
-
-
-                string sourceFile = allFiles[i];
-                string relativePath = sourceFile.Substring(SourcePath.Length).TrimStart(Path.DirectorySeparatorChar);
-                string targetFile = Path.Combine(TargetPath, relativePath);
-
-                CopyFileWithProgress(sourceFile, targetFile, i, totalFiles, totalSize);
-
-                if (i < allFiles.Count - 1 && !StopRequested)
-                {
-                    Thread.Sleep(1000); 
-                }
-            }
-        }
-
-
-        
-        private void CopyFileWithProgress(string sourceFile, string targetFile, int currentIndex, int totalFiles, long totalSize)
-        {
-            var targetDir = Path.GetDirectoryName(targetFile);
-            if (!Directory.Exists(targetDir))
-            {
-                Directory.CreateDirectory(targetDir);
-            }
-
-
-        private void ExecuteDifferentialBackup()
-        {
-            DateTime lastBackup = GetLastCompleteBackupDate();
-            _loggerService.Log($"Last complete backup was at {lastBackup}");
-            _loggerService.Log($"Chiffrement: {(IsEncryptionEnabled ? "Activé" : "Désactivé")}");
-
-            var modifiedFiles = _fileSystemService.GetModifiedFilesSince(SourcePath, lastBackup).ToList();
-            long totalSize = modifiedFiles.Sum(f => new FileInfo(f).Length);
-
-
-            var fileInfo = new FileInfo(sourceFile);
-
-            using (var sourceStream = new FileStream(sourceFile, FileMode.Open, FileAccess.Read, FileShare.Read))
-            using (var targetStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write, FileShare.None))
-            {
-
-                var buffer = new byte[81920];
-                int bytesRead;
-                long totalBytesRead = 0;
-
-                while ((bytesRead = sourceStream.Read(buffer, 0, buffer.Length)) > 0 && !StopRequested)
-                {
-                    targetStream.Write(buffer, 0, bytesRead);
-                    totalBytesRead += bytesRead;
-
-                string sourceFile = modifiedFiles[i];
-                string relativePath = sourceFile[SourcePath.Length..].TrimStart(Path.DirectorySeparatorChar);
-                string targetFile = Path.Combine(TargetPath, relativePath);
-
-                if (IsEncryptionEnabled)
-                {
-                    targetFile += ".crypt";
-                }
-
-                double progressValue = (i * 100.0) / modifiedFiles.Count;
-                Progress = progressValue;
-
-                _stateService.UpdateState(
-                    Name,
-                    "InProgress",
-                    progressValue,
-                    sourceFile,
-                    targetFile,
-                    modifiedFiles.Count,
-                    totalSize,
-                    modifiedFiles.Count - i
-                );
-
-
-                    double progress = (currentIndex + (totalBytesRead / (double)fileInfo.Length)) * 100.0 / totalFiles;
-                   
-                    System.Windows.Application.Current.Dispatcher.InvokeAsync(() => Progress = progress);
-
-                    
-                    if (StopRequested)
-                    {
-                        _loggerService.Log($"Copie de {sourceFile} interrompue par l'utilisateur");
-                        return;
-                    }
-                }
-            }
-
-            if (!StopRequested)
-            {
-                _stateService.UpdateState(
-                    Name,
-                    "InProgress",
-                    (currentIndex + 1) * 100.0 / totalFiles,
-                    filesRemaining: totalFiles - (currentIndex + 1)
-                );
-
-                _loggerService.LogFileTransfer(Name, sourceFile, targetFile, fileInfo.Length, 0);
-            }
-        }
-
-
-        private void ExecuteDifferentialBackup(CancellationToken cancellationToken)
-
-
-        private double CopyAndLog(string sourceFile, string targetFile)
-
-        {
-            DateTime lastBackupDate = GetLastBackupDate();
-            var modifiedFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories)
-                                            .Where(f => File.GetLastWriteTime(f) > lastBackupDate)
-                                            .ToList();
-
-
-            long totalSize = modifiedFiles.Sum(f => new FileInfo(f).Length);
-            int totalFiles = modifiedFiles.Count;
-
-            _stateService.UpdateState(Name, "InProgress", 0, filesRemaining: totalFiles, totalFiles: totalFiles, totalSize: totalSize);
-
-            for (int i = 0; i < modifiedFiles.Count && !StopRequested; i++)
-
-              Stopwatch sw = Stopwatch.StartNew();
-
-            try
-
-            {
                 if (StopRequested)
                 {
                     _loggerService.Log($"Job {Name} arrêté par l'utilisateur avant fichier {i + 1}/{totalFiles}");
                     return;
                 }
-
 
                 while (IsPaused && !StopRequested)
                 {
@@ -449,52 +276,169 @@ namespace EasySave.ViewModels
                 }
 
                 if (StopRequested) return;
-                
-                _fileSystemService.CopyFile(sourceFile, targetFile);
-                sw.Stop(); ;
 
-                
-
-                if (IsEncryptionEnabled)
-                {
-                    // Crée une copie temporaire avec l'extension .crypt directement dans le dossier cible
-                    string targetFileCrypt = targetFile;
-                    Directory.CreateDirectory(Path.GetDirectoryName(targetFileCrypt)!);
-                    File.Copy(sourceFile, targetFileCrypt, overwrite: true);
-
-                    var fileManager = new CryptoSoft.FileManager(targetFileCrypt, encryptionKey);
-                    timeMs = fileManager.TransformFile(); // Chiffre le fichier sur place
-
-                    // Supprimer l'original non chiffré si présent
-                    if (File.Exists(targetFile) && !targetFile.EndsWith(".crypt"))
-                        File.Delete(targetFile);
-                }
-                else
-                {
-                    Directory.CreateDirectory(Path.GetDirectoryName(targetFile)!);
-                    File.Copy(sourceFile, targetFile, overwrite: true);
-                    sw.Stop();
-                    timeMs = sw.Elapsed.TotalMilliseconds;
-                }
-
-                fileSize = new FileInfo(targetFile).Length;
-
-
-                string sourceFile = modifiedFiles[i];
+                string sourceFile = allFiles[i];
                 string relativePath = sourceFile.Substring(SourcePath.Length).TrimStart(Path.DirectorySeparatorChar);
                 string targetFile = Path.Combine(TargetPath, relativePath);
 
-                CopyFileWithProgress(sourceFile, targetFile, i, totalFiles, totalSize);
+                var extension = Path.GetExtension(sourceFile).ToLower();
+                IsEncryptionEnabled = settings.ExtensionsToCrypt.Any(e => e.Equals(extension, StringComparison.OrdinalIgnoreCase));
 
-                if (i < modifiedFiles.Count - 1 && !StopRequested)
+
+                if (IsEncryptionEnabled)
                 {
-                    Thread.Sleep(1000);
+                    targetFile += ".crypt";
+                }
+
+                CopyFileWithProgress(sourceFile, targetFile, i, totalFiles, totalSize, settings.ExtensionsToCrypt);
+
+                double progressValue = (i + 1) * 100.0 / totalFiles;
+                Progress = progressValue;
+
+                _stateService.UpdateState(
+                    Name,
+                    "InProgress",
+                    progressValue,
+                    sourceFile,
+                    targetFile,
+                    totalFiles,
+                    totalSize,
+                    totalFiles - (i + 1)
+                );
+
+                if (i < allFiles.Count - 1 && !StopRequested)
+                {
+                    Thread.Sleep(100);
                 }
             }
         }
 
 
-        private DateTime GetLastBackupDate()
+        private void CopyFileWithProgress(string sourceFile, string targetFile, int currentIndex, int totalFiles, long totalSize, List<string> extensionsToCrypt)
+        {
+            var targetDir = Path.GetDirectoryName(targetFile);
+            if (!Directory.Exists(targetDir))
+            {
+                Directory.CreateDirectory(targetDir);
+            }
+
+            Stopwatch sw = Stopwatch.StartNew();
+            long fileSize = 0;
+            double timeMs = 0;
+
+            try
+            {
+                var fileInfo = new FileInfo(sourceFile);
+                fileSize = fileInfo.Length;
+
+                using (var sourceStream = new FileStream(sourceFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (var targetStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    var buffer = new byte[81920];
+                    int bytesRead;
+                    long totalBytesRead = 0;
+
+                    while ((bytesRead = sourceStream.Read(buffer, 0, buffer.Length)) > 0 && !StopRequested)
+                    {
+                        targetStream.Write(buffer, 0, bytesRead);
+                        totalBytesRead += bytesRead;
+
+                        double progress = (double)(currentIndex * totalSize + totalBytesRead) / (totalFiles * totalSize) * 100;
+                        System.Windows.Application.Current.Dispatcher.InvokeAsync(() => Progress = progress);
+
+                        if (StopRequested)
+                        {
+                            _loggerService.Log($"Copie de {sourceFile} interrompue par l'utilisateur");
+                            return;
+                        }
+                    }
+                }
+
+                sw.Stop();
+                timeMs = sw.Elapsed.TotalMilliseconds;
+
+                if (IsEncryptionEnabled)
+                {
+                    var fileManager = new CryptoSoft.FileManager(targetFile, encryptionKey);
+                    fileManager.TransformFile();
+                }
+
+                _loggerService.LogFileTransfer(Name, sourceFile, targetFile, fileSize, timeMs);
+            }
+            catch (Exception ex)
+            {
+                _loggerService.LogError($"Erreur lors de la copie de {sourceFile} vers {targetFile}: {ex.Message}");
+            }
+        }
+
+
+        private void ExecuteDifferentialBackup(CancellationToken cancellationToken)
+        {
+            DateTime lastBackup = GetLastCompleteBackupDate();
+            _loggerService.Log($"Last complete backup was at {lastBackup}");
+            var settings = SettingsService.Load();
+            _loggerService.Log($"Chiffrement: {(IsEncryptionEnabled ? "Activé" : "Désactivé")}");
+
+            var modifiedFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories)
+                                         .Where(f => File.GetLastWriteTime(f) > lastBackup)
+                                         .ToList();
+            long totalSize = modifiedFiles.Sum(f => new FileInfo(f).Length);
+            int totalFiles = modifiedFiles.Count;
+
+            _stateService.UpdateState(Name, "InProgress", 0, filesRemaining: totalFiles, totalFiles: totalFiles, totalSize: totalSize);
+
+            _loggerService.Log($"Found {modifiedFiles.Count} modified files since last backup");
+
+            for (int i = 0; i < modifiedFiles.Count && !StopRequested; i++)
+            {
+                if (StopRequested)
+                {
+                    _loggerService.Log($"Job {Name} arrêté par l'utilisateur avant fichier {i + 1}/{totalFiles}");
+                    return;
+                }
+
+                while (IsPaused && !StopRequested)
+                {
+                    Thread.Sleep(500);
+                }
+
+                if (StopRequested) return;
+
+                string sourceFile = modifiedFiles[i];
+                string relativePath = sourceFile.Substring(SourcePath.Length).TrimStart(Path.DirectorySeparatorChar);
+                string targetFile = Path.Combine(TargetPath, relativePath);
+
+                var extension = Path.GetExtension(sourceFile).ToLower();
+                IsEncryptionEnabled = settings.ExtensionsToCrypt.Any(e => e.Equals(extension, StringComparison.OrdinalIgnoreCase));
+
+                string finalTargetFile = targetFile;
+                if (IsEncryptionEnabled)
+                {
+                    finalTargetFile += ".crypt";
+                }
+
+                CopyFileWithProgress(sourceFile, finalTargetFile, i, totalFiles, totalSize, settings.ExtensionsToCrypt);
+
+                double progressValue = (i + 1) * 100.0 / totalFiles;
+                Progress = progressValue;
+
+                _stateService.UpdateState(
+                    Name,
+                    "InProgress",
+                    progressValue,
+                    sourceFile,
+                    finalTargetFile,
+                    totalFiles,
+                    totalSize,
+                    totalFiles - (i + 1)
+                );
+
+                if (i < modifiedFiles.Count - 1 && !StopRequested)
+                {
+                    Thread.Sleep(100);
+                }
+            }
+        }
 
 
         public void DecryptFile(string encryptedFilePath, string? outputFilePath = null)
@@ -521,9 +465,7 @@ namespace EasySave.ViewModels
         }
 
 
-
         private DateTime GetLastCompleteBackupDate()
-
         {
             return Directory.Exists(TargetPath)
                 ? Directory.GetLastWriteTime(TargetPath)

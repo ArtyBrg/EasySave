@@ -11,7 +11,6 @@ using EasySave.Services;
 using System.Windows.Forms;
 using System.Text.Json;
 
-
 namespace EasySave.ViewModels
 {
     public class BackupManagerViewModel : ViewModelBase
@@ -27,6 +26,7 @@ namespace EasySave.ViewModels
         private bool _showEditDialog;
         private BackupJobViewModel _jobToEdit;
         private System.Threading.CancellationTokenSource _cts = new System.Threading.CancellationTokenSource();
+        private bool _isExecutingJobs = false;
 
         public BackupManagerViewModel(
             FileSystemService fileSystemService,
@@ -40,30 +40,19 @@ namespace EasySave.ViewModels
             _persistenceService = persistenceService;
 
             LoadInitialJobs();
+            LoadJobsFromFile();
 
-            CreateJobCommand = new RelayCommand(param => CreateJob(param as string[] ?? Array.Empty<string>()));
-
-
-            CreateJobCommand = new RelayCommand(CreateJob, CanCreateJob);
-            ExecuteSelectedJobCommand = new RelayCommand(async _ => await ExecuteSelectedJobAsync(), _ => _jobs.Any(j => j.IsSelected && !j.IsRunning));
-            ExecuteAllJobsCommand = new RelayCommand(async _ => await ExecuteAllJobsAsync(), _ => _jobs.Count > 0 && !_jobs.Any(j => j.IsRunning));
+            CreateJobCommand = new RelayCommand(param => CreateJob(param as string[] ?? Array.Empty<string>()), CanCreateJob);
+            ExecuteSelectedJobCommand = new RelayCommand(async _ => await ExecuteSelectedJobAsync(), _ => _jobs.Any(j => j.IsSelected && !j.IsRunning && !_isExecutingJobs));
+            ExecuteAllJobsCommand = new RelayCommand(async _ => await ExecuteAllJobsAsync(), _ => _jobs.Count > 0 && !_isExecutingJobs && !_jobs.Any(j => j.IsRunning));
             ConfirmEditCommand = new RelayCommand(_ => ConfirmEdit());
             CancelEditCommand = new RelayCommand(_ => CancelEdit());
             DeleteSelectedJobsCommand = new RelayCommand(DeleteSelectedJobsWithConfirmation);
             RequestEditJobCommand = new RelayCommand(parameter => RequestEditJob(parameter as BackupJobViewModel));
-            ExecuteJobsSequentiallyCommand = new RelayCommand(async _ => await ExecuteJobsSequentially(), _ => _jobs.Any(j => j.IsSelected && !j.IsRunning));
+            ExecuteJobsSequentiallyCommand = new RelayCommand(async _ => await ExecuteJobsSequentially(), _ => _jobs.Any(j => j.IsSelected && !j.IsRunning && !_isExecutingJobs));
             CancelAllJobsCommand = new RelayCommand(_ => CancelAllRunningJobs(), _ => _jobs.Any(j => j.IsRunning));
-
-
             BrowseSourceCommand = new RelayCommand(parameter => BrowsePath(parameter as BackupJobViewModel, true));
             BrowseTargetCommand = new RelayCommand(parameter => BrowsePath(parameter as BackupJobViewModel, false));
-
-            ExecuteAllJobsCommand = new RelayCommand(
-                async param => await ExecuteAllJobsAsync(),
-                param => _jobs.Count > 0 && !IsExecutingJobs && !_jobs.Any(j => j.IsRunning));
-
-            LoadJobsFromFile();
-
         }
 
         public ObservableCollection<BackupJobViewModel> Jobs => _jobs;
@@ -96,6 +85,18 @@ namespace EasySave.ViewModels
         public ICommand CancelAllJobsCommand { get; }
         public ICommand BrowseSourceCommand { get; }
         public ICommand BrowseTargetCommand { get; }
+
+        private bool IsExecutingJobs
+        {
+            get => _isExecutingJobs;
+            set
+            {
+                _isExecutingJobs = value;
+                ((RelayCommand)ExecuteSelectedJobCommand).RaiseCanExecuteChanged();
+                ((RelayCommand)ExecuteAllJobsCommand).RaiseCanExecuteChanged();
+                ((RelayCommand)ExecuteJobsSequentiallyCommand).RaiseCanExecuteChanged();
+            }
+        }
 
         private void LoadInitialJobs()
         {
@@ -147,12 +148,7 @@ namespace EasySave.ViewModels
             _stateService.UpdateState(name, "Created", 0);
             _loggerService.Log($"Created new backup job: {name} (ID: {jobViewModel.Id})");
 
-            SaveJobs();
-
             SaveJobsToFile();
-
-            return jobViewModel;
-
         }
 
         public bool CanCreateJob(object _)
@@ -165,6 +161,7 @@ namespace EasySave.ViewModels
             var selectedJobs = _jobs.Where(j => j.IsSelected && !j.IsRunning).ToList();
             if (!selectedJobs.Any()) return;
 
+            IsExecutingJobs = true;
             foreach (var job in selectedJobs)
             {
                 try
@@ -176,14 +173,18 @@ namespace EasySave.ViewModels
                     _loggerService.LogError($"Error executing job {job.Name}: {ex.Message}");
                 }
             }
+            IsExecutingJobs = false;
         }
 
         private async Task ExecuteAllJobsAsync()
         {
-            var tasks = _jobs.Where(j => !j.IsRunning)
-                                 .Select(job => Task.Run(() => job.ExecuteAsync()))
-                                 .ToList();
+            var jobsToExecute = _jobs.Where(j => !j.IsRunning).ToList();
+            if (!jobsToExecute.Any()) return;
+
+            IsExecutingJobs = true;
+            var tasks = jobsToExecute.Select(job => Task.Run(() => job.ExecuteAsync())).ToList();
             await Task.WhenAll(tasks);
+            IsExecutingJobs = false;
         }
 
         private void DeleteSelectedJobsWithConfirmation(object parameter)
@@ -192,7 +193,6 @@ namespace EasySave.ViewModels
             if (!selectedJobs.Any()) return;
 
             var message = $"Voulez-vous vraiment supprimer {selectedJobs.Count} job(s) sélectionné(s) ?";
-            // Update the MessageBox usage to explicitly specify the namespace to resolve ambiguity.
             var result = System.Windows.MessageBox.Show(message, "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
             if (result == MessageBoxResult.Yes)
@@ -203,7 +203,7 @@ namespace EasySave.ViewModels
                     _stateService.UpdateState(job.Name, "Deleted", 0);
                     Jobs.Remove(job);
                 }
-                SaveJobs();
+                SaveJobsToFile();
             }
         }
 
@@ -243,11 +243,10 @@ namespace EasySave.ViewModels
 
                 _loggerService.Log($"Edited backup job: {originalJob.Name} (ID: {originalJob.Id})");
                 _stateService.UpdateState(originalJob.Name, "Modified", originalJob.Progress);
-                SaveJobs();
+                SaveJobsToFile();
             }
             ShowEditDialog = false;
         }
-
 
         private void CancelEdit()
         {
@@ -260,6 +259,7 @@ namespace EasySave.ViewModels
             if (!selectedJobs.Any()) return;
 
             _cts = new System.Threading.CancellationTokenSource();
+            IsExecutingJobs = true;
 
             foreach (var job in selectedJobs)
             {
@@ -268,6 +268,7 @@ namespace EasySave.ViewModels
 
                 await job.ExecuteAsync(_cts.Token);
             }
+            IsExecutingJobs = false;
         }
 
         private void CancelAllRunningJobs()
@@ -291,14 +292,11 @@ namespace EasySave.ViewModels
                     job.SourcePath = dialog.SelectedPath;
                 else
                     job.TargetPath = dialog.SelectedPath;
-
-        public bool JobNameExists(string name)
-        {
-            return _jobs.Any(job => job.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            }
         }
 
         private static readonly string JobsFileName = Path.GetFullPath(
-    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "BackupJobs", "jobs.json"));
+            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "BackupJobs", "jobs.json"));
         public void SaveJobsToFile()
         {
             try
@@ -345,7 +343,6 @@ namespace EasySave.ViewModels
             catch (Exception ex)
             {
                 _loggerService.LogError($"Failed to load jobs: {ex.Message}");
-
             }
         }
     }
