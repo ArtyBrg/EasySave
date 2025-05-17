@@ -1,0 +1,192 @@
+[
+  {
+    "Name": "Test 1",
+    "SourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\UML Diagrams\\diagrams\\usecase.puml",
+    "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\Backup\\usecase.puml",
+    "State": "END",
+    "TotalFiles": 4,
+    "TotalSize": 5680,
+    "FilesRemaining": 0,
+    "Progress": 100
+  },
+  {
+    "Name": "Test 2",
+    "SourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\UML Diagrams\\pictures\\usecase.png",
+    "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\Backup\\usecase.png",
+    "State": "END",
+    "TotalFiles": 4,
+    "TotalSize": 319954,
+    "FilesRemaining": 0,
+    "Progress": 100
+  },
+  {
+    "Name": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\UML Diagrams",
+    "SourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\UML Diagrams\\pictures\\usecase.png",
+    "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\Backup\\pictures\\usecase.png",
+    "State": "END",
+    "TotalFiles": 9,
+    "TotalSize": 331658,
+    "FilesRemaining": 0,
+    "Progress": 100
+  },
+  {
+    "Name": "1",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "2",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "3",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "4",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "5",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "6",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "ez",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "zzeeze",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "dzdz",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "ezdz",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "dz",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "INACTIVE",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "de",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "ERROR",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "dede",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "ERROR",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "test",
+    "SourcePath": "C:\\Users\\Brulux\\Pictures\\Screenshots\\desktop.ini",
+    "TargetPath": "C:\\Users\\Brulux\\Pictures\\images2\\desktop.ini",
+    "State": "ERROR",
+    "TotalFiles": 80,
+    "TotalSize": 19951987,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "der",
+    "SourcePath": "",
+    "TargetPath": "",
+    "State": "ERROR",
+    "TotalFiles": 0,
+    "TotalSize": 0,
+    "FilesRemaining": 0,
+    "Progress": 0
+  },
+  {
+    "Name": "Test Arthur",
+    "SourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\usecase.puml",
+    "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\usecase.puml",
+    "State": "END",
+    "TotalFiles": 4,
+    "TotalSize": 5680,
+    "FilesRemaining": 0,
+    "Progress": 100
+  }
+]
