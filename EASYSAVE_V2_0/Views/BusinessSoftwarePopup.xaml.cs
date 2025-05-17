@@ -1,10 +1,12 @@
-﻿using System.Windows;
+﻿using EasySave.ViewModels;
+using System.Configuration;
+using System.Windows;
 
 namespace EasySave.Views
 {
     public partial class BusinessSoftwarePopup : Window
     {
-        public BusinessSoftwarePopup()
+        public BusinessSoftwarePopup(object viewModel)
         {
             InitializeComponent();
 
@@ -12,6 +14,8 @@ namespace EasySave.Views
             {
                 this.Focus();
             };
+
+            DataContext = viewModel;
         }
     }
 }

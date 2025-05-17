@@ -49,23 +49,23 @@
 
             <!-- Menu de navigation -->
             <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <Button Content="Home" Command="{Binding NavigateCommand}" 
-                        CommandParameter="Home" Height="40" Width="80" Margin="5"
+                <Button Content="{Binding Translations[TabHome]}" Command="{Binding NavigateCommand}" 
+                        CommandParameter="Home" Height="40" Width="80" Margin="5" Style="{StaticResource RoundedButtonMenu}"
                         Background="Transparent" Foreground="White" BorderThickness="0" />
-                <Button Content="Create Job" Command="{Binding NavigateCommand}" 
-                        CommandParameter="CreateJob" Height="40" Width="80" Margin="5"
+                <Button Content="{Binding Translations[TabCreate]}" Command="{Binding NavigateCommand}" 
+                        CommandParameter="CreateJob" Height="40" Width="95" Margin="5" Style="{StaticResource RoundedButtonMenu}"
                         Background="Transparent" Foreground="White" BorderThickness="0" />
-                <Button Content="Jobs List" Command="{Binding NavigateCommand}" 
-                        CommandParameter="JobsList" Height="40" Width="80" Margin="5"
+                <Button Content="{Binding Translations[TabJob]}" Command="{Binding NavigateCommand}" 
+                        CommandParameter="JobsList" Height="40" Width="100" Margin="5" Style="{StaticResource RoundedButtonMenu}"
                         Background="Transparent" Foreground="White" BorderThickness="0" />
                 <Button Content="Logs" Command="{Binding NavigateCommand}" 
-                        CommandParameter="Logs" Height="40" Width="80" Margin="5"
+                        CommandParameter="Logs" Height="40" Width="80" Margin="5" Style="{StaticResource RoundedButtonMenu}"
                         Background="Transparent" Foreground="White" BorderThickness="0" />
-                <Button Content="Decrypt" Command="{Binding NavigateCommand}" 
-                        CommandParameter="Decrypt" Height="40" Width="80" Margin="5"
+                <Button Content="{Binding Translations[TabDecrypt]}" Command="{Binding NavigateCommand}" 
+                        CommandParameter="Decrypt" Height="40" Width="80" Margin="5" Style="{StaticResource RoundedButtonMenu}"
                         Background="Transparent" Foreground="White" BorderThickness="0" />
-                <Button Content="Settings" Command="{Binding NavigateCommand}" 
-                        CommandParameter="Settings" Height="40" Width="80" Margin="5"
+                <Button Content="{Binding Translations[TabSetting]}" Command="{Binding NavigateCommand}" 
+                        CommandParameter="Settings" Height="40" Width="80" Margin="5" Style="{StaticResource RoundedButtonMenu}"
                         Background="Transparent" Foreground="White" BorderThickness="0"/>
 
             </StackPanel>
@@ -89,27 +89,16 @@
                     Background="#2C3E50" BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10">
                             <StackPanel>
                                 <!-- Langue -->
-                                <TextBlock Text="Langue" FontWeight="Bold" Margin="0,0,0,5" Foreground="#1ABC9C"/>
+                                <TextBlock Text="{Binding Translations[SettingLanguage]}" FontWeight="Bold" Margin="0,0,0,5" Foreground="#1ABC9C"/>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
-                                    <Button Content="EN" Command="{Binding SetLanguageCommand}" CommandParameter="EN" 
-                                Height="30" Width="40" Margin="5"
-                                Background="{Binding CurrentLanguage, Converter={StaticResource LanguageButtonColorConverter}, ConverterParameter=EN}"/>
-                                    <Button Content="FR" Command="{Binding SetLanguageCommand}" CommandParameter="FR" 
-                                Height="30" Width="40" Margin="5"
-                                Background="{Binding CurrentLanguage, Converter={StaticResource LanguageButtonColorConverter}, ConverterParameter=FR}"/>
+                                    <Button Content="FR" Command="{Binding SetLanguageCommand}" CommandParameter="FR" Height="30" Width="40" Margin="5"
+                                    Background="{Binding CurrentLanguage, Source={StaticResource AppVM}, 
+                                    Converter={StaticResource LanguageButtonColorConverter}, ConverterParameter='FR|App'}"/>
+
+                                    <Button Content="EN" Command="{Binding SetLanguageCommand}" CommandParameter="EN" Height="30" Width="40" Margin="5"
+                                    Background="{Binding CurrentLanguage, Source={StaticResource AppVM}, 
+                                    Converter={StaticResource LanguageButtonColorConverter}, ConverterParameter='EN|App'}"/>
                                 </StackPanel>
-
-                                <!-- Format de log -->
-                                <TextBlock Text="Format de logs" FontWeight="Bold" Margin="0,0,0,5" Foreground="#1ABC9C"/>
-                                <ComboBox SelectedItem="{Binding SelectedLogFormat, Mode=TwoWay}" Width="90" Margin="0,0,0,10">
-                                    <ComboBox.Items>
-                                        <sys:String>JSON</sys:String>
-                                        <sys:String>XML</sys:String>
-                                    </ComboBox.Items>
-                                </ComboBox>
-
-                                <!-- Apply -->
-                                <Button Content="Apply" Width="80" HorizontalAlignment="Right"/>
                             </StackPanel>
                         </Border>
                     </Popup>

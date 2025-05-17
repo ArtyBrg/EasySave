@@ -8,23 +8,23 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Welcome to EasySave" 
+            <TextBlock Text="{Binding Translations[Welcome]}" 
                        FontSize="36" FontWeight="Bold"
                        HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
-            <TextBlock Text="Your backup solution" 
+            <TextBlock Text="{Binding Translations[Description]}" 
                        FontSize="22" Opacity="0.8"
                        HorizontalAlignment="Center" Margin="0,0,0,40"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="Create New Job" 
+                <Button Content="{Binding Translations[ButtonHomeCreate]}" 
                         Command="{Binding NavigateCommand}" CommandParameter="CreateJob"
-                        Width="180" Height="50" Margin="10"
-                        Background="#3498DB" Foreground="White" FontSize="14" />
+                        Width="180" Height="50" Margin="10" Style="{StaticResource RoundedHoverBlueButton}"
+                        Background="#2196F3" Foreground="White" FontSize="14" />
 
-                <Button Content="View Existing Jobs" 
+                <Button Content="{Binding Translations[ButtonHomeView]}" 
                         Command="{Binding NavigateCommand}" CommandParameter="JobsList"
-                        Width="180" Height="50" Margin="10"
+                        Width="180" Height="50" Margin="10" Style="{StaticResource RoundedHoverGreenButton}"
                         Background="#27AE60" Foreground="White" FontSize="14" />
             </StackPanel>
         </StackPanel>

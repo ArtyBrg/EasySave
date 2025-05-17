@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using EasySave.Models;
 using EasySave.Services;
 using CryptoSoft;
+using EasySave_WPF;
 
 namespace EasySave.ViewModels
 {
     public class BackupJobViewModel : ViewModelBase
     {
+
         private readonly BackupJob _backupJob;
         private readonly FileSystemService _fileSystemService;
         private readonly LoggerService _loggerService;
@@ -42,9 +44,6 @@ namespace EasySave.ViewModels
         {
             // Ce constructeur appelle le principal avec tous les arguments nécessaires
         }
-
-
-
 
         public BackupJobViewModel(BackupJob backupJob,
                                 FileSystemService fileSystemService,

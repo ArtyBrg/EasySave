@@ -7,6 +7,7 @@ namespace EasySave_WPF
     {
         public MainWindow()
         {
+            this.Resources["AppVM"] = App.AppViewModel;
             InitializeComponent();
         }
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
