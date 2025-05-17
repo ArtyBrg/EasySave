@@ -21,13 +21,6 @@
             </Setter>
         </Style>
 
-        <Style x:Key="SettingsTitleStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Margin" Value="0,0,0,10"/>
-            <Setter Property="Foreground" Value="#333333"/>
-        </Style>
-
         <Style x:Key="LanguageButtonStyle" TargetType="Button">
             <Setter Property="Height" Value="32"/>
             <Setter Property="Width" Value="50"/>
@@ -58,10 +51,11 @@
         <Style x:Key="SettingsComboBoxStyle" TargetType="ComboBox">
             <Setter Property="Width" Value="200"/>
             <Setter Property="Height" Value="32"/>
-            <Setter Property="Margin" Value="0,5,0,10"/>
             <Setter Property="BorderBrush" Value="#DDDDDD"/>
+            <Setter Property="Background" Value="White"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="8,5"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
 
         <Style x:Key="SettingsButtonStyle" TargetType="Button">
@@ -93,31 +87,36 @@
             </Setter>
         </Style>
 
-        <Style x:Key="CheckBoxStyle" TargetType="CheckBox">
-            <Setter Property="Margin" Value="0,5,0,5"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Style x:Key="SettingsTitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="Foreground" Value="#333333"/>
         </Style>
+
     </UserControl.Resources>
 
     <Grid Background="White">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="25">
-                <TextBlock Text="Paramètres" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" Foreground="#2E7D32"/>
+
+                <TextBlock Text="{Binding Translations[SettingsTitle]}" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" 
+                           Foreground="#1ABC9C" TextAlignment="Center"/>
 
                 <!-- Langue -->
                 <Border Style="{StaticResource SettingsCardStyle}">
                     <StackPanel>
-                        <TextBlock Text="Langue" Style="{StaticResource SettingsTitleStyle}"/>
+                        <TextBlock Text="{Binding Translations[SettingLanguage]}" Style="{StaticResource SettingsTitleStyle}"/>
                         <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <TextBlock Text="Sélectionnez votre langue :" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                            <Button Content="Français" Command="{Binding SetLanguageCommand}" CommandParameter="FR" 
-                                Style="{StaticResource LanguageButtonStyle}"
-                                Background="{Binding CurrentLanguage, Converter={StaticResource LanguageButtonColorConverter}, ConverterParameter=FR}"
-                                BorderBrush="#DDDDDD"/>
-                            <Button Content="English" Command="{Binding SetLanguageCommand}" CommandParameter="EN" 
-                                Style="{StaticResource LanguageButtonStyle}"
-                                Background="{Binding CurrentLanguage, Converter={StaticResource LanguageButtonColorConverter}, ConverterParameter=EN}"
-                                BorderBrush="#DDDDDD"/>
+                            <Button Content="{Binding Translations[ButtonLangFR]}" Command="{Binding SetLanguageCommand}" 
+                            CommandParameter="FR" Style="{StaticResource LanguageButtonStyle}" BorderBrush="#DDDDDD"
+                            Background="{Binding SelectedLanguage, Converter={StaticResource LanguageButtonColorConverter}, 
+                            ConverterParameter='FR|Settings'}" />
+
+                            <Button Content="{Binding Translations[ButtonLangEN]}" Command="{Binding SetLanguageCommand}" CommandParameter="EN" 
+                            Style="{StaticResource LanguageButtonStyle}" BorderBrush="#DDDDDD"
+                            Background="{Binding SelectedLanguage, Converter={StaticResource LanguageButtonColorConverter}, 
+                            ConverterParameter='EN|Settings'}" />
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -125,18 +124,18 @@
                 <!-- Format des logs -->
                 <Border Style="{StaticResource SettingsCardStyle}">
                     <StackPanel>
-                        <TextBlock Text="Format des logs" Style="{StaticResource SettingsTitleStyle}"/>
-                        <TextBlock Text="Sélectionnez le format des fichiers de logs :" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding Translations[SettingLog]}" Style="{StaticResource SettingsTitleStyle}"/>
+                        <TextBlock Text="{Binding Translations[SettingLogText]}" Margin="0,0,0,5" Foreground="#4A5568"/>
                         <ComboBox SelectedItem="{Binding SelectedLogFormat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                                Style="{StaticResource SettingsComboBoxStyle}" ItemsSource="{Binding LogFormats}" />
+                                Style="{StaticResource SettingsComboBoxStyle}" ItemsSource="{Binding LogFormats}"/>
                     </StackPanel>
                 </Border>
 
                 <!-- Extensions à crypter -->
                 <Border Style="{StaticResource SettingsCardStyle}">
                     <StackPanel>
-                        <TextBlock Text="Cryptage des fichiers" Style="{StaticResource SettingsTitleStyle}"/>
-                        <TextBlock Text="Extensions de fichiers à crypter lors des sauvegardes :" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding Translations[CryptFile]}" Style="{StaticResource SettingsTitleStyle}"/>
+                        <TextBlock Text="{Binding Translations[SettingCrypt]}" Margin="0,0,0,5" Foreground="#4A5568"/>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -145,8 +144,8 @@
                             <TextBox Text="{Binding FileExtensionToCrypt, Mode=TwoWay}" 
                                     Height="32" Padding="8,5" Margin="0,5,10,5"
                                     BorderBrush="#DDDDDD"/>
-                            <Button Grid.Column="1" Content="Ajouter" Width="80" Height="32"
-                                    Command="{Binding AddExtensionCommand}"
+                            <Button Grid.Column="1" Content="{Binding Translations[ButtonAdd]}" Width="80" Height="32"
+                                    Command="{Binding AddExtensionCommand}" Style="{StaticResource RoundedHoverBlueButton}"
                                     Background="#2196F3" Foreground="White" BorderThickness="0"/>
                         </Grid>
                         <ListView ItemsSource="{Binding ExtensionsToCrypt}" 
@@ -174,10 +173,10 @@
                 <!-- Logiciel métier -->
                 <Border Style="{StaticResource SettingsCardStyle}">
                     <StackPanel>
-                        <TextBlock Text="Logiciel métier" Style="{StaticResource SettingsTitleStyle}"/>
-                        <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
-                            Définissez un logiciel métier qui, lorsqu'il est en cours d'exécution, empêchera le lancement de nouvelles sauvegardes.
-                        </TextBlock>
+                        <TextBlock Text="{Binding Translations[SettingSoftware]}" Style="{StaticResource SettingsTitleStyle}"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,0,0,10" Text="{Binding Translations[SoftText]}" Foreground="#4A5568"/>
+                        
+                        
 
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -192,26 +191,26 @@
                                     Style="{StaticResource SettingsComboBoxStyle}"
                                     Margin="0,5,10,5"/>
 
-                            <Button Grid.Column="1" Content="Parcourir..." Width="100" Height="32"
+                            <Button Grid.Column="1" Content="{Binding Translations[Browse]}" Width="100" Height="32"
                                     Command="{Binding BrowseBusinessSoftwareCommand}"
                                     Background="#2196F3" Foreground="White" BorderThickness="0"
-                                    Margin="0,5,10,5"/>
+                                    Margin="0,5,10,5" Style="{StaticResource RoundedHoverBlueButton}"/>
 
-                            <Button Grid.Column="2" Content="Utiliser Calculatrice" Width="140" Height="32"
+                            <Button Grid.Column="2" Content="{Binding Translations[UseCalc]}" Width="140" Height="32"
                                     Command="{Binding UseCalculatorCommand}"
                                     Background="#673AB7" Foreground="White" BorderThickness="0"
-                                    Margin="0,5,0,5"/>
+                                    Margin="0,5,0,5" Style="{StaticResource RoundedHoverPurpleButton}"/>
                         </Grid>
 
                         <StackPanel Margin="0,10,0,0">
-                            <TextBlock Text="Logiciel métier sélectionné :" FontWeight="SemiBold"/>
-                            <TextBlock Text="{Binding CurrentBusinessSoftware}" Margin="0,5,0,0"/>
+                            <TextBlock Text="{Binding Translations[SelectedSoftware]}" FontWeight="SemiBold" FontSize="14"/>
+                            <TextBlock Text="{Binding CurrentBusinessSoftware}" Margin="0,5,0,0" Foreground="#4A5568"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
 
                 <!-- Bouton d'application -->
-                <Button Content="Appliquer les changements" 
+                <Button Content="{Binding Translations[ButtonApply]}" 
                         Command="{Binding ApplySettingsCommand}"
                         Style="{StaticResource SettingsButtonStyle}"
                         HorizontalAlignment="Right"/>

@@ -9,6 +9,8 @@ namespace EasySave_WPF
 {
     public partial class App : Application
     {
+        public static AppViewModel AppViewModel { get; private set; }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -29,6 +31,9 @@ namespace EasySave_WPF
 
             // Chargement de la langue des paramètres
             languageService.LoadLanguageFromSettings();
+
+            // TranslationProvider
+            AppViewModel = new AppViewModel();
 
             // Configuration de la fenêtre principale
             var mainWindow = new MainWindow
