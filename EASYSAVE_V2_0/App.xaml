@@ -8,6 +8,15 @@
             <converters:RadioButtonCheckedConverter x:Key="RadioButtonCheckedConverter" />
             <converters:JobStatusConverter x:Key="JobStatusConverter" />
             <converters:LanguageButtonColorConverter x:Key="LanguageButtonColorConverter" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+            <Style TargetType="{x:Type DataGridRow}">
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#E3F2FD"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
