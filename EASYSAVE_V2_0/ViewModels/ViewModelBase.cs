@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using EasySave.Services;
+using EasySave_WPF;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace EasySave.ViewModels
@@ -20,6 +22,12 @@ namespace EasySave.ViewModels
             storage = value;
             OnPropertyChanged(propertyName);
             return true;
+        }
+
+        public TranslationProvider Translations => App.AppViewModel.Translations;
+        public void ChangeLanguage(string langCode)
+        {
+            App.AppViewModel.ChangeLanguages(langCode);
         }
     }
 }
