@@ -142,6 +142,24 @@ namespace EASYSAVE_V2_0.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Execute All.
+        /// </summary>
+        internal static string ButtonExAll {
+            get {
+                return ResourceManager.GetString("ButtonExAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Execute Selected.
+        /// </summary>
+        internal static string ButtonExSelect {
+            get {
+                return ResourceManager.GetString("ButtonExSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Create a New Job.
         /// </summary>
         internal static string ButtonHomeCreate {
