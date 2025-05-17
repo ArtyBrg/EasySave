@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LogEntries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LogEntry>
+    <Name>ezez</Name>
+    <FileSource>C:\Users\Brulux\Pictures\Screenshots\Capture d'écran 2025-04-30 083024.png</FileSource>
+    <FileTarget>C:\Users\Brulux\Pictures\Screenshots\Capture d'écran 2025-04-30 083024.png</FileTarget>
+    <FileSize>0</FileSize>
+    <FileTransferTime>-1</FileTransferTime>
+    <Time>2025-05-20 17:43:17</Time>
+  </LogEntry>
+  <LogEntry>
+    <Name>ezez</Name>
+    <FileSource>C:\Users\Brulux\Pictures\Screenshots\desktop.ini</FileSource>
+    <FileTarget>C:\Users\Brulux\Pictures\Screenshots\desktop.ini</FileTarget>
+    <FileSize>0</FileSize>
+    <FileTransferTime>-1</FileTransferTime>
+    <Time>2025-05-20 17:43:17</Time>
+  </LogEntry>
+</LogEntries>
