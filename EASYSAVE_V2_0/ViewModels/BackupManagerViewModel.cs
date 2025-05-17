@@ -8,7 +8,9 @@ using System.Windows;
 using System.Windows.Input;
 using EasySave.Models;
 using EasySave.Services;
-using System.Windows.Forms; // Add this using directive
+using System.Windows.Forms;
+using System.Text.Json;
+
 
 namespace EasySave.ViewModels
 {
@@ -39,6 +41,9 @@ namespace EasySave.ViewModels
 
             LoadInitialJobs();
 
+            CreateJobCommand = new RelayCommand(param => CreateJob(param as string[] ?? Array.Empty<string>()));
+
+
             CreateJobCommand = new RelayCommand(CreateJob, CanCreateJob);
             ExecuteSelectedJobCommand = new RelayCommand(async _ => await ExecuteSelectedJobAsync(), _ => _jobs.Any(j => j.IsSelected && !j.IsRunning));
             ExecuteAllJobsCommand = new RelayCommand(async _ => await ExecuteAllJobsAsync(), _ => _jobs.Count > 0 && !_jobs.Any(j => j.IsRunning));
@@ -49,8 +54,16 @@ namespace EasySave.ViewModels
             ExecuteJobsSequentiallyCommand = new RelayCommand(async _ => await ExecuteJobsSequentially(), _ => _jobs.Any(j => j.IsSelected && !j.IsRunning));
             CancelAllJobsCommand = new RelayCommand(_ => CancelAllRunningJobs(), _ => _jobs.Any(j => j.IsRunning));
 
+
             BrowseSourceCommand = new RelayCommand(parameter => BrowsePath(parameter as BackupJobViewModel, true));
             BrowseTargetCommand = new RelayCommand(parameter => BrowsePath(parameter as BackupJobViewModel, false));
+
+            ExecuteAllJobsCommand = new RelayCommand(
+                async param => await ExecuteAllJobsAsync(),
+                param => _jobs.Count > 0 && !IsExecutingJobs && !_jobs.Any(j => j.IsRunning));
+
+            LoadJobsFromFile();
+
         }
 
         public ObservableCollection<BackupJobViewModel> Jobs => _jobs;
@@ -133,7 +146,13 @@ namespace EasySave.ViewModels
             _jobs.Add(jobViewModel);
             _stateService.UpdateState(name, "Created", 0);
             _loggerService.Log($"Created new backup job: {name} (ID: {jobViewModel.Id})");
+
             SaveJobs();
+
+            SaveJobsToFile();
+
+            return jobViewModel;
+
         }
 
         public bool CanCreateJob(object _)
@@ -229,6 +248,7 @@ namespace EasySave.ViewModels
             ShowEditDialog = false;
         }
 
+
         private void CancelEdit()
         {
             ShowEditDialog = false;
@@ -271,6 +291,61 @@ namespace EasySave.ViewModels
                     job.SourcePath = dialog.SelectedPath;
                 else
                     job.TargetPath = dialog.SelectedPath;
+
+        public bool JobNameExists(string name)
+        {
+            return _jobs.Any(job => job.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        }
+
+        private static readonly string JobsFileName = Path.GetFullPath(
+    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "BackupJobs", "jobs.json"));
+        public void SaveJobsToFile()
+        {
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(JobsFileName)!);
+                var jobModels = _jobs.Select(vm => new BackupJob
+                {
+                    Id = vm.Id,
+                    Name = vm.Name,
+                    SourcePath = vm.SourcePath,
+                    TargetPath = vm.TargetPath,
+                    Type = vm.Type
+                }).ToList();
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                string json = JsonSerializer.Serialize(jobModels, options);
+                File.WriteAllText(JobsFileName, json);
+                _loggerService.Log($"Saved {jobModels.Count} backup jobs to {JobsFileName}");
+            }
+            catch (Exception ex)
+            {
+                _loggerService.LogError($"Failed to save jobs: {ex.Message}");
+            }
+        }
+        public void LoadJobsFromFile()
+        {
+            if (!File.Exists(JobsFileName))
+                return;
+            try
+            {
+                string json = File.ReadAllText(JobsFileName);
+                var jobModels = JsonSerializer.Deserialize<List<BackupJob>>(json);
+                if (jobModels == null)
+                    return;
+                _jobs.Clear();
+                foreach (var jobModel in jobModels)
+                {
+                    if (jobModel.Id >= _nextId)
+                        _nextId = jobModel.Id + 1;
+                    var jobVM = new BackupJobViewModel(jobModel, _fileSystemService, _loggerService, _stateService);
+                    _jobs.Add(jobVM);
+                }
+                _loggerService.Log($"Loaded {jobModels.Count} backup jobs from {JobsFileName}");
+            }
+            catch (Exception ex)
+            {
+                _loggerService.LogError($"Failed to load jobs: {ex.Message}");
+
             }
         }
     }

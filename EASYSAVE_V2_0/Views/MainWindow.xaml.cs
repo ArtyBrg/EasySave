@@ -9,5 +9,10 @@ namespace EasySave_WPF
         {
             InitializeComponent();
         }
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsPopup.IsOpen = !SettingsPopup.IsOpen;
+        }
+
     }
 }

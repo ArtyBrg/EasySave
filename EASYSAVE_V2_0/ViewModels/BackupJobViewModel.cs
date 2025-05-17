@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using EasySave.Models;
 using EasySave.Services;
+using CryptoSoft;
 
 namespace EasySave.ViewModels
 {
@@ -18,12 +19,40 @@ namespace EasySave.ViewModels
         private readonly FileSystemService _fileSystemService;
         private readonly LoggerService _loggerService;
         private readonly StateService _stateService;
+        private readonly string encryptionKey = "crypto123";
 
         private bool _isRunning;
         private double _progress;
+
         private bool _isPaused;
-        private bool _stopRequested; // Nouveau drapeau pour demander l'arrêt
+        private bool _stopRequested; 
         private CancellationTokenSource _cts = new CancellationTokenSource();
+
+        private bool _isEncryptionEnabled;
+        public bool IsEncryptionEnabled
+        {
+            get => _isEncryptionEnabled;
+            set => SetProperty(ref _isEncryptionEnabled, value);
+        }
+
+        public BackupJobViewModel()
+    : this(
+        new BackupJob
+        {
+            Name = "DefaultJob",
+            SourcePath = @"C:\Source",
+            TargetPath = @"C:\Target",
+            Type = "Complete"
+        },
+        new FileSystemService(new LoggerService()),
+        new LoggerService(),
+        new StateService(new LoggerService()))
+        {
+            // Ce constructeur appelle le principal avec tous les arguments nécessaires
+        }
+
+
+
 
         public BackupJobViewModel(BackupJob backupJob,
                                         FileSystemService fileSystemService,
@@ -147,9 +176,9 @@ namespace EasySave.ViewModels
         {
             try
             {
-                StopRequested = true; // Demande l'arrêt via le drapeau
+                StopRequested = true; 
                 _loggerService.Log($"Job {Name} stop requested");
-                // Ne pas appeler _cts.Cancel() qui provoque l'exception si la tâche n'a pas démarré.
+                
             }
             catch (Exception ex)
             {
@@ -165,25 +194,32 @@ namespace EasySave.ViewModels
                 return;
             }
 
+            var settings = SettingsService.Load();
+            _loggerService.SetLogFormat(settings.LogFormat);
+
             IsRunning = true;
             IsPaused = false;
             Progress = 0;
-            StopRequested = false; // Réinitialiser le drapeau d'arrêt
+            StopRequested = false; 
 
             try
             {
                 _loggerService.Log($"Starting backup job {Id} - {Name}");
                 _stateService.UpdateState(Name, "Active", 0, SourcePath, TargetPath);
 
-                // Utiliser ConfigureAwait(false) pour éviter les problèmes de contexte de synchronisation
+                
                 await Task.Run(() =>
                 {
                     try
                     {
+
                         if (Type == "Complete")
                             ExecuteCompleteBackup(cancellationToken);
                         else
                             ExecuteDifferentialBackup(cancellationToken);
+
+                        ExecuteCompleteBackup(files, totalSize, settings.ExtensionsToCrypt);
+
                     }
                     catch (Exception ex)
                     {
@@ -215,6 +251,7 @@ namespace EasySave.ViewModels
             }
         }
 
+
         private void ExecuteCompleteBackup(CancellationToken cancellationToken)
         {
             var allFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories).ToList();
@@ -223,13 +260,20 @@ namespace EasySave.ViewModels
 
             _stateService.UpdateState(Name, "InProgress", 0, filesRemaining: totalFiles, totalFiles: totalFiles, totalSize: totalSize);
 
-            for (int i = 0; i < allFiles.Count && !StopRequested; i++) // Vérifier StopRequested à chaque itération
+        private void ExecuteCompleteBackup(List<string> files, long totalSize, List<string> extensionsToCrypt)
+        {
+            _loggerService.Log($"Found {files.Count} files to backup");
+           
+
+
+            for (int i = 0; i < allFiles.Count && !StopRequested; i++) 
             {
-                // Ne pas utiliser ThrowIfCancellationRequested qui lance l'exception
+
+                
                 if (StopRequested)
                 {
                     _loggerService.Log($"Job {Name} arrêté par l'utilisateur avant fichier {i + 1}/{totalFiles}");
-                    return; // Sortir proprement sans lancer d'exception
+                    return; 
                 }
 
                 while (IsPaused && !StopRequested)
@@ -237,7 +281,36 @@ namespace EasySave.ViewModels
                     Thread.Sleep(500);
                 }
 
-                if (StopRequested) return; // Double vérification après la pause
+                if (StopRequested) return; 
+
+                string sourceFile = files[i];
+
+                string relativePath = sourceFile[SourcePath.Length..].TrimStart(Path.DirectorySeparatorChar);
+                string targetFile = Path.Combine(TargetPath, relativePath);
+
+                var extension = Path.GetExtension(sourceFile).ToLower();
+                IsEncryptionEnabled = extensionsToCrypt.Any(e => e.Equals(extension, StringComparison.OrdinalIgnoreCase));
+
+
+                if (IsEncryptionEnabled)
+                {
+                    targetFile += ".crypt";
+                }
+
+                double progressValue = (i * 100.0) / files.Count;
+                Progress = progressValue;
+
+                _stateService.UpdateState(
+                    Name,
+                    "InProgress",
+                    progressValue,
+                    sourceFile,
+                    targetFile,
+                    files.Count,
+                    totalSize,
+                    files.Count - i
+                );
+
 
                 string sourceFile = allFiles[i];
                 string relativePath = sourceFile.Substring(SourcePath.Length).TrimStart(Path.DirectorySeparatorChar);
@@ -247,12 +320,13 @@ namespace EasySave.ViewModels
 
                 if (i < allFiles.Count - 1 && !StopRequested)
                 {
-                    Thread.Sleep(1000); // Délai de 1000 millisecondes (1 seconde)
+                    Thread.Sleep(1000); 
                 }
             }
         }
 
-        // Version modifiée qui n'utilise plus CancellationToken pour l'arrêt direct
+
+        
         private void CopyFileWithProgress(string sourceFile, string targetFile, int currentIndex, int totalFiles, long totalSize)
         {
             var targetDir = Path.GetDirectoryName(targetFile);
@@ -261,11 +335,23 @@ namespace EasySave.ViewModels
                 Directory.CreateDirectory(targetDir);
             }
 
+
+        private void ExecuteDifferentialBackup()
+        {
+            DateTime lastBackup = GetLastCompleteBackupDate();
+            _loggerService.Log($"Last complete backup was at {lastBackup}");
+            _loggerService.Log($"Chiffrement: {(IsEncryptionEnabled ? "Activé" : "Désactivé")}");
+
+            var modifiedFiles = _fileSystemService.GetModifiedFilesSince(SourcePath, lastBackup).ToList();
+            long totalSize = modifiedFiles.Sum(f => new FileInfo(f).Length);
+
+
             var fileInfo = new FileInfo(sourceFile);
 
             using (var sourceStream = new FileStream(sourceFile, FileMode.Open, FileAccess.Read, FileShare.Read))
             using (var targetStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write, FileShare.None))
             {
+
                 var buffer = new byte[81920];
                 int bytesRead;
                 long totalBytesRead = 0;
@@ -275,11 +361,35 @@ namespace EasySave.ViewModels
                     targetStream.Write(buffer, 0, bytesRead);
                     totalBytesRead += bytesRead;
 
+                string sourceFile = modifiedFiles[i];
+                string relativePath = sourceFile[SourcePath.Length..].TrimStart(Path.DirectorySeparatorChar);
+                string targetFile = Path.Combine(TargetPath, relativePath);
+
+                if (IsEncryptionEnabled)
+                {
+                    targetFile += ".crypt";
+                }
+
+                double progressValue = (i * 100.0) / modifiedFiles.Count;
+                Progress = progressValue;
+
+                _stateService.UpdateState(
+                    Name,
+                    "InProgress",
+                    progressValue,
+                    sourceFile,
+                    targetFile,
+                    modifiedFiles.Count,
+                    totalSize,
+                    modifiedFiles.Count - i
+                );
+
+
                     double progress = (currentIndex + (totalBytesRead / (double)fileInfo.Length)) * 100.0 / totalFiles;
-                    // Utiliser le dispatcher de manière sécurisée
+                   
                     System.Windows.Application.Current.Dispatcher.InvokeAsync(() => Progress = progress);
 
-                    // Vérifier régulièrement si un arrêt a été demandé
+                    
                     if (StopRequested)
                     {
                         _loggerService.Log($"Copie de {sourceFile} interrompue par l'utilisateur");
@@ -301,13 +411,18 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Modifiez également ExecuteDifferentialBackup de la même manière
+
         private void ExecuteDifferentialBackup(CancellationToken cancellationToken)
+
+
+        private double CopyAndLog(string sourceFile, string targetFile)
+
         {
             DateTime lastBackupDate = GetLastBackupDate();
             var modifiedFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories)
                                             .Where(f => File.GetLastWriteTime(f) > lastBackupDate)
                                             .ToList();
+
 
             long totalSize = modifiedFiles.Sum(f => new FileInfo(f).Length);
             int totalFiles = modifiedFiles.Count;
@@ -315,6 +430,11 @@ namespace EasySave.ViewModels
             _stateService.UpdateState(Name, "InProgress", 0, filesRemaining: totalFiles, totalFiles: totalFiles, totalSize: totalSize);
 
             for (int i = 0; i < modifiedFiles.Count && !StopRequested; i++)
+
+              Stopwatch sw = Stopwatch.StartNew();
+
+            try
+
             {
                 if (StopRequested)
                 {
@@ -322,12 +442,43 @@ namespace EasySave.ViewModels
                     return;
                 }
 
+
                 while (IsPaused && !StopRequested)
                 {
                     Thread.Sleep(500);
                 }
 
                 if (StopRequested) return;
+                
+                _fileSystemService.CopyFile(sourceFile, targetFile);
+                sw.Stop(); ;
+
+                
+
+                if (IsEncryptionEnabled)
+                {
+                    // Crée une copie temporaire avec l'extension .crypt directement dans le dossier cible
+                    string targetFileCrypt = targetFile;
+                    Directory.CreateDirectory(Path.GetDirectoryName(targetFileCrypt)!);
+                    File.Copy(sourceFile, targetFileCrypt, overwrite: true);
+
+                    var fileManager = new CryptoSoft.FileManager(targetFileCrypt, encryptionKey);
+                    timeMs = fileManager.TransformFile(); // Chiffre le fichier sur place
+
+                    // Supprimer l'original non chiffré si présent
+                    if (File.Exists(targetFile) && !targetFile.EndsWith(".crypt"))
+                        File.Delete(targetFile);
+                }
+                else
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(targetFile)!);
+                    File.Copy(sourceFile, targetFile, overwrite: true);
+                    sw.Stop();
+                    timeMs = sw.Elapsed.TotalMilliseconds;
+                }
+
+                fileSize = new FileInfo(targetFile).Length;
+
 
                 string sourceFile = modifiedFiles[i];
                 string relativePath = sourceFile.Substring(SourcePath.Length).TrimStart(Path.DirectorySeparatorChar);
@@ -342,7 +493,37 @@ namespace EasySave.ViewModels
             }
         }
 
+
         private DateTime GetLastBackupDate()
+
+
+        public void DecryptFile(string encryptedFilePath, string? outputFilePath = null)
+        {
+            try
+            {
+                var fileManager = new CryptoSoft.FileManager(encryptedFilePath, encryptionKey);
+                fileManager.TransformFile(); // Déchiffre sur place
+
+                string restoredPath = outputFilePath ?? encryptedFilePath.Replace(".crypt", "");
+
+                // Renomme le fichier déchiffré sans l'extension .crypt
+                if (File.Exists(restoredPath))
+                    File.Delete(restoredPath); // Supprimer s'il existe déjà pour éviter conflit
+
+                File.Move(encryptedFilePath, restoredPath);
+
+                _loggerService.Log($"Déchiffrement réussi : {encryptedFilePath} -> {restoredPath}");
+            }
+            catch (Exception ex)
+            {
+                _loggerService.LogError($"Erreur de déchiffrement : {ex.Message}");
+            }
+        }
+
+
+
+        private DateTime GetLastCompleteBackupDate()
+
         {
             return Directory.Exists(TargetPath)
                 ? Directory.GetLastWriteTime(TargetPath)

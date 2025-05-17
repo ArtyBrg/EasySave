@@ -1,8 +1,13 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using EasySave.Services;
+using System.Windows.Forms;
+using LoggerLib;
+using System.Text;
+using EasySave.Models;
+
 
 namespace EasySave.ViewModels
 {
@@ -12,6 +17,7 @@ namespace EasySave.ViewModels
         private readonly LanguageService _languageService;
         private readonly LoggerService _loggerService;
 
+
         private string _selectedViewName = "Home";
         private string _logContent = "";
         private string _currentLanguage = "EN";
@@ -20,6 +26,18 @@ namespace EasySave.ViewModels
         private string _newJobTargetPath = "";
         private string _newJobType = "Complete";
         private string _errorMessage = "";
+        private string _selectedViewName;
+        private StringBuilder _logBuilder = new StringBuilder();
+        private string _logContent = string.Empty;
+        private string _currentLanguage;
+
+        // Propriétés pour la création de jobs
+        private string _newJobName;
+        private string _newJobSourcePath;
+        private string _newJobTargetPath;
+        private string _newJobType;
+        private string _errorMessage;
+
 
         public MainViewModel(
             BackupManagerViewModel backupManager,
@@ -30,8 +48,19 @@ namespace EasySave.ViewModels
             _languageService = languageService;
             _loggerService = loggerService;
 
+
             _loggerService.LogMessageAdded += (sender, message) =>
                 LogContent += message + Environment.NewLine;
+
+            // Initialisation
+            _currentLanguage = "EN"; // Valeur par défaut
+            _selectedViewName = "Home";
+            _newJobType = "Complete";
+
+            // Abonnement aux événements
+            _loggerService.LogMessageAdded += OnLogMessageAdded;
+            _loggerService.Log("MainViewModel initialized - Log system ready");
+
 
             NavigateCommand = new RelayCommand(Navigate);
             SetLanguageCommand = new RelayCommand(SetLanguage);
@@ -40,7 +69,18 @@ namespace EasySave.ViewModels
             BrowseTargetCommand = new RelayCommand(BrowseTargetPath);
         }
 
+
         public BackupManagerViewModel BackupManager => _backupManager;
+
+        private void OnLogMessageAdded(object sender, string message)
+        {
+            // Ajouter le message à notre builder
+            _logBuilder.AppendLine(message);
+            // Mettre à jour la propriété LogContent avec le contenu complet
+            LogContent = _logBuilder.ToString();
+        }
+
+        public BackupManagerViewModel BackupManager => _backupManagerViewModel;
 
         public string SelectedViewName
         {
@@ -112,6 +152,9 @@ namespace EasySave.ViewModels
         {
             if (parameter is string viewName)
             {
+
+                _loggerService.Log($"Navigating to view: {viewName}");
+
                 SelectedViewName = viewName;
                 ErrorMessage = string.Empty;
             }
@@ -151,6 +194,8 @@ namespace EasySave.ViewModels
                 string[] jobParams = { NewJobName, NewJobSourcePath, NewJobTargetPath, NewJobType };
                 _backupManager.CreateJob(jobParams);
 
+                _loggerService.Log($"Created new backup job: {NewJobName} ({NewJobType})");
+
                 NewJobName = string.Empty;
                 NewJobSourcePath = string.Empty;
                 NewJobTargetPath = string.Empty;
@@ -160,7 +205,7 @@ namespace EasySave.ViewModels
             catch (Exception ex)
             {
                 ErrorMessage = $"Error creating job: {ex.Message}";
-                _loggerService.LogError($"Exception: {ex}");
+                _loggerService.LogError($"Exception creating job: {ex}");
             }
         }
 
@@ -169,8 +214,12 @@ namespace EasySave.ViewModels
         {
             return !string.IsNullOrWhiteSpace(NewJobName) &&
                    !string.IsNullOrWhiteSpace(NewJobSourcePath) &&
+
                    !string.IsNullOrWhiteSpace(NewJobTargetPath) &&
                    _backupManager.CanCreateJob(_);
+
+                   !string.IsNullOrWhiteSpace(NewJobTargetPath);
+
         }
 
         private void BrowseSourcePath(object _)
@@ -179,6 +228,7 @@ namespace EasySave.ViewModels
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 NewJobSourcePath = dialog.SelectedPath;
+                _loggerService.Log($"Source path selected: {dialog.SelectedPath}");
             }
         }
 
@@ -188,9 +238,36 @@ namespace EasySave.ViewModels
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 NewJobTargetPath = dialog.SelectedPath;
+                _loggerService.Log($"Target path selected: {dialog.SelectedPath}");
             }
         }
 
+
         public string GetLocalizedString(string key) => _languageService.GetString(key);
+
+        // Méthodes auxiliaires pour la traduction
+        public string GetLocalizedString(string key)
+        {
+            return _languageService.GetString(key);
+        }
+
+        private string _selectedLogFormat = "JSON";
+        public string SelectedLogFormat
+        {
+            get => _selectedLogFormat;
+            set
+            {
+                if (SetProperty(ref _selectedLogFormat, value))
+                {
+                    LogFormat format = value.ToUpper() switch
+                    {
+                        "XML" => LogFormat.Xml,
+                        _ => LogFormat.Json
+                    };
+                    _loggerService.SetLogFormat(format);
+                    _loggerService.Log($"Log format changed to {value.ToUpper()}");
+                }
+            }
+        }
     }
 }

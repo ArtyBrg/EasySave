@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using EasySave.Services;
 using EasySave.ViewModels;
+using LoggerLib;
 
 namespace EasySave.Views
 {
@@ -78,6 +80,9 @@ namespace EasySave.Views
                     case "5":
                         InitializeLanguage();
                         break;
+                    case "6":
+                        SettingsLog();
+                        break;
                     default:
                         Console.WriteLine("Invalid option. Please try again.");
                         break;
@@ -94,6 +99,7 @@ namespace EasySave.Views
             Console.WriteLine(_viewModel.GetTranslation("Main menu list"));
             Console.WriteLine(_viewModel.GetTranslation("Main menu exit"));
             Console.WriteLine(_viewModel.GetTranslation("Main menu select language"));
+            Console.WriteLine(_viewModel.GetTranslation("Main menu select log settings"));
             Console.WriteLine(_viewModel.GetTranslation("Main menu select option"));
         }
 
@@ -102,11 +108,6 @@ namespace EasySave.Views
             Console.WriteLine("\n");
             Console.WriteLine(_viewModel.GetTranslation("Create backup job"));
 
-            if (!_viewModel.CanCreateJob())
-            {
-                Console.WriteLine(_viewModel.GetTranslation("Maximum job create"));
-                return;
-            }
 
             string name = GetUserInput(_viewModel.GetTranslation("Create job name"));
             if (_viewModel.JobNameExists(name))
@@ -247,6 +248,25 @@ namespace EasySave.Views
             }
 
             return ids;
+        }
+
+        private void SettingsLog()
+        {
+            var settingsVm = new SettingsViewModel();
+
+            Console.WriteLine(_viewModel.GetTranslation("Select Log"));
+            string input = Console.ReadLine();
+
+            if (Enum.TryParse(typeof(LogFormat), input, true, out object formatObj) &&
+                Enum.IsDefined(typeof(LogFormat), formatObj))
+            {
+                var format = (LogFormat)formatObj;
+                settingsVm.ChangeLogFormat(format);
+            }
+            else
+            {
+                Console.WriteLine(_viewModel.GetTranslation("Error Log"));
+            }
         }
 
         private string GetUserInput(string prompt)

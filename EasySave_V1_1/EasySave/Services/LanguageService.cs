@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Globalization;
-using System.IO;
 using System.Resources;
-using System.Text.Json;
 using System.Threading;
+using EasySave.Models;
 
 namespace EasySave.Services
 {
     public class LanguageService
     {
         private static ResourceManager _resourceManager = EasySave_V1_1.Resources.Resources.ResourceManager;
-        private static readonly string SettingsFilePath =
-            Path.Combine(AppContext.BaseDirectory, "Settings.json");
 
         public void SetLanguage(string languageCode)
         {
@@ -25,23 +22,17 @@ namespace EasySave.Services
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
 
-            SaveLanguageToSettings(languageCode); // Sauvegarde automatique
+            var settings = SettingsService.Load();
+            settings.Language = languageCode.ToUpper();
+            SettingsService.Save(settings);
         }
 
         public void LoadLanguageFromSettings()
         {
-            if (!File.Exists(SettingsFilePath))
-            {
-                Console.WriteLine("Settings file not found. Using default language.");
-                return;
-            }
+            var settings = SettingsService.Load();
 
-            var json = File.ReadAllText(SettingsFilePath);
-            var settings = JsonSerializer.Deserialize<Settings>(json);
-
-            if (!string.IsNullOrEmpty(settings?.Language))
+            if (!string.IsNullOrEmpty(settings.Language))
             {
-                //Console.WriteLine($"Loaded language from settings: {settings.Language}");
                 SetLanguage(settings.Language);
             }
             else
@@ -50,22 +41,9 @@ namespace EasySave.Services
             }
         }
 
-
         public string GetString(string key)
         {
             return _resourceManager.GetString(key) ?? $"[{key}]";
-        }
-
-        private void SaveLanguageToSettings(string languageCode)
-        {
-            var settings = new Settings { Language = languageCode.ToUpper() };
-            var json = JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(SettingsFilePath, json);
-        }
-
-        private class Settings
-        {
-            public string Language { get; set; }
         }
     }
 }

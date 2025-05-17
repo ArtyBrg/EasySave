@@ -41,10 +41,6 @@ namespace EasySave.ViewModels
             return _backupManagerViewModel.GetAllJobs();
         }
 
-        public bool CanCreateJob()
-        {
-            return _backupManagerViewModel.GetAllJobs().Count() < 5;
-        }
 
         public bool JobNameExists(string name)
         {

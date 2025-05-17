@@ -204,4 +204,13 @@
   <data name="List job input empty" xml:space="preserve">
     <value>Input cannot be empty. Please try again:</value>
   </data>
+  <data name="Main menu select log settings" xml:space="preserve">
+    <value>6. Select Logs extension:</value>
+  </data>
+  <data name="Select Log" xml:space="preserve">
+    <value>Enter log format (Json / Xml):</value>
+  </data>
+  <data name="Error Log" xml:space="preserve">
+    <value>Invalid format, select a good one</value>
+  </data>
 </root>

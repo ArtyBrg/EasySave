@@ -1,21 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using System.Text.Json.Serialization;
+using LoggerLib; // LoggerLib.dll
 using EasySave.Models;
 
 namespace EasySave.Services
 {
     public class LoggerService
     {
-        private readonly string _logDirectory;
+        private DailyLogger _dailyLogger;
+        private string _logDirectory;
 
         public event EventHandler<string> LogMessageAdded;
 
         public LoggerService(string logDirectory = "Logs")
         {
+            var settings = SettingsService.Load();
             _logDirectory = logDirectory;
+
             Directory.CreateDirectory(_logDirectory);
             LoadExistingLogs();
         }
@@ -38,46 +40,44 @@ namespace EasySave.Services
             {
                 LogMessageAdded?.Invoke(this, $"[ERROR] Failed to load existing logs: {ex.Message}");
             }
+
+            _dailyLogger = new DailyLogger(logDirectory, settings.LogFormat);
+            Log("Logger service initialized");
+        }
+
+        public void SetLogFormat(LogFormat format)
+        {
+            try
+            {
+                _dailyLogger.SetLogFormat(format);
+
+                var settings = SettingsService.Load();
+                settings.LogFormat = format;
+                SettingsService.Save(settings);
+            }
+            catch (Exception ex)
+            {
+                LogError($"Failed to set log format: {ex.Message}");
+            }
         }
 
         public void Log(string message)
         {
-            var logMessage = $"[LOG] {DateTime.Now:yyyy-MM-dd HH:mm:ss}: {message}";
+            string logMessage = $"[LOG] {DateTime.Now:yyyy-MM-dd HH:mm:ss}: {message}";
             LogMessageAdded?.Invoke(this, logMessage);
         }
 
-        public void LogError(string errorMessage)
+        public void LogError(string message)
         {
-            var logMessage = $"[ERROR] {DateTime.Now:yyyy-MM-dd HH:mm:ss}: {errorMessage}";
-            LogMessageAdded?.Invoke(this, logMessage);
+            string errorMessage = $"[ERROR] {DateTime.Now:yyyy-MM-dd HH:mm:ss}: {message}";
+            LogMessageAdded?.Invoke(this, errorMessage);
         }
 
         public void LogFileTransfer(string backupName, string sourcePath, string targetPath, long size, double transferTimeMs)
         {
-            var entry = new JsonLogEntry
+            try
             {
-                Name = backupName,
-                FileSource = sourcePath,
-                FileTarget = targetPath,
-                FileSize = size,
-                FileTransferTime = transferTimeMs,
-                Time = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
-            };
 
-            LogJsonEntry(entry);
-
-            var message = $"[TRANSFER] {DateTime.Now:yyyy-MM-dd HH:mm:ss}: {backupName} - {sourcePath} -> {targetPath}";
-            LogMessageAdded?.Invoke(this, message);
-        }
-
-        private void LogJsonEntry(JsonLogEntry entry)
-        {
-            string logFilePath = Path.Combine(_logDirectory, $"{DateTime.Now:yyyy-MM-dd}.json");
-
-            List<JsonLogEntry> logEntries = new();
-
-            if (File.Exists(logFilePath))
-            {
                 string existingContent = File.ReadAllText(logFilePath);
                 try
                 {
@@ -90,14 +90,23 @@ namespace EasySave.Services
             }
 
             logEntries.Add(entry);
+          
+                _dailyLogger.LogFileTransfer(
+                    backupName,
+                    Path.GetFullPath(sourcePath),
+                    Path.GetFullPath(targetPath),
+                    size,
+                    transferTimeMs
+                );
 
-            var options = new JsonSerializerOptions
+                var message = $"[TRANSFER] {DateTime.Now:yyyy-MM-dd HH:mm:ss}: {backupName} - {sourcePath} -> {targetPath}";
+                Console.WriteLine(message); // Écrire dans la console pour le débogage
+                LogMessageAdded?.Invoke(this, message);
+            }
+            catch (Exception ex)
             {
-                WriteIndented = true,
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-            };
-
-            File.WriteAllText(logFilePath, JsonSerializer.Serialize(logEntries, options));
+                LogError($"Failed to log file transfer: {ex.Message}");
+            }
         }
     }
 }
