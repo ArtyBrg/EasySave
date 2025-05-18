@@ -50,7 +50,6 @@ namespace EasySave.Services
                 state.Progress = progress;
                 state.SourcePath = string.IsNullOrEmpty(sourcePath) ? state.SourcePath : sourcePath;
                 state.TargetPath = string.IsNullOrEmpty(targetPath) ? state.TargetPath : targetPath;
-                Thread.Sleep(30000);
                 state.TotalFiles = totalFiles > 0 ? totalFiles : state.TotalFiles;
                 state.TotalSize = totalSize > 0 ? totalSize : state.TotalSize;
                 state.FilesRemaining = filesLeft;
