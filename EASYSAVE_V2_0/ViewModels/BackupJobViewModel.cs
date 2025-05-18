@@ -264,7 +264,7 @@ namespace EasySave.ViewModels
             int totalFiles = allFiles.Count;
             var settings = SettingsService.Load();
 
-            _stateService.UpdateState(Name, "InProgress", 0, filesRemaining: totalFiles, totalFiles: totalFiles, totalSize: totalSize);
+            _stateService.UpdateState(Name, "InProgress", 0, totalFiles: totalFiles, totalSize: totalSize);
             _loggerService.Log($"Found {allFiles.Count} files to backup");
 
             for (int i = 0; i < allFiles.Count && !StopRequested; i++)
@@ -379,7 +379,7 @@ namespace EasySave.ViewModels
             long totalSize = modifiedFiles.Sum(f => new FileInfo(f).Length);
             int totalFiles = modifiedFiles.Count;
 
-            _stateService.UpdateState(Name, "InProgress", 0, filesRemaining: totalFiles, totalFiles: totalFiles, totalSize: totalSize);
+            _stateService.UpdateState(Name, "InProgress", 0, totalFiles: totalFiles, totalSize: totalSize);
             _loggerService.Log($"Found {modifiedFiles.Count} modified files since last backup");
 
             for (int i = 0; i < modifiedFiles.Count && !StopRequested; i++)
