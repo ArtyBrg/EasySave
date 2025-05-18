@@ -12,11 +12,13 @@ using System.Windows.Input;
 using EasySave.Models;
 using EasySave.Services;
 using CryptoSoft;
+using EasySave_WPF;
 
 namespace EasySave.ViewModels
 {
     public class BackupJobViewModel : ViewModelBase
     {
+
         private readonly BackupJob _backupJob;
         private readonly FileSystemService _fileSystemService;
         private readonly LoggerService _loggerService;

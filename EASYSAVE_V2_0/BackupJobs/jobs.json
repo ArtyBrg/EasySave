@@ -3,23 +3,15 @@
     "Id": 1,
     "Name": "Test",
     "SourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams",
-    "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams",
-    "Type": "Complete",
-    "IsEncryptionEnabled": false
-  },
-  {
-    "Id": 2,
-    "Name": "Test Crypt",
-    "SourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams",
     "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures",
     "Type": "Complete",
     "IsEncryptionEnabled": false
   },
   {
-    "Id": 3,
-    "Name": "Liam",
-    "SourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams",
-    "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures",
+    "Id": 4,
+    "Name": "ezez",
+    "SourcePath": "C:\\Users\\Brulux\\Pictures\\Screenshots",
+    "TargetPath": "C:\\Users\\Brulux\\Pictures\\Screenshots",
     "Type": "Complete",
     "IsEncryptionEnabled": false
   }

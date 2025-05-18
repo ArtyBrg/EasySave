@@ -28,6 +28,9 @@ namespace EasySave.ViewModels
         private string _newJobType;
         private string _errorMessage;
 
+
+        private string _currentLanguage = null;
+
         public MainViewModel(
             BackupManagerViewModel backupManagerViewModel,
             LanguageService languageService,
@@ -120,7 +123,6 @@ namespace EasySave.ViewModels
             set => SetProperty(ref _errorMessage, value);
         }
 
-
         public string CurrentLanguage
         {
             get => _currentLanguage;
@@ -133,7 +135,7 @@ namespace EasySave.ViewModels
                 }
             }
         }
-        // Commandespublic ICommand NavigateCommand { get; }
+        public ICommand NavigateCommand { get; }
         public ICommand SetLanguageCommand { get; }
         public ICommand CreateJobCommand { get; }
         public ICommand BrowseSourceCommand { get; }

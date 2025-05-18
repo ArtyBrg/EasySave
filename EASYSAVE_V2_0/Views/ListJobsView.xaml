@@ -149,16 +149,15 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
 
         <!-- Boutons d'action -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-            <Button Content="Execute Selected" Command="{Binding BackupManager.ExecuteSelectedJobCommand}" 
-                    Style="{StaticResource PrimaryButtonStyle}"/>
-            <Button Content="Execute All" Command="{Binding BackupManager.ExecuteAllJobsCommand}" 
+            <Button Content="{Binding Translations[ButtonExSelect]}" Command="{Binding BackupManager.ExecuteSelectedJobCommand}" 
+                    Style="{StaticResource PrimaryButtonStyle}" Width="125"/>
+            <Button Content="{Binding Translations[ButtonExAll]}" Command="{Binding BackupManager.ExecuteAllJobsCommand}" 
                     Style="{StaticResource SuccessButtonStyle}"/>
         </StackPanel>
 

@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace EasySave_WPF.Views
 {
@@ -41,7 +42,9 @@ namespace EasySave_WPF.Views
 
             if (string.IsNullOrWhiteSpace(encryptedPath) || !File.Exists(encryptedPath))
             {
-                MessageBox.Show("Veuillez sélectionner un fichier valide.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageTextBlock.Text = _viewModel.Translations["InvalidFile"];
+                MessageTextBlock.Foreground = new SolidColorBrush(Colors.Red);
+                MessageTextBlock.Visibility = Visibility.Visible;
                 return;
             }
 
@@ -49,7 +52,8 @@ namespace EasySave_WPF.Views
 
             _viewModel.DecryptFile(encryptedPath, outputPath);
 
-            MessageTextBlock.Text = "Fichier déchiffré avec succès !";
+            MessageTextBlock.Text = _viewModel.Translations["DecryptSuccess"];
+            MessageTextBlock.Foreground = new SolidColorBrush(Colors.Green);
             MessageTextBlock.Visibility = Visibility.Visible;
         }
     }

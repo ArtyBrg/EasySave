@@ -9,7 +9,7 @@
             <converters:JobStatusConverter x:Key="JobStatusConverter" />
             <converters:LanguageButtonColorConverter x:Key="LanguageButtonColorConverter" />
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-
+          
             <Style x:Key="RoundedButtonMenu" TargetType="Button">
                 <Setter Property="FontWeight" Value="Bold"/>
                 <Setter Property="Padding" Value="10,5"/>
@@ -156,7 +156,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-
+          
             <Style TargetType="{x:Type DataGridRow}">
                 <Style.Triggers>
                     <Trigger Property="IsSelected" Value="True">
@@ -164,6 +164,7 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

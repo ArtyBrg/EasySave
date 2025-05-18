@@ -9,6 +9,8 @@ namespace EasySave_WPF
 {
     public partial class App : Application
     {
+        public static AppViewModel AppViewModel { get; private set; }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);

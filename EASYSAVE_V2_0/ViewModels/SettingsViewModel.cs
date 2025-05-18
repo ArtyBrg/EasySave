@@ -396,58 +396,58 @@ namespace EasySave.ViewModels
 
                 // Appliquer les paramètres chargés
                 if (settings != null)
-                {
-                    SelectedLanguage = settings.Language;
-                    _loggerService?.Log($"Language loaded from settings: {SelectedLanguage}");
-                    SelectedLogFormat = settings.LogFormat;
-                    _loggerService?.Log($"Log format loaded from settings: {SelectedLogFormat}");
-
-                    // Charger les extensions
-                    ExtensionsToCrypt.Clear();
-                    int i = 0;
-                    foreach (var extension in settings.ExtensionsToCrypt)
                     {
-                        i += 1;
-                        ExtensionsToCrypt.Add(extension);
-                        _loggerService?.Log($"Extension to crypt number {i} loaded from settings: {extension}");
-                    }
+                        SelectedLanguage = settings.Language;
+                        _loggerService?.Log($"Language loaded from settings: {SelectedLanguage}");
+                        SelectedLogFormat = settings.LogFormat;
+                        _loggerService?.Log($"Log format loaded from settings: {SelectedLogFormat}");
 
-                    // Charger le logiciel métier
-                    if (!string.IsNullOrEmpty(settings.BusinessSoftware.Name) && settings.BusinessSoftware.Name != "Aucun")
-                    {
-                        CurrentBusinessSoftware = settings.BusinessSoftware.Name;
-
-                        // Ajout du logiciel métier à la liste si non présent
-                        var businessSoftware = new ProcessInfo
+                        // Charger les extensions
+                        ExtensionsToCrypt.Clear();
+                        int i = 0;
+                        foreach (var extension in settings.ExtensionsToCrypt)
                         {
-                            Name = settings.BusinessSoftware.Name,
-                            FullPath = settings.BusinessSoftware.FullPath
-                        };
-
-                        if (!AvailableProcesses.Any(p => p.FullPath == businessSoftware.FullPath))
-                        {
-                            AvailableProcesses.Add(businessSoftware);
+                            i += 1;
+                            ExtensionsToCrypt.Add(extension);
+                            _loggerService?.Log($"Extension to crypt number {i} loaded from settings: {extension}");
                         }
 
-                        // Sélection du logiciel métier
-                        SelectedBusinessSoftware = businessSoftware;
-                        _loggerService?.Log($"Business software loaded from settings: {SelectedBusinessSoftware}");
-                    }
+                        // Charger le logiciel métier
+                        if (!string.IsNullOrEmpty(settings.BusinessSoftware.Name) && settings.BusinessSoftware.Name != "Aucun")
+                        {
+                            CurrentBusinessSoftware = settings.BusinessSoftware.Name;
 
-                    // Appliquer le format de log
-                    if (_loggerService != null)
-                    {
-                        try
-                        {
-                            LogFormat format = settings.LogFormat;
-                            _loggerService.SetLogFormat(format);
+                            // Ajout du logiciel métier à la liste si non présent
+                            var businessSoftware = new ProcessInfo
+                            {
+                                Name = settings.BusinessSoftware.Name,
+                                FullPath = settings.BusinessSoftware.FullPath
+                            };
+
+                            if (!AvailableProcesses.Any(p => p.FullPath == businessSoftware.FullPath))
+                            {
+                                AvailableProcesses.Add(businessSoftware);
+                            }
+
+                            // Sélection du logiciel métier
+                            SelectedBusinessSoftware = businessSoftware;
+                            _loggerService?.Log($"Business software loaded from settings: {SelectedBusinessSoftware}");
                         }
-                        catch (Exception ex)
+
+                        // Appliquer le format de log
+                        if (_loggerService != null)
                         {
-                            _loggerService.LogError($"Failed to set log format from settings: {ex.Message}");
+                            try
+                            {
+                                LogFormat format = settings.LogFormat;
+                                _loggerService.SetLogFormat(format);
+                            }
+                            catch (Exception ex)
+                            {
+                                _loggerService.LogError($"Failed to set log format from settings: {ex.Message}");
+                            }
                         }
                     }
-                }
 
                 else
                 {
@@ -553,11 +553,5 @@ namespace EasySave.ViewModels
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
-
-
-
     }
-
-
-
 }
