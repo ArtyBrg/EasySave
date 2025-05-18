@@ -25,8 +25,8 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" 
-                                CornerRadius="6" 
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="6"
                                 SnapsToDevicePixels="True">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
@@ -54,8 +54,8 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" 
-                                CornerRadius="6" 
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="6"
                                 SnapsToDevicePixels="True">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
@@ -76,7 +76,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
     </UserControl.Resources>
 
     <Grid Margin="20">
@@ -87,42 +86,128 @@
         </Grid.RowDefinitions>
 
         <!-- Titre -->
-        <TextBlock Grid.Row="0" Text="{Binding Translations[ListJobs]}" TextAlignment="Center"
-                   FontSize="26" FontWeight="Bold" Margin="0,0,0,20" Foreground="#16A085"/>
+        <TextBlock Grid.Row="0" 
+                   Text="{Binding Translations[ListJobs]}" 
+                   TextAlignment="Center"
+                   FontSize="26" 
+                   FontWeight="Bold" 
+                   Margin="0,0,0,20" 
+                   Foreground="#16A085"/>
 
         <!-- DataGrid dans une carte -->
-        <Border Grid.Row="1" Background="White" CornerRadius="10" Padding="10"
-                BorderBrush="#D0D3D4" BorderThickness="1" SnapsToDevicePixels="True" >
-            <DataGrid ItemsSource="{Binding BackupManager.Jobs}" 
+        <Border Grid.Row="1" 
+                Background="White" 
+                CornerRadius="10" 
+                Padding="10"
+                BorderBrush="#D0D3D4" 
+                BorderThickness="1" 
+                SnapsToDevicePixels="True">
+            <DataGrid ItemsSource="{Binding BackupManager.Jobs}"
                       SelectedItem="{Binding BackupManager.SelectedJob}"
-                      AutoGenerateColumns="False" IsReadOnly="True"
-                      CanUserAddRows="False" CanUserDeleteRows="False"
-                      AlternatingRowBackground="#ECF0F1" RowBackground="White"
+                      AutoGenerateColumns="False" 
+                      IsReadOnly="True"
+                      CanUserAddRows="False" 
+                      CanUserDeleteRows="False"
+                      AlternatingRowBackground="#ECF0F1" 
+                      RowBackground="White"
                       GridLinesVisibility="None"
-                      RowHeaderWidth="0" 
+                      RowHeaderWidth="0"
                       HeadersVisibility="Column"
                       FontSize="14"
-                      >
+                      SelectionMode="Extended">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="40" />
-                    <DataGridTextColumn Header="{Binding Data[ColumnJobName], Source={StaticResource Proxy}}" Binding="{Binding Name}" Width="*" />
-                    <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="100" />
-                    <DataGridTextColumn Header="Source" Binding="{Binding SourcePath}" Width="2*" />
-                    <DataGridTextColumn Header="{Binding Data[ColumnTarget], Source={StaticResource Proxy}}" Binding="{Binding TargetPath}" Width="2*" />
-                    <DataGridTemplateColumn Header="{Binding Data[ColumnProgress], Source={StaticResource Proxy}}" Width="150">
+                    <!-- Colonne de Checkbox ajoutée -->
+                    <DataGridTemplateColumn Width="30">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ProgressBar Value="{Binding Progress}" Minimum="0" Maximum="100" 
-                                             Height="16" Margin="5,0" Foreground="#16A085" />
+                                <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          VerticalAlignment="Center" 
+                                          HorizontalAlignment="Center"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn Header="{Binding Data[ColumnStatus], Source={StaticResource Proxy}}" Width="100">
+                    <DataGridTextColumn Header="ID" 
+                                       Binding="{Binding Id}" 
+                                       Width="40" />
+                    <DataGridTextColumn Header="{Binding Data[ColumnJobName], Source={StaticResource Proxy}}" 
+                                       Binding="{Binding Name}" 
+                                       Width="*" />
+                    <DataGridTextColumn Header="Type" 
+                                       Binding="{Binding Type}" 
+                                       Width="100" />
+                    <DataGridTextColumn Header="Source" 
+                                       Binding="{Binding SourcePath}" 
+                                       Width="2*" />
+                    <DataGridTextColumn Header="{Binding Data[ColumnTarget], Source={StaticResource Proxy}}" 
+                                       Binding="{Binding TargetPath}" 
+                                       Width="2*" />
+                    <DataGridTemplateColumn Header="{Binding Data[ColumnProgress], Source={StaticResource Proxy}}" 
+                                           Width="150">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding IsRunning, Converter={StaticResource JobStatusConverter}}" 
-                                           HorizontalAlignment="Center" FontWeight="SemiBold" Foreground="#34495E"/>
+                                <ProgressBar Value="{Binding Progress}" 
+                                             Minimum="0" 
+                                             Maximum="100"
+                                             Height="16" 
+                                             Margin="5,0" 
+                                             Foreground="#16A085" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="{Binding Data[ColumnStatus], Source={StaticResource Proxy}}" 
+                                           Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding IsRunning, Converter={StaticResource JobStatusConverter}}"
+                                           HorizontalAlignment="Center" 
+                                           FontWeight="SemiBold" 
+                                           Foreground="#34495E"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Actions" 
+                                           Width="150">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" 
+                                            HorizontalAlignment="Center">
+                                    <Button Content="▶" 
+                                            Command="{Binding ExecuteCommand}"
+                                            ToolTip="Execute" 
+                                            Width="30" 
+                                            Height="24" 
+                                            Margin="2"
+                                            Background="#27AE60" 
+                                            Foreground="White"/>
+                                    <Button Content="⏸" 
+                                            Command="{Binding PauseCommand}"
+                                            ToolTip="Pause/Resume" 
+                                            Width="30" 
+                                            Height="24" 
+                                            Margin="2"
+                                            Background="#F39C12" 
+                                            Foreground="White"/>
+                                    <Button Content="⏹" 
+                                            Command="{Binding StopCommand}"
+                                            ToolTip="Stop" 
+                                            Width="30" 
+                                            Height="24" 
+                                            Margin="2"
+                                            Background="#C0392B" 
+                                            Foreground="White"/>
+                                    <Button Content="✏️"
+                                            Command="{Binding DataContext.BackupManager.RequestEditJobCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                            CommandParameter="{Binding}"
+                                            ToolTip="Edit" 
+                                            Width="30" 
+                                            Height="24" 
+                                            Margin="2"
+                                            Background="#3498DB" 
+                                            Foreground="White"/>
+                                </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -131,11 +216,113 @@
         </Border>
 
         <!-- Boutons d'action -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-            <Button Content="Execute Selected" Command="{Binding BackupManager.ExecuteSelectedJobCommand}" 
-                    Style="{StaticResource PrimaryButtonStyle}"/>
-            <Button Content="Execute All" Command="{Binding BackupManager.ExecuteAllJobsCommand}" 
+        <StackPanel Grid.Row="2" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Right" 
+                    Margin="0,20,0,0">
+            <Button Content="{Binding Translations[ButtonExSelect]}" 
+                    Command="{Binding BackupManager.ExecuteSelectedJobCommand}"
+                    Style="{StaticResource PrimaryButtonStyle}" 
+                    Width="125"
+                    IsEnabled="{Binding BackupManager.HasSelectedJobs}"/>
+            <Button Content="{Binding Translations[ButtonExAll]}" 
+                    Command="{Binding BackupManager.ExecuteAllJobsCommand}"
                     Style="{StaticResource SuccessButtonStyle}"/>
         </StackPanel>
+
+        <!-- Dialogue d'édition -->
+        <Border Grid.Row="0" 
+                Grid.RowSpan="3" 
+                Background="#80000000"
+                Visibility="{Binding BackupManager.ShowEditDialog, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Border Background="White" 
+                    Width="500" 
+                    Padding="20" 
+                    CornerRadius="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" 
+                               Text="{Binding Translations[EditPannel]}" 
+                               TextAlignment="Center"
+                               FontSize="26" 
+                               FontWeight="Bold" 
+                               Margin="0,0,0,20" 
+                               Foreground="#16A085"/>
+
+                    <StackPanel Grid.Row="1" 
+                                Margin="0,20">
+                        <TextBlock Text="{Binding Translations[JobName]}" 
+                                   Margin="0,0,0,5"/>
+                        <TextBox Text="{Binding BackupManager.JobToEdit.Name, Mode=TwoWay}"
+                                 Margin="0,0,0,10" 
+                                 Padding="5"/>
+
+                        <TextBlock Text="{Binding Translations[SourcePath]}" 
+                                   Margin="0,0,0,5"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding BackupManager.JobToEdit.SourcePath, Mode=TwoWay}"
+                                     Margin="0,0,5,10" 
+                                     Padding="5" 
+                                     Grid.Column="0"/>
+                            <Button Content="{Binding Translations[Browse]}" 
+                                    Command="{Binding BackupManager.BrowseSourceCommand}"
+                                    CommandParameter="{Binding BackupManager.JobToEdit}"
+                                    Width="80" Style="{StaticResource RoundedHoverBlueButton}" Margin="0,0,0,10" 
+                                    Grid.Column="1" Background="#2196F3" Foreground="White" BorderThickness="0"/>
+                        </Grid>
+
+                        <TextBlock Text="{Binding Translations[TargetPath]}" 
+                                   Margin="0,0,0,5"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding BackupManager.JobToEdit.TargetPath, Mode=TwoWay}"
+                                     Margin="0,0,5,10" 
+                                     Padding="5" 
+                                     Grid.Column="0"/>
+                            <Button Content="{Binding Translations[Browse]}" 
+                                    Command="{Binding BackupManager.BrowseTargetCommand}"
+                                    CommandParameter="{Binding BackupManager.JobToEdit}"
+                                    Width="80" Style="{StaticResource RoundedHoverBlueButton}" Margin="0,0,0,10" 
+                                    Grid.Column="1" Background="#2196F3" Foreground="White" BorderThickness="0"/>
+                        </Grid>
+
+                        <TextBlock Text="{Binding Translations[BackupType]}" 
+                                   Margin="0,0,0,5"/>
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton Content="{Binding Translations[Complete]}"
+                                         IsChecked="{Binding BackupManager.JobToEdit.Type, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter=Complete}"
+                                         Margin="0,0,20,0" 
+                                         VerticalContentAlignment="Center"/>
+                            <RadioButton Content="{Binding Translations[Differential]}"
+                                         IsChecked="{Binding BackupManager.JobToEdit.Type, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter=Differential}"
+                                         VerticalContentAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" 
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                        <Button Content="{Binding Translations[ButtonCancel]}" 
+                                Command="{Binding BackupManager.CancelEditCommand}" Background="Red" Foreground="White" FontWeight="Bold"
+                                Width="100" Style="{StaticResource RoundedHoverRedButton}" Height="30" Margin="0,0,10,0"/>
+                        <Button Content="{Binding Translations[ButtonSave]}" 
+                                Command="{Binding BackupManager.ConfirmEditCommand}" Style="{StaticResource RoundedHoverGreenButton}"
+                                Width="100" Height="30" Background="#27AE60" Foreground="White" FontWeight="Bold"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Border>
     </Grid>
 </UserControl>

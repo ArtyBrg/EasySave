@@ -252,4 +252,16 @@
   <data name="DecryptSuccess" xml:space="preserve">
     <value>File decrypted successfully!</value>
   </data>
+  <data name="ButtonExSelect" xml:space="preserve">
+    <value>Execute Selected</value>
+  </data>
+  <data name="ButtonExAll" xml:space="preserve">
+    <value>Execute All</value>
+  </data>
+  <data name="EditPannel" xml:space="preserve">
+    <value>Edit Backup Job:</value>
+  </data>
+  <data name="ButtonSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
 </root>

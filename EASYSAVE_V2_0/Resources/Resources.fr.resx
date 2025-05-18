@@ -252,4 +252,16 @@
   <data name="DecryptSuccess" xml:space="preserve">
     <value>Fichier déchiffré avec succès !</value>
   </data>
+  <data name="ButtonExSelect" xml:space="preserve">
+    <value>Exécuter la sélection</value>
+  </data>
+  <data name="ButtonExAll" xml:space="preserve">
+    <value>Tout exécuter</value>
+  </data>
+  <data name="EditPannel" xml:space="preserve">
+    <value>Modifier le travail de sauvegarde :</value>
+  </data>
+  <data name="ButtonSave" xml:space="preserve">
+    <value>Sauvegarder</value>
+  </data>
 </root>
