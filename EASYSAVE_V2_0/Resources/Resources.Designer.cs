@@ -196,6 +196,15 @@ namespace EASYSAVE_V2_0.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Save.
+        /// </summary>
+        internal static string ButtonSave {
+            get {
+                return ResourceManager.GetString("ButtonSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Name.
         /// </summary>
         internal static string ColumnJobName {
@@ -291,6 +300,15 @@ namespace EASYSAVE_V2_0.Resources {
         internal static string Differential {
             get {
                 return ResourceManager.GetString("Differential", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Edit Backup Job:.
+        /// </summary>
+        internal static string EditPannel {
+            get {
+                return ResourceManager.GetString("EditPannel", resourceCulture);
             }
         }
         

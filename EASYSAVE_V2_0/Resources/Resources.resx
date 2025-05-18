@@ -258,4 +258,10 @@
   <data name="ButtonExAll" xml:space="preserve">
     <value>Execute All</value>
   </data>
+  <data name="EditPannel" xml:space="preserve">
+    <value>Edit Backup Job:</value>
+  </data>
+  <data name="ButtonSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
 </root>

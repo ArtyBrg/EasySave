@@ -47,8 +47,8 @@
         </Border>
             <TextBlock x:Name="MessageTextBlock"
            Text=""
-           FontSize="14"
-           FontWeight="SemiBold"
+           FontSize="26"
+           FontWeight="Bold"
            TextAlignment="Center"
            HorizontalAlignment="Center"
            Visibility="Collapsed"
