@@ -1,45 +1,45 @@
 using System;
-using System.Windows;
-using System.Windows.Forms;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using EasySave.Services;
+using System.Windows.Forms;
 using LoggerLib;
 using System.Text;
 using EasySave.Models;
+using System.ComponentModel;
+using EasySave_WPF;
 
 namespace EasySave.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private readonly BackupManagerViewModel _backupManager;
+        private readonly BackupManagerViewModel _backupManagerViewModel;
         private readonly LanguageService _languageService;
         private readonly LoggerService _loggerService;
 
-        private string _selectedViewName = "Home";
-        private string _logContent = "";
-        private string _currentLanguage = "EN";
-        private string _newJobName = "";
-        private string _newJobSourcePath = "";
-        private string _newJobTargetPath = "";
-        private string _newJobType = "Complete";
-        private string _errorMessage = "";
+        private string _selectedViewName;
         private StringBuilder _logBuilder = new StringBuilder();
-        private string _selectedLogFormat = "JSON";
+        private string _logContent = string.Empty;
+
+        // Propriétés pour la création de jobs
+        private string _newJobName;
+        private string _newJobSourcePath;
+        private string _newJobTargetPath;
+        private string _newJobType;
+        private string _errorMessage;
 
         public MainViewModel(
-            BackupManagerViewModel backupManager,
+            BackupManagerViewModel backupManagerViewModel,
             LanguageService languageService,
             LoggerService loggerService)
         {
-            _backupManager = backupManager;
+            _backupManagerViewModel = backupManagerViewModel;
             _languageService = languageService;
             _loggerService = loggerService;
 
-            _loggerService.LogMessageAdded += (sender, message) =>
-                LogContent += message + Environment.NewLine;
+            InitLanguage();
 
             // Initialisation
-            _currentLanguage = "EN"; // Valeur par défaut
             _selectedViewName = "Home";
             _newJobType = "Complete";
 
@@ -47,11 +47,12 @@ namespace EasySave.ViewModels
             _loggerService.LogMessageAdded += OnLogMessageAdded;
             _loggerService.Log("MainViewModel initialized - Log system ready");
 
+            // Commandes
             NavigateCommand = new RelayCommand(Navigate);
-            SetLanguageCommand = new RelayCommand(SetLanguage);
             CreateJobCommand = new RelayCommand(CreateBackupJob, CanCreateJob);
-            BrowseSourceCommand = new RelayCommand(BrowseSourcePath);
-            BrowseTargetCommand = new RelayCommand(BrowseTargetPath);
+            BrowseSourceCommand = new RelayCommand(param => BrowseSourcePath());
+            BrowseTargetCommand = new RelayCommand(param => BrowseTargetPath());
+            SetLanguageCommand = new RelayCommand(param => ChangeLanguage(param as string));
         }
 
         public BackupManagerViewModel BackupManager => _backupManager;
@@ -64,6 +65,7 @@ namespace EasySave.ViewModels
             LogContent = _logBuilder.ToString();
         }
 
+        public BackupManagerViewModel BackupManager => _backupManagerViewModel;
         public string SelectedViewName
         {
             get => _selectedViewName;
@@ -74,12 +76,6 @@ namespace EasySave.ViewModels
         {
             get => _logContent;
             set => SetProperty(ref _logContent, value);
-        }
-
-        public string CurrentLanguage
-        {
-            get => _currentLanguage;
-            set => SetProperty(ref _currentLanguage, value);
         }
 
         public string NewJobName
@@ -124,12 +120,26 @@ namespace EasySave.ViewModels
             set => SetProperty(ref _errorMessage, value);
         }
 
-        public ICommand NavigateCommand { get; }
+
+        public string CurrentLanguage
+        {
+            get => _currentLanguage;
+            set
+            {
+                if (_currentLanguage != value)
+                {
+                    _currentLanguage = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        // Commandespublic ICommand NavigateCommand { get; }
         public ICommand SetLanguageCommand { get; }
         public ICommand CreateJobCommand { get; }
         public ICommand BrowseSourceCommand { get; }
         public ICommand BrowseTargetCommand { get; }
 
+        private string _selectedLogFormat = "JSON";
         public string SelectedLogFormat
         {
             get => _selectedLogFormat;
@@ -158,24 +168,16 @@ namespace EasySave.ViewModels
             }
         }
 
-        private void SetLanguage(object parameter)
+        private void InitLanguage()
         {
-            if (parameter is not string language) return;
+            var settings = SettingsService.Load();
+            CurrentLanguage = settings?.Language ?? "FR";
 
-            try
-            {
-                _languageService.SetLanguage(language);
-                CurrentLanguage = language.ToUpper();
-                _loggerService.Log($"Language changed to {language}");
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage = $"Error changing language: {ex.Message}";
-                _loggerService.LogError($"Failed to change language: {ex.Message}");
-            }
+            // Forcer la notification pour la couleur au démarrage
+            OnPropertyChanged(nameof(CurrentLanguage));
         }
 
-        private void CreateBackupJob(object _)
+        private void CreateBackupJob(object parameter)
         {
             ErrorMessage = string.Empty;
 
@@ -189,8 +191,14 @@ namespace EasySave.ViewModels
                     return;
                 }
 
+                if (_backupManagerViewModel.JobNameExists(NewJobName))
+                {
+                    ErrorMessage = "A job with this name already exists";
+                    return;
+                }
+
                 string[] jobParams = { NewJobName, NewJobSourcePath, NewJobTargetPath, NewJobType };
-                _backupManager.CreateJob(jobParams);
+                var job = _backupManagerViewModel.CreateJob(jobParams);
 
                 _loggerService.Log($"Created new backup job: {NewJobName} ({NewJobType})");
 
@@ -207,13 +215,13 @@ namespace EasySave.ViewModels
             }
         }
 
-        private bool CanCreateJob(object _)
+        private bool CanCreateJob(object parameter)
         {
             return !string.IsNullOrWhiteSpace(NewJobName) &&
                    !string.IsNullOrWhiteSpace(NewJobSourcePath) &&
-                   !string.IsNullOrWhiteSpace(NewJobTargetPath) &&
-                   _backupManager.CanCreateJob(null);
+                   !string.IsNullOrWhiteSpace(NewJobTargetPath);
         }
+
 
         private void BrowseSourcePath(object _)
         {
@@ -235,6 +243,10 @@ namespace EasySave.ViewModels
             }
         }
 
-        public string GetLocalizedString(string key) => _languageService.GetString(key);
+        // Méthodes auxiliaires pour la traduction
+        public string GetLocalizedString(string key)
+        {
+            return _languageService.GetString(key);
+        }
     }
 }

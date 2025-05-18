@@ -1,8 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Windows;
 using EasySave.Services;
 using EasySave.ViewModels;
-using System.IO;
-using System;
 
 namespace EasySave_WPF
 {
@@ -22,26 +23,22 @@ namespace EasySave_WPF
             var persistenceService = new PersistenceService(loggerService);
 
             // Initialisation des ViewModels
-            var backupManager = new BackupManagerViewModel(
-                fileSystemService,
-                loggerService,
-                stateService,
-                persistenceService);
+            var backupManagerViewModel = new BackupManagerViewModel(fileSystemService, loggerService, stateService);
+            var mainViewModel = new MainViewModel(backupManagerViewModel, languageService, loggerService);
+            var settingsViewModel = new SettingsViewModel(loggerService);
 
-            var mainWindow = new MainWindow();
-            mainWindow.DataContext = new MainViewModel(
-                backupManager,
-                languageService,
-                loggerService);
+            // Chargement de la langue des paramètres
+            languageService.LoadLanguageFromSettings();
+
+            // TranslationProvider
+            AppViewModel = new AppViewModel();
+
+            // Configuration de la fenêtre principale
+            var mainWindow = new MainWindow
+            {
+                DataContext = mainViewModel
+            };
             mainWindow.Show();
-        }
-
-        protected override void OnExit(ExitEventArgs e)
-        {
-            var mainVM = MainWindow?.DataContext as MainViewModel;
-            mainVM?.BackupManager.SaveJobs();
-
-            base.OnExit(e);
         }
     }
 }

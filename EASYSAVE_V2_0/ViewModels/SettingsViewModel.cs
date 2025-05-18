@@ -14,6 +14,7 @@ using LoggerLib;
 using System.Text;
 using System.Timers;
 using System.Windows.Threading;
+using EasySave_WPF;
 
 namespace EasySave.ViewModels
 {
@@ -31,17 +32,14 @@ namespace EasySave.ViewModels
         private StringBuilder _logBuilder = new StringBuilder();
         private string _logContent = string.Empty;
 
-        private string _currentLanguage = "FR"; // Par défaut en français
-        public string CurrentLanguage
+        private string _selectedLanguage;
+        public string SelectedLanguage
         {
-            get => _currentLanguage;
+            get => _selectedLanguage;
             set
             {
-                if (_currentLanguage != value)
-                {
-                    _currentLanguage = value;
-                    OnPropertyChanged();
-                }
+                _selectedLanguage = value;
+                OnPropertyChanged();
             }
         }
 
@@ -63,7 +61,7 @@ namespace EasySave.ViewModels
                     {
                         if (_businessPopupWindow == null)
                         {
-                            _businessPopupWindow = new Views.BusinessSoftwarePopup
+                            _businessPopupWindow = new Views.BusinessSoftwarePopup(this)
                             {
                                 Owner = Application.Current.MainWindow,
                                 WindowStartupLocation = WindowStartupLocation.CenterOwner
@@ -236,7 +234,7 @@ namespace EasySave.ViewModels
 
         private void SetLanguage(string language)
         {
-            CurrentLanguage = language;
+            SelectedLanguage = language;
             // Logique pour changer la langue de l'application
             _loggerService?.Log($"Language setting changed to {language}");
         }
@@ -330,11 +328,13 @@ namespace EasySave.ViewModels
             SaveSettings();
 
             _loggerService?.Log($"Applying settings:");
-            _loggerService?.Log($"- Language: {CurrentLanguage}");
+            _loggerService?.Log($"- Language: {SelectedLanguage}");
             _loggerService?.Log($"- Log format: {SelectedLogFormat}");
             _loggerService?.Log($"- Extensions to encrypt: {string.Join(", ", ExtensionsToCrypt)}");
             _loggerService?.Log($"- Business software: {CurrentBusinessSoftware}");
             _loggerService?.Log("Settings applied successfully.");
+
+            App.AppViewModel.ChangeLanguages(SelectedLanguage);
 
             MessageBox.Show("Paramètres enregistrés avec succès !", "EasySave", MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -394,10 +394,11 @@ namespace EasySave.ViewModels
             {
                 var settings = SettingsService.Load();
 
+                // Appliquer les paramètres chargés
                 if (settings != null)
                 {
-                    CurrentLanguage = settings.Language;
-                    _loggerService?.Log($"Language loaded from settings: {CurrentLanguage}");
+                    SelectedLanguage = settings.Language;
+                    _loggerService?.Log($"Language loaded from settings: {SelectedLanguage}");
                     SelectedLogFormat = settings.LogFormat;
                     _loggerService?.Log($"Log format loaded from settings: {SelectedLogFormat}");
 
@@ -416,6 +417,7 @@ namespace EasySave.ViewModels
                     {
                         CurrentBusinessSoftware = settings.BusinessSoftware.Name;
 
+                        // Ajout du logiciel métier à la liste si non présent
                         var businessSoftware = new ProcessInfo
                         {
                             Name = settings.BusinessSoftware.Name,
@@ -427,15 +429,18 @@ namespace EasySave.ViewModels
                             AvailableProcesses.Add(businessSoftware);
                         }
 
+                        // Sélection du logiciel métier
                         SelectedBusinessSoftware = businessSoftware;
                         _loggerService?.Log($"Business software loaded from settings: {SelectedBusinessSoftware}");
                     }
 
+                    // Appliquer le format de log
                     if (_loggerService != null)
                     {
                         try
                         {
-                            _loggerService.SetLogFormat(settings.LogFormat);
+                            LogFormat format = settings.LogFormat;
+                            _loggerService.SetLogFormat(format);
                         }
                         catch (Exception ex)
                         {
@@ -443,13 +448,17 @@ namespace EasySave.ViewModels
                         }
                     }
                 }
+
                 else
                 {
-                    // Valeurs par défaut
+                    // Fichier non trouvé, charger des valeurs par défaut
                     ExtensionsToCrypt.Add(".txt");
                     ExtensionsToCrypt.Add(".docx");
                     ExtensionsToCrypt.Add(".pdf");
+
+                    // Créer et sauvegarder un fichier de paramètres par défaut
                     SaveSettings();
+
                     _loggerService?.Log("Created default settings file");
                 }
             }
@@ -458,7 +467,7 @@ namespace EasySave.ViewModels
                 MessageBox.Show($"Erreur lors du chargement des paramètres : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 _loggerService?.LogError($"Error loading settings: {ex.Message}");
 
-                // Valeurs par défaut en cas d'erreur
+                // Charger des valeurs par défaut en cas d'erreur
                 ExtensionsToCrypt.Add(".txt");
                 ExtensionsToCrypt.Add(".docx");
                 ExtensionsToCrypt.Add(".pdf");
@@ -482,7 +491,7 @@ namespace EasySave.ViewModels
                 // Créer l'objet de paramètres
                 var settings = new EasySave.Models.AppSettings
                 {
-                    Language = CurrentLanguage,
+                    Language = SelectedLanguage,
                     LogFormat = SelectedLogFormat,
                     ExtensionsToCrypt = ExtensionsToCrypt.ToList(),
                     BusinessSoftware = new EasySave.Models.BusinessSoftware
