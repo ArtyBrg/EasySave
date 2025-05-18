@@ -126,6 +126,29 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Actions" Width="150">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Button Content="▶" Command="{Binding ExecuteCommand}"
+                                        ToolTip="Execute" Width="30" Height="24" Margin="2"
+                                        Background="#27AE60" Foreground="White"/>
+                                    <Button Content="⏸" Command="{Binding PauseCommand}"
+                                        ToolTip="Pause/Resume" Width="30" Height="24" Margin="2"
+                                        Background="#F39C12" Foreground="White"/>
+                                    <Button Content="⏹" Command="{Binding StopCommand}"
+                                        ToolTip="Stop" Width="30" Height="24" Margin="2"
+                                        Background="#C0392B" Foreground="White"/>
+                                    <Button Content="✏️"
+                                        Command="{Binding DataContext.BackupManager.RequestEditJobCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                        CommandParameter="{Binding}"
+                                        ToolTip="Edit" Width="30" Height="24" Margin="2"
+                                        Background="#3498DB" Foreground="White"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
@@ -137,5 +160,64 @@
             <Button Content="{Binding Translations[ButtonExAll]}" Command="{Binding BackupManager.ExecuteAllJobsCommand}" 
                     Style="{StaticResource SuccessButtonStyle}"/>
         </StackPanel>
+
+        <Border Grid.Row="0" Grid.RowSpan="3" Background="#80000000"
+                Visibility="{Binding BackupManager.ShowEditDialog, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Border Background="White" Width="500" Padding="20" CornerRadius="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Edit Backup Job" FontWeight="Bold" FontSize="18"/>
+                    <StackPanel Grid.Row="1" Margin="0,20">
+                        <TextBlock Text="Job Name:" Margin="0,0,0,5"/>
+                        <TextBox Text="{Binding BackupManager.JobToEdit.Name, Mode=TwoWay}"
+                                 Margin="0,0,0,10" Padding="5"/>
+                        <TextBlock Text="Source Path:" Margin="0,0,0,5"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding BackupManager.JobToEdit.SourcePath, Mode=TwoWay}"
+                                     Margin="0,0,5,10" Padding="5" Grid.Column="0"/>
+                            <Button Content="Browse..." Command="{Binding BackupManager.BrowseSourceCommand}"
+                                    CommandParameter="{Binding BackupManager.JobToEdit}"
+                                    Width="80" Margin="0,0,0,10" Grid.Column="1"/>
+                        </Grid>
+                        <TextBlock Text="Target Path:" Margin="0,0,0,5"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding BackupManager.JobToEdit.TargetPath, Mode=TwoWay}"
+                                     Margin="0,0,5,10" Padding="5" Grid.Column="0"/>
+                            <Button Content="Browse..." Command="{Binding BackupManager.BrowseTargetCommand}"
+                                    CommandParameter="{Binding BackupManager.JobToEdit}"
+                                    Width="80" Margin="0,0,0,10" Grid.Column="1"/>
+                        </Grid>
+                        <TextBlock Text="Backup Type:" Margin="0,0,0,5"/>
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton Content="Complete"
+                                         IsChecked="{Binding BackupManager.JobToEdit.Type, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter=Complete}"
+                                         Margin="0,0,20,0" VerticalContentAlignment="Center"/>
+                            <RadioButton Content="Differential"
+                                         IsChecked="{Binding BackupManager.JobToEdit.Type, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter=Differential}"
+                                         VerticalContentAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="Cancel" Command="{Binding BackupManager.CancelEditCommand}"
+                                Width="100" Height="30" Margin="0,0,10,0"/>
+                        <Button Content="Save" Command="{Binding BackupManager.ConfirmEditCommand}"
+                                Width="100" Height="30" Background="#27AE60" Foreground="White"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Border>
+
     </Grid>
 </UserControl>

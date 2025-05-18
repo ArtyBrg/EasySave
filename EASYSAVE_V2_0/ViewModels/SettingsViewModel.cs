@@ -84,8 +84,8 @@ namespace EasySave.ViewModels
 
                             // Forcer la fenêtre principale à revenir au premier plan
                             Application.Current.MainWindow.Activate();
-                            Application.Current.MainWindow.Topmost = true;    // Place au-dessus
-                            Application.Current.MainWindow.Topmost = false;   // Réinitialise pour permettre d'autres fenêtrages plus tard
+                            Application.Current.MainWindow.Topmost = true;     // Place au-dessus
+                            Application.Current.MainWindow.Topmost = false;    // Réinitialise pour permettre d'autres fenêtrages plus tard
                             Application.Current.MainWindow.Focus();
                         }
                     }
@@ -111,7 +111,7 @@ namespace EasySave.ViewModels
 
                 LogFormat format = value;
                 _loggerService.SetLogFormat(format);
-  
+
             }
         }
 
@@ -211,7 +211,7 @@ namespace EasySave.ViewModels
             LoadRunningProcesses();
             LoadSettings();
 
-            _businessSoftwareCheckTimer = new System.Timers.Timer(2000); // 5000 ms = 5 secondes
+            _businessSoftwareCheckTimer = new System.Timers.Timer(2000); // 2 secondes
             _businessSoftwareCheckTimer.Elapsed += CheckBusinessSoftwareRunning;
             _businessSoftwareCheckTimer.Start();
 
@@ -334,7 +334,6 @@ namespace EasySave.ViewModels
             _loggerService?.Log($"- Business software: {CurrentBusinessSoftware}");
             _loggerService?.Log("Settings applied successfully.");
 
-
             App.AppViewModel.ChangeLanguages(SelectedLanguage);
 
             MessageBox.Show("Paramètres enregistrés avec succès !", "EasySave", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -449,7 +448,7 @@ namespace EasySave.ViewModels
                             }
                         }
                     }
-                
+
                 else
                 {
                     // Fichier non trouvé, charger des valeurs par défaut
