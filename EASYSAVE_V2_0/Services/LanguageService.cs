@@ -10,8 +10,6 @@ namespace EasySave.Services
     public class LanguageService
     {
         private static ResourceManager _resourceManager = EASYSAVE_V2_0.Resources.Resources.ResourceManager;
-        private static readonly string SettingsFilePath =
-            Path.Combine(AppContext.BaseDirectory, "Settings.json");
 
         public void SetLanguage(string languageCode)
         {

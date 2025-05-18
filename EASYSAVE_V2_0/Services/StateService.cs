@@ -9,7 +9,7 @@ namespace EasySave.Services
 {
     public class StateService
     {
-        private string StateFile = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\\..\\..\\", "state.json"));
+        private string StateFile = Path.Combine(AppContext.BaseDirectory, @"..\\..\\..\\", "States", "state.json");
         private readonly List<BackupState> _states = new();
         private readonly LoggerService _logger;
 
