@@ -58,8 +58,6 @@ namespace EasySave.ViewModels
             SetLanguageCommand = new RelayCommand(param => ChangeLanguage(param as string));
         }
 
-        public BackupManagerViewModel BackupManager => _backupManager;
-
         private void OnLogMessageAdded(object sender, string message)
         {
             // Ajouter le message à notre builder
@@ -225,7 +223,7 @@ namespace EasySave.ViewModels
         }
 
 
-        private void BrowseSourcePath(object _)
+        private void BrowseSourcePath()
         {
             using var dialog = new FolderBrowserDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
@@ -235,7 +233,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        private void BrowseTargetPath(object _)
+        private void BrowseTargetPath()
         {
             using var dialog = new FolderBrowserDialog();
             if (dialog.ShowDialog() == DialogResult.OK)

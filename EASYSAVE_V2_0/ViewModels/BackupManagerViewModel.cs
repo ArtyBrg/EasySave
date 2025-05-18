@@ -119,21 +119,18 @@ namespace EasySave.ViewModels
             return _jobs.Any(j => j.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
 
-        public void CreateJob(object parameters)
+        public BackupJobViewModel CreateJob(string[] parameters)
         {
-            if (parameters is not string[] jobParams || jobParams.Length < 4)
-                throw new ArgumentException("Invalid job parameters");
+            if (parameters.Length < 4)
+                throw new ArgumentException("Missing job parameters");
 
-            string name = jobParams[0];
-            string source = jobParams[1];
-            string target = jobParams[2];
-            string type = jobParams[3];
+            string name = parameters[0];
+            string source = parameters[1];
+            string target = parameters[2];
+            string type = parameters[3];
 
             if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Job name cannot be empty");
-
-            if (JobNameExists(name))
-                throw new ArgumentException("Job name already exists");
+                throw new ArgumentException("Job name cannot be null or empty", nameof(name));
 
             var job = new BackupJob
             {
@@ -150,6 +147,8 @@ namespace EasySave.ViewModels
             _loggerService.Log($"Created new backup job: {name} (ID: {jobViewModel.Id})");
 
             SaveJobsToFile();
+
+            return jobViewModel;
         }
 
         public bool CanCreateJob(object _)
@@ -186,6 +185,30 @@ namespace EasySave.ViewModels
             var tasks = jobsToExecute.Select(job => Task.Run(() => job.ExecuteAsync())).ToList();
             await Task.WhenAll(tasks);
             IsExecutingJobs = false;
+        }
+
+        public async Task ExecuteJobsAsync(IEnumerable<int> jobIds)
+        {
+            if (IsExecutingJobs)
+                return;
+
+            IsExecutingJobs = true;
+
+            try
+            {
+                foreach (var id in jobIds)
+                {
+                    var job = _jobs.FirstOrDefault(j => j.Id == id);
+                    if (job != null)
+                    {
+                        await job.ExecuteAsync();
+                    }
+                }
+            }
+            finally
+            {
+                IsExecutingJobs = false;
+            }
         }
 
         private void DeleteSelectedJobsWithConfirmation(object parameter)

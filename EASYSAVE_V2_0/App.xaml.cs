@@ -25,7 +25,7 @@ namespace EasySave_WPF
             var persistenceService = new PersistenceService(loggerService);
 
             // Initialisation des ViewModels
-            var backupManagerViewModel = new BackupManagerViewModel(fileSystemService, loggerService, stateService);
+            var backupManagerViewModel = new BackupManagerViewModel(fileSystemService, loggerService, stateService, persistenceService);
             var mainViewModel = new MainViewModel(backupManagerViewModel, languageService, loggerService);
             var settingsViewModel = new SettingsViewModel(loggerService);
 
