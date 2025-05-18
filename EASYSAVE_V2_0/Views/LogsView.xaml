@@ -6,22 +6,28 @@
              xmlns:local="clr-namespace:EasySave_WPF.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="20">
+    <Grid Margin="25" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <!-- Titre -->
-        <TextBlock Grid.Row="0" Text="Application Logs" 
-                   FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+        <TextBlock Grid.Row="0" Text="{Binding Translations[ApplicationLogs]}" TextAlignment="Center"
+                   FontSize="24" FontWeight="Bold" Margin="0,0,0,20" Foreground="#1ABC9C"/>
 
-        <!-- Zone de logs -->
-        <TextBox Grid.Row="1" Text="{Binding LogContent, Mode=OneWay}" 
-                 IsReadOnly="True" TextWrapping="Wrap" 
-                 VerticalScrollBarVisibility="Auto" 
-                 HorizontalScrollBarVisibility="Auto"
-                 FontFamily="Consolas" FontSize="12"
-                 Background="#F9F9F9" BorderThickness="1" BorderBrush="#DDDDDD" />
+        <!-- Card contenant la zone de logs -->
+        <Border Grid.Row="1" Background="#F5F5F5" BorderBrush="#DDDDDD" BorderThickness="1" CornerRadius="8"
+                Padding="15" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" ShadowDepth="1" Opacity="0.15"/>
+            </Border.Effect>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <TextBlock Text="{Binding LogContent, Mode=OneWay}" 
+                           TextWrapping="Wrap" FontFamily="Consolas" FontSize="12"
+                           Foreground="#333333" />
+            </ScrollViewer>
+        </Border>
     </Grid>
 </UserControl>

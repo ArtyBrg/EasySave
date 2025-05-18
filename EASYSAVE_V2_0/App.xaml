@@ -8,6 +8,163 @@
             <converters:RadioButtonCheckedConverter x:Key="RadioButtonCheckedConverter" />
             <converters:JobStatusConverter x:Key="JobStatusConverter" />
             <converters:LanguageButtonColorConverter x:Key="LanguageButtonColorConverter" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+          
+            <Style x:Key="RoundedButtonMenu" TargetType="Button">
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Padding" Value="10,5"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="20"
+                            SnapsToDevicePixels="True">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True"/>
+
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#2980B9"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#1C598A"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RoundedHoverBlueButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="BorderBrush" Value="#1565C0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="6">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      RecognizesAccessKey="True"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#1976D2"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="border" Property="Background" Value="#FFF0F0F0"/>
+                                    <Setter Property="Foreground" Value="#FFADADAD"/>
+                                    <Setter Property="BorderBrush" Value="#FFADADAD"/>
+                                    <Setter Property="Cursor" Value="Arrow"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RoundedHoverGreenButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="BorderBrush" Value="#1B5E20"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="6">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      RecognizesAccessKey="True"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#1E8449"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="border" Property="Background" Value="#FFF0F0F0"/>
+                                    <Setter Property="Foreground" Value="#FFADADAD"/>
+                                    <Setter Property="BorderBrush" Value="#FFADADAD"/>
+                                    <Setter Property="Cursor" Value="Arrow"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RoundedHoverRedButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="BorderBrush" Value="#B71C1C"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="6">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      RecognizesAccessKey="True"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#C62828"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="border" Property="Background" Value="#FFF0F0F0"/>
+                                    <Setter Property="Foreground" Value="#FFADADAD"/>
+                                    <Setter Property="BorderBrush" Value="#FFADADAD"/>
+                                    <Setter Property="Cursor" Value="Arrow"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RoundedHoverPurpleButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Background" Value="#673AB7"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="#512DA8"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="6">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      RecognizesAccessKey="True"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#5E35B1"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+          
+            <Style TargetType="{x:Type DataGridRow}">
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#E3F2FD"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -117,91 +117,151 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Execute backup execution completed" xml:space="preserve">
-    <value>Backup jobs execution completed.</value>
+  <data name="ButtonAdd" xml:space="preserve">
+    <value>Add</value>
   </data>
-  <data name="Create backup job" xml:space="preserve">
-    <value>=== Create Backup Job ===</value>
+  <data name="ApplicationLogs" xml:space="preserve">
+    <value>Displaying logs</value>
   </data>
-  <data name="Create job name" xml:space="preserve">
-    <value>Enter job name:</value>
+  <data name="BackupType" xml:space="preserve">
+    <value>Backup type:</value>
   </data>
-  <data name="Create job path" xml:space="preserve">
-    <value>Enter source path:</value>
+  <data name="Browse" xml:space="preserve">
+    <value>Browse...</value>
   </data>
-  <data name="Create job target" xml:space="preserve">
-    <value>Enter target path:</value>
+  <data name="BusinessSoftwarePopUp" xml:space="preserve">
+    <value>Business software is currently running.</value>
   </data>
-  <data name="Create job type" xml:space="preserve">
-    <value>Enter backup type (Complete/Differential):</value>
+  <data name="ButtonCancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="Execute backup enter job id" xml:space="preserve">
-    <value>Enter job IDs to execute (1 ;3 / 1-3):</value>
+  <data name="ButtonCreate" xml:space="preserve">
+    <value>Create Job</value>
   </data>
-  <data name="Execute backup job" xml:space="preserve">
-    <value>=== Execute backup job ===</value>
+  <data name="ButtonLangFR" xml:space="preserve">
+    <value>French</value>
   </data>
-  <data name="Execute backup no available" xml:space="preserve">
-    <value>No backup jobs available.</value>
-  </data>
-  <data name="Execute backup no job select" xml:space="preserve">
-    <value>No jobs selected.</value>
-  </data>
-  <data name="Execute backup no valid id" xml:space="preserve">
-    <value>No valid job IDs entered.</value>
-  </data>
-  <data name="Execute backup print list" xml:space="preserve">
-    <value>Available backup jobs:</value>
-  </data>
-  <data name="Job name already exists" xml:space="preserve">
-    <value>Job name already exists</value>
-  </data>
-  <data name="job type complete" xml:space="preserve">
+  <data name="Complete" xml:space="preserve">
     <value>Complete</value>
   </data>
-  <data name="job type differential" xml:space="preserve">
+  <data name="CreateJob" xml:space="preserve">
+    <value>Create new backup job</value>
+  </data>
+  <data name="CryptFile" xml:space="preserve">
+    <value>File encryption:</value>
+  </data>
+  <data name="Differential" xml:space="preserve">
     <value>Differential</value>
   </data>
-  <data name="job type error" xml:space="preserve">
-    <value>Invalid type. Please enter 'Complete' or 'Differential'</value>
+  <data name="JobName" xml:space="preserve">
+    <value>Job Name:</value>
   </data>
-  <data name="Main menu create" xml:space="preserve">
-    <value>1. Create backup job</value>
+  <data name="SettingCrypt" xml:space="preserve">
+    <value>File extensions to be encrypted during backups:</value>
   </data>
-  <data name="Main menu execute" xml:space="preserve">
-    <value>2. Execute backup jobs</value>
+  <data name="SettingLanguage" xml:space="preserve">
+    <value>Language:</value>
   </data>
-  <data name="Main menu exit" xml:space="preserve">
-    <value>4. Exit</value>
+  <data name="SettingLog" xml:space="preserve">
+    <value>Logs Format:</value>
   </data>
-  <data name="Main menu list" xml:space="preserve">
-    <value>3. List backup jobs</value>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Settings</value>
   </data>
-  <data name="Main menu select language" xml:space="preserve">
-    <value>5. Select language FR/EN</value>
+  <data name="SourcePath" xml:space="preserve">
+    <value>Source path:</value>
   </data>
-  <data name="Main menu select option" xml:space="preserve">
-    <value>Select an option: </value>
+  <data name="TabCreate" xml:space="preserve">
+    <value>Create Job</value>
   </data>
-  <data name="Maximum job create" xml:space="preserve">
-    <value>You have reached the maximum number of backup jobs (5).</value>
+  <data name="TabDecrypt" xml:space="preserve">
+    <value>Decrypt</value>
   </data>
-  <data name="Select language" xml:space="preserve">
-    <value>To select your language enter 'FR' or 'EN'</value>
+  <data name="TabHome" xml:space="preserve">
+    <value>Home</value>
   </data>
-  <data name="Title" xml:space="preserve">
-    <value>=== EasySave Main Menu ===</value>
+  <data name="TabJob" xml:space="preserve">
+    <value>List Jobs</value>
   </data>
-  <data name="Execute backup executing error" xml:space="preserve">
-    <value>Error executing backup jobs:</value>
+  <data name="TabSetting" xml:space="preserve">
+    <value>Settings</value>
   </data>
-  <data name="List job title" xml:space="preserve">
-    <value>=== Backup Jobs List ===</value>
+  <data name="TargetPath" xml:space="preserve">
+    <value>Target path:</value>
   </data>
-  <data name="List job no backup available" xml:space="preserve">
-    <value>No backup jobs available.</value>
+  <data name="SettingSoftware" xml:space="preserve">
+    <value>Business Software:</value>
   </data>
-  <data name="List job input empty" xml:space="preserve">
-    <value>Input cannot be empty. Please try again:</value>
+  <data name="UseCalc" xml:space="preserve">
+    <value>Use Calculator</value>
+  </data>
+  <data name="SelectedSoftware" xml:space="preserve">
+    <value>Business software selected:</value>
+  </data>
+  <data name="ButtonApply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="SoftText" xml:space="preserve">
+    <value>Define business software that, when running, will prevent the application from running.</value>
+  </data>
+  <data name="ButtonLangEN" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome to EasySave</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Your Backup Solution</value>
+  </data>
+  <data name="ButtonHomeView" xml:space="preserve">
+    <value>View Existing Jobs</value>
+  </data>
+  <data name="ButtonHomeCreate" xml:space="preserve">
+    <value>Create a New Job</value>
+  </data>
+  <data name="ColumnTarget" xml:space="preserve">
+    <value>Target</value>
+  </data>
+  <data name="ColumnProgress" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="ColumnJobName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ColumnStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="ListJobs" xml:space="preserve">
+    <value>Backup Jobs</value>
+  </data>
+  <data name="SettingLogText" xml:space="preserve">
+    <value>Select logs file format:</value>
+  </data>
+  <data name="ButtonDecrypt" xml:space="preserve">
+    <value>Decrypt</value>
+  </data>
+  <data name="DecryptTitle" xml:space="preserve">
+    <value>File Decryption</value>
+  </data>
+  <data name="FileToDecrypt" xml:space="preserve">
+    <value>File to decrypt:</value>
+  </data>
+  <data name="InvalidFile" xml:space="preserve">
+    <value>Please select a valid file.</value>
+  </data>
+  <data name="DecryptSuccess" xml:space="preserve">
+    <value>File decrypted successfully!</value>
+  </data>
+  <data name="ButtonExSelect" xml:space="preserve">
+    <value>Execute Selected</value>
+  </data>
+  <data name="ButtonExAll" xml:space="preserve">
+    <value>Execute All</value>
+  </data>
+  <data name="EditPannel" xml:space="preserve">
+    <value>Edit Backup Job:</value>
+  </data>
+  <data name="ButtonSave" xml:space="preserve">
+    <value>Save</value>
   </data>
 </root>

@@ -17,7 +17,32 @@ namespace EasySave.Services
         {
             var settings = SettingsService.Load();
             _logDirectory = logDirectory;
-            _dailyLogger = new DailyLogger(logDirectory, settings.LogFormat);
+
+            Directory.CreateDirectory(_logDirectory);
+            LoadExistingLogs();
+        }
+
+        private void LoadExistingLogs()
+        {
+            try
+            {
+                string logFilePath = Path.Combine(_logDirectory, $"{DateTime.Now:yyyy-MM-dd}.json");
+                if (File.Exists(logFilePath))
+                {
+                    string existingContent = File.ReadAllText(logFilePath);
+                    if (!string.IsNullOrWhiteSpace(existingContent))
+                    {
+                        LogMessageAdded?.Invoke(this, $"Loaded existing logs from {logFilePath}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogMessageAdded?.Invoke(this, $"[ERROR] Failed to load existing logs: {ex.Message}");
+            }
+
+            var settings = SettingsService.Load();
+            _dailyLogger = new DailyLogger(_logDirectory, settings.LogFormat);
             Log("Logger service initialized");
         }
 

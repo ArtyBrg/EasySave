@@ -12,30 +12,91 @@ using Newtonsoft.Json;
 using EasySave.Services;
 using LoggerLib;
 using System.Text;
+using System.Timers;
+using System.Windows.Threading;
+using EasySave_WPF;
 
 namespace EasySave.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
 
+        private Window _businessPopupWindow;
+
         private readonly LoggerService _loggerService;
+
+        private System.Timers.Timer _businessSoftwareCheckTimer;
+        private bool _popupAlreadyShown = false;
+
 
         private StringBuilder _logBuilder = new StringBuilder();
         private string _logContent = string.Empty;
 
-        private string _currentLanguage = "FR"; // Par défaut en français
-        public string CurrentLanguage
+        private string _selectedLanguage;
+        public string SelectedLanguage
         {
-            get => _currentLanguage;
+            get => _selectedLanguage;
             set
             {
-                if (_currentLanguage != value)
-                {
-                    _currentLanguage = value;
-                    OnPropertyChanged();
-                }
+                _selectedLanguage = value;
+                OnPropertyChanged();
             }
         }
+
+        private void CheckBusinessSoftwareRunning(object sender, ElapsedEventArgs e)
+        {
+            try
+            {
+                var settings = SettingsService.Load();
+
+                if (string.IsNullOrEmpty(settings?.BusinessSoftware?.FullPath))
+                    return;
+
+                var processName = Path.GetFileNameWithoutExtension(settings.BusinessSoftware.FullPath);
+                var runningInstances = Process.GetProcessesByName(processName);
+
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (runningInstances.Any())
+                    {
+                        if (_businessPopupWindow == null)
+                        {
+                            _businessPopupWindow = new Views.BusinessSoftwarePopup(this)
+                            {
+                                Owner = Application.Current.MainWindow,
+                                WindowStartupLocation = WindowStartupLocation.CenterOwner
+                            };
+
+                            // Rendre l'application inactive pendant ce temps
+                            Application.Current.MainWindow.IsEnabled = false;
+
+                            _businessPopupWindow.Show();
+                        }
+                    }
+                    else
+                    {
+                        if (_businessPopupWindow != null)
+                        {
+                            _businessPopupWindow.Close();
+                            _businessPopupWindow = null;
+
+                            Application.Current.MainWindow.IsEnabled = true;
+
+                            // Forcer la fenêtre principale à revenir au premier plan
+                            Application.Current.MainWindow.Activate();
+                            Application.Current.MainWindow.Topmost = true;     // Place au-dessus
+                            Application.Current.MainWindow.Topmost = false;    // Réinitialise pour permettre d'autres fenêtrages plus tard
+                            Application.Current.MainWindow.Focus();
+                        }
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                _loggerService?.LogError($"Erreur pendant la détection du logiciel métier : {ex.Message}");
+            }
+        }
+
 
         public ObservableCollection<string> LogFormats { get; } = new ObservableCollection<string> { "JSON", "XML" };
         // Format de log
@@ -50,7 +111,7 @@ namespace EasySave.ViewModels
 
                 LogFormat format = value;
                 _loggerService.SetLogFormat(format);
-  
+
             }
         }
 
@@ -149,6 +210,11 @@ namespace EasySave.ViewModels
 
             LoadRunningProcesses();
             LoadSettings();
+
+            _businessSoftwareCheckTimer = new System.Timers.Timer(2000); // 2 secondes
+            _businessSoftwareCheckTimer.Elapsed += CheckBusinessSoftwareRunning;
+            _businessSoftwareCheckTimer.Start();
+
         }
 
         private void OnLogMessageAdded(object sender, string message)
@@ -168,7 +234,7 @@ namespace EasySave.ViewModels
 
         private void SetLanguage(string language)
         {
-            CurrentLanguage = language;
+            SelectedLanguage = language;
             // Logique pour changer la langue de l'application
             _loggerService?.Log($"Language setting changed to {language}");
         }
@@ -236,7 +302,7 @@ namespace EasySave.ViewModels
 
         private void UseCalculator(object parameter)
         {
-            const string calculatorName = "calc.exe";
+            const string calculatorName = "CalculatorApp";
 
             // Recherche de la calculatrice dans les processus existants
             var calculator = AvailableProcesses.FirstOrDefault(p => p.Name.Equals(calculatorName, StringComparison.OrdinalIgnoreCase));
@@ -247,7 +313,7 @@ namespace EasySave.ViewModels
                 calculator = new ProcessInfo
                 {
                     Name = calculatorName,
-                    FullPath = "calc.exe" // Le chemin complet n'est pas nécessaire pour la calculatrice
+                    FullPath = "CalculatorApp" // Le chemin complet n'est pas nécessaire pour la calculatrice
                 };
                 AvailableProcesses.Add(calculator);
             }
@@ -262,11 +328,13 @@ namespace EasySave.ViewModels
             SaveSettings();
 
             _loggerService?.Log($"Applying settings:");
-            _loggerService?.Log($"- Language: {CurrentLanguage}");
+            _loggerService?.Log($"- Language: {SelectedLanguage}");
             _loggerService?.Log($"- Log format: {SelectedLogFormat}");
             _loggerService?.Log($"- Extensions to encrypt: {string.Join(", ", ExtensionsToCrypt)}");
             _loggerService?.Log($"- Business software: {CurrentBusinessSoftware}");
             _loggerService?.Log("Settings applied successfully.");
+
+            App.AppViewModel.ChangeLanguages(SelectedLanguage);
 
             MessageBox.Show("Paramètres enregistrés avec succès !", "EasySave", MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -282,18 +350,21 @@ namespace EasySave.ViewModels
                 {
                     try
                     {
-                        if (!string.IsNullOrEmpty(process.MainWindowTitle))
+                        string path = GetProcessFilePath(process);
+
+                        // Filtrer les vrais logiciels (optionnel)
+                        if (path.StartsWith("C:\\Program Files") || path.StartsWith("C:\\Program Files (x86)"))
                         {
                             AvailableProcesses.Add(new ProcessInfo
                             {
-                                Name = process.ProcessName + ".exe",
-                                FullPath = GetProcessFilePath(process)
+                                Name = process.ProcessName,
+                                FullPath = path
                             });
                         }
                     }
                     catch
                     {
-                        // Ignore les processus auxquels on n'a pas accès
+                        // Accès refusé à certains processus
                     }
                 }
             }
@@ -303,6 +374,7 @@ namespace EasySave.ViewModels
                 _loggerService?.LogError($"Error loading processes: {ex.Message}");
             }
         }
+
 
         private string GetProcessFilePath(Process process)
         {
@@ -325,8 +397,8 @@ namespace EasySave.ViewModels
                 // Appliquer les paramètres chargés
                 if (settings != null)
                     {
-                        CurrentLanguage = settings.Language;
-                        _loggerService?.Log($"Language loaded from settings: {CurrentLanguage}");
+                        SelectedLanguage = settings.Language;
+                        _loggerService?.Log($"Language loaded from settings: {SelectedLanguage}");
                         SelectedLogFormat = settings.LogFormat;
                         _loggerService?.Log($"Log format loaded from settings: {SelectedLogFormat}");
 
@@ -376,7 +448,7 @@ namespace EasySave.ViewModels
                             }
                         }
                     }
-                
+
                 else
                 {
                     // Fichier non trouvé, charger des valeurs par défaut
@@ -419,7 +491,7 @@ namespace EasySave.ViewModels
                 // Créer l'objet de paramètres
                 var settings = new EasySave.Models.AppSettings
                 {
-                    Language = CurrentLanguage,
+                    Language = SelectedLanguage,
                     LogFormat = SelectedLogFormat,
                     ExtensionsToCrypt = ExtensionsToCrypt.ToList(),
                     BusinessSoftware = new EasySave.Models.BusinessSoftware

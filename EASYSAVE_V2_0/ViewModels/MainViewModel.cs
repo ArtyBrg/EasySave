@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using EasySave.Services;
@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using LoggerLib;
 using System.Text;
 using EasySave.Models;
+using System.ComponentModel;
 using EasySave_WPF;
 
 namespace EasySave.ViewModels
@@ -19,7 +20,6 @@ namespace EasySave.ViewModels
         private string _selectedViewName;
         private StringBuilder _logBuilder = new StringBuilder();
         private string _logContent = string.Empty;
-        private string _currentLanguage;
 
         // Propriétés pour la création de jobs
         private string _newJobName;
@@ -27,6 +27,9 @@ namespace EasySave.ViewModels
         private string _newJobTargetPath;
         private string _newJobType;
         private string _errorMessage;
+
+
+        private string _currentLanguage = null;
 
         public MainViewModel(
             BackupManagerViewModel backupManagerViewModel,
@@ -37,8 +40,9 @@ namespace EasySave.ViewModels
             _languageService = languageService;
             _loggerService = loggerService;
 
+            InitLanguage();
+
             // Initialisation
-            _currentLanguage = "EN"; // Valeur par défaut
             _selectedViewName = "Home";
             _newJobType = "Complete";
 
@@ -48,10 +52,10 @@ namespace EasySave.ViewModels
 
             // Commandes
             NavigateCommand = new RelayCommand(Navigate);
-            SetLanguageCommand = new RelayCommand(param => SetLanguage(param as string));
             CreateJobCommand = new RelayCommand(CreateBackupJob, CanCreateJob);
             BrowseSourceCommand = new RelayCommand(param => BrowseSourcePath());
             BrowseTargetCommand = new RelayCommand(param => BrowseTargetPath());
+            SetLanguageCommand = new RelayCommand(param => ChangeLanguage(param as string));
         }
 
         private void OnLogMessageAdded(object sender, string message)
@@ -63,7 +67,6 @@ namespace EasySave.ViewModels
         }
 
         public BackupManagerViewModel BackupManager => _backupManagerViewModel;
-
         public string SelectedViewName
         {
             get => _selectedViewName;
@@ -76,13 +79,6 @@ namespace EasySave.ViewModels
             set => SetProperty(ref _logContent, value);
         }
 
-        public string CurrentLanguage
-        {
-            get => _currentLanguage;
-            set => SetProperty(ref _currentLanguage, value);
-        }
-
-        // Propriétés pour la création de jobs
         public string NewJobName
         {
             get => _newJobName;
@@ -125,12 +121,42 @@ namespace EasySave.ViewModels
             set => SetProperty(ref _errorMessage, value);
         }
 
-        // Commandes
+        public string CurrentLanguage
+        {
+            get => _currentLanguage;
+            set
+            {
+                if (_currentLanguage != value)
+                {
+                    _currentLanguage = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public ICommand NavigateCommand { get; }
         public ICommand SetLanguageCommand { get; }
         public ICommand CreateJobCommand { get; }
         public ICommand BrowseSourceCommand { get; }
         public ICommand BrowseTargetCommand { get; }
+
+        private string _selectedLogFormat = "JSON";
+        public string SelectedLogFormat
+        {
+            get => _selectedLogFormat;
+            set
+            {
+                if (SetProperty(ref _selectedLogFormat, value))
+                {
+                    LogFormat format = value.ToUpper() switch
+                    {
+                        "XML" => LogFormat.Xml,
+                        _ => LogFormat.Json
+                    };
+                    _loggerService.SetLogFormat(format);
+                    _loggerService.Log($"Log format changed to {value.ToUpper()}");
+                }
+            }
+        }
 
         private void Navigate(object parameter)
         {
@@ -138,26 +164,17 @@ namespace EasySave.ViewModels
             {
                 _loggerService.Log($"Navigating to view: {viewName}");
                 SelectedViewName = viewName;
-                ErrorMessage = string.Empty; // Réinitialiser les messages d'erreur lors de la navigation
+                ErrorMessage = string.Empty;
             }
         }
 
-        private void SetLanguage(string language)
+        private void InitLanguage()
         {
-            if (string.IsNullOrEmpty(language))
-                return;
+            var settings = SettingsService.Load();
+            CurrentLanguage = settings?.Language ?? "FR";
 
-            try
-            {
-                _languageService.SetLanguage(language);
-                CurrentLanguage = language.ToUpper();
-                _loggerService.Log($"Language changed to {language}");
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage = $"Error changing language: {ex.Message}";
-                _loggerService.LogError($"Failed to change language: {ex.Message}");
-            }
+            // Forcer la notification pour la couleur au démarrage
+            OnPropertyChanged(nameof(CurrentLanguage));
         }
 
         private void CreateBackupJob(object parameter)
@@ -205,6 +222,7 @@ namespace EasySave.ViewModels
                    !string.IsNullOrWhiteSpace(NewJobTargetPath);
         }
 
+
         private void BrowseSourcePath()
         {
             using var dialog = new FolderBrowserDialog();
@@ -229,25 +247,6 @@ namespace EasySave.ViewModels
         public string GetLocalizedString(string key)
         {
             return _languageService.GetString(key);
-        }
-
-        private string _selectedLogFormat = "JSON";
-        public string SelectedLogFormat
-        {
-            get => _selectedLogFormat;
-            set
-            {
-                if (SetProperty(ref _selectedLogFormat, value))
-                {
-                    LogFormat format = value.ToUpper() switch
-                    {
-                        "XML" => LogFormat.Xml,
-                        _ => LogFormat.Json
-                    };
-                    _loggerService.SetLogFormat(format);
-                    _loggerService.Log($"Log format changed to {value.ToUpper()}");
-                }
-            }
         }
     }
 }

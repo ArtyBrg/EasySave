@@ -13,51 +13,12 @@ namespace EasySave.Services
         private readonly List<BackupState> _states = new();
         private readonly LoggerService _logger;
 
-        // Événement pour la notification UI
         public event EventHandler<BackupState> StateUpdated;
 
         public StateService(LoggerService logger)
         {
             _logger = logger;
             LoadStates();
-        }
-
-        private void LoadStates()
-        {
-            try
-            {
-                if (File.Exists(StateFile))
-                {
-                    var json = File.ReadAllText(StateFile);
-                    if (!string.IsNullOrWhiteSpace(json))
-                    {
-                        var states = JsonSerializer.Deserialize<List<BackupState>>(json);
-                        if (states != null)
-                        {
-                            _states.Clear();
-                            _states.AddRange(states);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Failed to load states: {ex.Message}");
-            }
-        }
-
-        private void SaveStates()
-        {
-            try
-            {
-                var options = new JsonSerializerOptions { WriteIndented = true };
-                var json = JsonSerializer.Serialize(_states, options);
-                File.WriteAllText(StateFile, json);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Failed to save states: {ex.Message}");
-            }
         }
 
         public void UpdateState(string jobName, string status, double progress,
@@ -109,9 +70,44 @@ namespace EasySave.Services
             }
         }
 
-        public IEnumerable<BackupState> GetAllStates()
+        private void LoadStates()
         {
-            return _states.AsReadOnly();
+            try
+            {
+                if (File.Exists(StateFile))
+                {
+                    var json = File.ReadAllText(StateFile);
+                    if (!string.IsNullOrWhiteSpace(json))
+                    {
+                        var states = JsonSerializer.Deserialize<List<BackupState>>(json);
+                        if (states != null)
+                        {
+                            _states.Clear();
+                            _states.AddRange(states);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to load states: {ex.Message}");
+            }
         }
+
+        private void SaveStates()
+        {
+            try
+            {
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                var json = JsonSerializer.Serialize(_states, options);
+                File.WriteAllText(StateFile, json);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to save states: {ex.Message}");
+            }
+        }
+
+        public IEnumerable<BackupState> GetAllStates() => _states.AsReadOnly();
     }
 }
