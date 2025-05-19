@@ -1,0 +1,31 @@
+@startuml
+class JsonLogEntry {
+    + Name : string <<get>> <<set>>
+    + FileSource : string <<get>> <<set>>
+    + FileTarget : string <<get>> <<set>>
+    + FileSize : long <<get>> <<set>>
+    + FileTransferTime : double <<get>> <<set>>
+    + Time : string <<get>> <<set>>
+    + EncryptionTime : double <<get>> <<set>>
+}
+class LoggerService {
+    - _logDirectory : string
+    +  <<event>> LogMessageAdded : EventHandler<string> 
+    + LoggerService(logDirectory:string)
+    - LoadExistingLogs() : void
+    + SetLogFormat(format:LogFormat) : void
+    + Log(message:string) : void
+    + LogError(message:string) : void
+    + LogFileTransfer(backupName:string, sourcePath:string, targetPath:string, size:long, transferTimeMs:double, encryptionTimeMs:double) : void
+}
+Class DailyLogger {
+    - <<readonly>> _logDirectory : string
+    + DailyLogger(logDirectory:string, logFormat:LogFormat)
+    + SetLogFormat(format:LogFormat) : void
+    + Log(entry:JsonLogEntry) : void
+    - LogJson(entry:JsonLogEntry, path:string) : void
+    - LogXml(entry:JsonLogEntry, path:string) : void
+    + LogFileTransfer(backupName:string, sourcePath:string, targetPath:string, size:long, transferTimeMs:double, encryptionTimeMs:double) : void
+}
+LoggerService --> "_dailyLogger" DailyLogger
+@enduml

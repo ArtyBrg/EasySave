@@ -1,5 +1,6 @@
 ﻿namespace EasySave.Models
 {
+    // Enum for log format
     public class BackupState
     {
         public string Name { get; set; }

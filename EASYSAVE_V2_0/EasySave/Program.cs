@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace EasySave_WPF
 {
+    // Console application to execute backup jobs
     public static class Program
     {
         [DllImport("kernel32.dll")]
@@ -15,6 +16,7 @@ namespace EasySave_WPF
         [STAThread]
         public static void Main(string[] args)
         {
+            // Verification if the application is running in console mode
             if (args.Length > 0)
             {
                 AttachConsole(ATTACH_PARENT_PROCESS);

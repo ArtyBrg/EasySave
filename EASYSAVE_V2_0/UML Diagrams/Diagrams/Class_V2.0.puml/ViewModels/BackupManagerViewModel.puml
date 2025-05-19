@@ -1,0 +1,37 @@
+@startuml
+class BackupManagerViewModel {
+    - _nextId : int = 1
+    - _showEditDialog : bool
+    - _isExecutingJobs : bool = false
+    + BackupManagerViewModel(fileSystemService:FileSystemService, loggerService:LoggerService, stateService:StateService, persistenceService:PersistenceService)
+    + ShowEditDialog : bool <<get>> <<set>>
+    - IsExecutingJobs : bool <<get>> <<set>>
+    - LoadInitialJobs() : void
+    + SaveJobs() : void
+    + JobNameExists(name:string) : bool
+    + CreateJob(parameters:string[]) : BackupJobViewModel
+    + CanCreateJob(_:object) : bool
+    - <<async>> ExecuteSelectedJobAsync() : Task
+    - <<async>> ExecuteAllJobsAsync() : Task
+    + <<async>> ExecuteJobsAsync(jobIds:IEnumerable<int>) : Task
+    - DeleteSelectedJobsWithConfirmation(parameter:object) : void
+    + RequestEditJob(job:BackupJobViewModel) : void
+    - ConfirmEdit() : void
+    - CancelEdit() : void
+    + <<async>> ExecuteJobsSequentially() : Task
+    - CancelAllRunningJobs() : void
+    - BrowsePath(job:BackupJobViewModel, isSource:bool) : void
+    - {static} <<readonly>> JobsFileName : string
+    + SaveJobsToFile() : void
+    + LoadJobsFromFile() : void
+}
+ViewModelBase <|-- BackupManagerViewModel
+BackupManagerViewModel --> "_fileSystemService" FileSystemService
+BackupManagerViewModel --> "_loggerService" LoggerService
+BackupManagerViewModel --> "_stateService" StateService
+BackupManagerViewModel --> "_persistenceService" PersistenceService
+BackupManagerViewModel --> "_selectedJob" BackupJobViewModel
+BackupManagerViewModel --> "_jobToEdit" BackupJobViewModel
+BackupManagerViewModel --> "SelectedJob" BackupJobViewModel
+BackupManagerViewModel --> "JobToEdit" BackupJobViewModel
+@enduml

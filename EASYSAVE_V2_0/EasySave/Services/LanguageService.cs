@@ -7,10 +7,12 @@ using System.Threading;
 
 namespace EasySave.Services
 {
+    // Class to manage the language settings of the application
     public class LanguageService
     {
         private static ResourceManager _resourceManager = EASYSAVE_V2_0.Resources.Resources.ResourceManager;
 
+        /// Path to the settings file
         public void SetLanguage(string languageCode)
         {
             var culture = languageCode.ToUpper() switch
@@ -28,6 +30,7 @@ namespace EasySave.Services
             SettingsService.Save(settings);
         }
 
+        // Load the language from the settings file
         public void LoadLanguageFromSettings()
         {
             var settings = SettingsService.Load();
@@ -38,15 +41,17 @@ namespace EasySave.Services
             }
             else
             {
-                // Si aucune langue n'est définie, on utilise la langue par défaut (anglais)
+                // If no language is set, default to English
             }
         }
 
+        // Get the current language
         public string GetString(string key)
         {
             return _resourceManager.GetString(key) ?? $"[{key}]";
         }
 
+        // Get the current language
         private class Settings
         {
             public string Language { get; set; }

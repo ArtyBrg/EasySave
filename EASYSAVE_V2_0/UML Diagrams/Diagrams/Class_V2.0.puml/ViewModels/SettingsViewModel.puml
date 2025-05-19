@@ -1,0 +1,44 @@
+@startuml
+class SettingsViewModel {
+    - _popupAlreadyShown : bool = false
+    - _logContent : string
+    - _selectedLanguage : string
+    + SelectedLanguage : string <<get>> <<set>>
+    - CheckBusinessSoftwareRunning(sender:object, e:ElapsedEventArgs) : void
+    - _fileExtensionToCrypt : string = ""
+    + FileExtensionToCrypt : string <<get>> <<set>>
+    - _currentBusinessSoftware : string = "Aucun"
+    + CurrentBusinessSoftware : string <<get>> <<set>>
+    + SettingsViewModel(loggerService:LoggerService)
+    - OnLogMessageAdded(sender:object, message:string) : void
+    + LogContent : string <<get>> <<set>>
+    - SetLanguage(language:string) : void
+    - AddExtension(parameter:object) : void
+    - RemoveExtension(extension:string) : void
+    - BrowseBusinessSoftware(parameter:object) : void
+    - UseCalculator(parameter:object) : void
+    - ApplySettings(parameter:object) : void
+    - LoadRunningProcesses() : void
+    - GetProcessFilePath(process:Process) : string
+    - LoadSettings() : void
+    - SaveSettings() : void
+}
+class ProcessInfo {
+    + Name : string <<get>> <<set>>
+    + FullPath : string <<get>> <<set>>
+    + <<override>> ToString() : string
+}
+class "RelayCommand`1"<T> {
+    + RelayCommand(execute:Action<T>, canExecute:Predicate<T>)
+    + CanExecute(parameter:object) : bool
+    + Execute(parameter:object) : void
+}
+ViewModelBase <|-- SettingsViewModel
+SettingsViewModel --> "_businessPopupWindow" Window
+SettingsViewModel --> "_loggerService" LoggerService
+SettingsViewModel --> "_selectedLogFormat" LogFormat
+SettingsViewModel --> "SelectedLogFormat" LogFormat
+SettingsViewModel --> "_selectedBusinessSoftware" ProcessInfo
+SettingsViewModel --> "SelectedBusinessSoftware" ProcessInfo
+ICommand <|-- "RelayCommand`1"
+@enduml

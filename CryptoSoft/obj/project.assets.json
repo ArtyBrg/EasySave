@@ -69,23 +69,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Utilisateur\\.nuget\\packages\\": {},
+    "C:\\Users\\chamd\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\Génie Logiciel\\Projet\\CryptoSoft\\CryptoSoft.csproj",
+      "projectUniqueName": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\CryptoSoft\\CryptoSoft.csproj",
       "projectName": "CryptoSoft",
-      "projectPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\Génie Logiciel\\Projet\\CryptoSoft\\CryptoSoft.csproj",
-      "packagesPath": "C:\\Users\\Utilisateur\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\Génie Logiciel\\Projet\\CryptoSoft\\obj\\",
+      "projectPath": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\CryptoSoft\\CryptoSoft.csproj",
+      "packagesPath": "C:\\Users\\chamd\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\CryptoSoft\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Utilisateur\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\chamd\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

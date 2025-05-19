@@ -6,6 +6,7 @@ using EasySave.Models;
 
 namespace EasySave.Services
 {
+    /// Handles the persistence of backup jobs
     public class PersistenceService
     {
         private const string JobsFile = "jobs.json";
@@ -16,10 +17,12 @@ namespace EasySave.Services
             _logger = logger;
         }
 
+        //Backup jobs are stored in a JSON file
         public List<BackupJob> LoadJobs()
         {
             try
             {
+                // Check if the jobs file exists
                 if (File.Exists(JobsFile))
                 {
                     var json = File.ReadAllText(JobsFile);
@@ -33,6 +36,7 @@ namespace EasySave.Services
             return new List<BackupJob>();
         }
 
+        //Save the backup jobs to a JSON file
         public void SaveJobs(IEnumerable<BackupJob> jobs)
         {
             try

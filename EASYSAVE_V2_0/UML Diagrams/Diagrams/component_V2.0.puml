@@ -1,0 +1,68 @@
+@startuml
+title Component Diagram – EasySave v2.0 (incl. v1.1 features)
+
+/' ✦ EXTERNES '/ 
+database "Log File\n(JSON / XML)"           as LogFile
+database "State File\n(JSON)"               as StateFile
+file     "Language Resources\n(.resx / JSON)" as LangRes
+component "CryptoSoft.exe"                  as CryptoSoft
+component "Business App\n(user-defined)"    as BizApp
+
+/' ✦ COEUR TECHNIQUE '/ 
+package "Core Functionality" {
+    [EasySave Core]          as Core
+    [Logger.dll]             as Logger
+    [Localization Module]    as Localizer
+    [CryptoService]          as CryptoSvc
+    [BizApp Watcher]         as BizWatcher
+}
+
+note right of Core
+Manages an unlimited number of
+jobs (full / diff)  
+Play / Pause / Stop command  
+(pre-prepared; activated v3.0)
+end note
+
+note bottom of Logger
+Produces daily JSON or XML logs  
+(+ encryption time in ms  
+  0: no encryption  
+  >0: duration  
+  <0 : error code)
+end note
+
+note right of CryptoSvc
+Call CryptoSoft.exe  
+Encryption only for
+extensions listed in
+general settings
+end note
+
+note bottom of BizWatcher
+Monitors the “Business App” process  
+If active: prevents backup launch  
+Sequential jobs: terminates current file  
+Logs termination
+end note
+
+/' ✦ INTERFACE UTILISATEUR '/ 
+package "GUI Application (WPF)" {
+    [EasySave UI]            as GUI
+}
+
+/' ✦ DEPENDANCES '/ 
+GUI     --> Core
+Core    --> Logger       : uses
+Core    --> Localizer    : internationalization
+Core    --> CryptoSvc    : optional encrypt
+Core    --> BizWatcher   : before run
+Core    --> LogFile      : write logs
+Core    --> StateFile    : write state
+Logger  --> LogFile      : append
+Localizer --> LangRes    : load resources
+CryptoSvc --> CryptoSoft : CLI call
+BizWatcher --> BizApp    : detect process
+
+
+@enduml
