@@ -476,13 +476,35 @@ namespace EasySave.ViewModels
                 sw.Stop();
                 timeMs = sw.Elapsed.TotalMilliseconds;
 
+                double encryptionTimeMs = 0;
+
                 if (IsEncryptionEnabled)
                 {
-                    var fileManager = new CryptoSoft.FileManager(targetFile, encryptionKey);
-                    fileManager.TransformFile();
+                    Stopwatch sc = Stopwatch.StartNew();
+
+                    try
+                    {
+                        var fileManager = new CryptoSoft.FileManager(targetFile, encryptionKey);
+                        fileManager.TransformFile();
+
+                        sc.Stop();
+                        encryptionTimeMs = sc.Elapsed.TotalMilliseconds;
+                    }
+                    catch (Exception ex)
+                    {
+                        _loggerService.Log("Erreur de cryptage : " + ex.Message);
+
+                        sc.Stop();
+
+                        encryptionTimeMs = -1;
+                    }
+                }
+                else
+                {
+                    encryptionTimeMs = 0;
                 }
 
-                _loggerService.LogFileTransfer(Name, sourceFile, targetFile, fileSize, timeMs);
+                _loggerService.LogFileTransfer(Name, sourceFile, targetFile, fileSize, timeMs, encryptionTimeMs);
             }
             catch (Exception ex)
             {

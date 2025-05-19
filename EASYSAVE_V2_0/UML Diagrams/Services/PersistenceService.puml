@@ -1,9 +1,0 @@
-@startuml
-class PersistenceService {
-    - <<const>> JobsFile : string = "jobs.json"
-    + PersistenceService(logger:LoggerService)
-    + LoadJobs() : List<BackupJob>
-    + SaveJobs(jobs:IEnumerable<BackupJob>) : void
-}
-PersistenceService --> "_logger" LoggerService
-@enduml
