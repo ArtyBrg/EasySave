@@ -1,6 +1,0 @@
-@startuml
-class CreateJobView <<partial>> {
-    + CreateJobView()
-}
-UserControl <|-- CreateJobView
-@enduml

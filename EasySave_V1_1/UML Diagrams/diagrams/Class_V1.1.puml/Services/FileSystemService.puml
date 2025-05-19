@@ -1,0 +1,10 @@
+@startuml
+class FileSystemService {
+    + FileSystemService(logger:LoggerService)
+    + GetAllFiles(path:string) : IEnumerable<string>
+    + GetModifiedFilesSince(path:string, since:DateTime) : IEnumerable<string>
+    + CopyFile(source:string, target:string) : void
+    + GetDirectorySize(path:string) : long
+}
+FileSystemService --> "_logger" LoggerService
+@enduml

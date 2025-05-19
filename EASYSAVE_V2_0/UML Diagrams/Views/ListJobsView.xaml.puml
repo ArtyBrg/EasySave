@@ -1,6 +1,0 @@
-@startuml
-class ListJobsView <<partial>> {
-    + ListJobsView()
-}
-UserControl <|-- ListJobsView
-@enduml

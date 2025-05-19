@@ -1,0 +1,6 @@
+@startuml
+class AppSettings {
+    + Language : string <<get>> <<set>> = "EN"
+}
+AppSettings o-> "LogFormat" LogFormat
+@enduml

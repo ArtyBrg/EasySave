@@ -1,6 +1,0 @@
-@startuml
-class LogsView <<partial>> {
-    + LogsView()
-}
-UserControl <|-- LogsView
-@enduml

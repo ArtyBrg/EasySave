@@ -1,6 +1,0 @@
-@startuml
-class HomeView <<partial>> {
-    + HomeView()
-}
-UserControl <|-- HomeView
-@enduml

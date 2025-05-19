@@ -1,0 +1,13 @@
+@startuml
+class StateService {
+    - <<const>> StateFile : string = "state.json"
+    + StateService(logger:LoggerService)
+    - LoadStates() : void
+    - SaveStates() : void
+    + UpdateState(jobName:string, status:string, progress:double, sourcePath:string, targetPath:string, totalFiles:int, totalSize:long, filesLeft:int) : void
+    + GetAllStates() : IEnumerable<BackupState>
+}
+class "List`1"<T> {
+}
+StateService --> "_logger" LoggerService
+@enduml
