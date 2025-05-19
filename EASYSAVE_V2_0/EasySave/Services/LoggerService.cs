@@ -74,7 +74,7 @@ namespace EasySave.Services
             LogMessageAdded?.Invoke(this, errorMessage);
         }
 
-        public void LogFileTransfer(string backupName, string sourcePath, string targetPath, long size, double transferTimeMs)
+        public void LogFileTransfer(string backupName, string sourcePath, string targetPath, long size, double transferTimeMs, double encryptionTimeMs)
         {
             try
             {
@@ -83,11 +83,12 @@ namespace EasySave.Services
                     Path.GetFullPath(sourcePath),
                     Path.GetFullPath(targetPath),
                     size,
-                    transferTimeMs
+                    transferTimeMs,
+                    encryptionTimeMs
                 );
 
                 var message = $"[TRANSFER] {DateTime.Now:yyyy-MM-dd HH:mm:ss}: {backupName} - {sourcePath} -> {targetPath}";
-                Console.WriteLine(message); // Écrire dans la console pour le débogage
+                Console.WriteLine(message);
                 LogMessageAdded?.Invoke(this, message);
             }
             catch (Exception ex)

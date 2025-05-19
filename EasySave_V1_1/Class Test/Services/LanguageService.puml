@@ -4,5 +4,4 @@ class LanguageService {
     + LoadLanguageFromSettings() : void
     + GetString(key:string) : string
 }
-LanguageService o-> "_resourceManager" ResourceManager
 @enduml

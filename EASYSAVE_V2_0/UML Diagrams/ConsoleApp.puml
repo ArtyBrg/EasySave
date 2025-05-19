@@ -1,6 +1,0 @@
-@startuml
-class ConsoleApp {
-    + Run(args:string[]) : void
-    - ParseJobIds(input:string) : List<int>
-}
-@enduml

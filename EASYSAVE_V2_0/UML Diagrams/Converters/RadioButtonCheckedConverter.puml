@@ -1,7 +1,0 @@
-@startuml
-class RadioButtonCheckedConverter {
-    + Convert(value:object, targetType:Type, parameter:object, culture:CultureInfo) : object
-    + ConvertBack(value:object, targetType:Type, parameter:object, culture:CultureInfo) : object?
-}
-IValueConverter <|-- RadioButtonCheckedConverter
-@enduml

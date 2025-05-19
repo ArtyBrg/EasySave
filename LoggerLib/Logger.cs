@@ -21,6 +21,8 @@ namespace LoggerLib
         public long FileSize { get; set; }
         public double FileTransferTime { get; set; }
         public string Time { get; set; }
+        public double EncryptionTime { get; set; } 
+
     }
 
     [XmlRoot("LogEntries")]
@@ -115,7 +117,7 @@ namespace LoggerLib
             xmlSerializer.Serialize(writeStream, logEntries);
         }
 
-        public void LogFileTransfer(string backupName, string sourcePath, string targetPath, long size, double transferTimeMs)
+        public void LogFileTransfer(string backupName, string sourcePath, string targetPath, long size, double transferTimeMs, double encryptionTimeMs)
         {
             var entry = new JsonLogEntry
             {
@@ -124,6 +126,7 @@ namespace LoggerLib
                 FileTarget = Path.GetFullPath(targetPath),
                 FileSize = size,
                 FileTransferTime = transferTimeMs,
+                EncryptionTime = encryptionTimeMs,
                 Time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
             };
 

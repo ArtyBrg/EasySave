@@ -1,9 +1,0 @@
-@startuml
-class TranslationProvider {
-    + TranslationProvider(languageService:LanguageService)
-    + Refresh() : void
-    +  <<event>> PropertyChanged : PropertyChangedEventHandler 
-}
-INotifyPropertyChanged <|-- TranslationProvider
-TranslationProvider --> "_languageService" LanguageService
-@enduml
