@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "CzkhHUyoUUk=",
+  "dgSpecHash": "FxAKK/uFpXM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\EasySave\\CryptoSoft\\CryptoSoft.csproj",
+  "projectFilePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\Génie Logiciel\\Projet\\CryptoSoft\\CryptoSoft.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\chamd\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.15\\microsoft.net.illink.tasks.8.0.15.nupkg.sha512"
+    "C:\\Users\\Utilisateur\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.15\\microsoft.net.illink.tasks.8.0.15.nupkg.sha512"
   ],
   "logs": []
 }

@@ -1,0 +1,6 @@
+@startuml
+class SettingsView <<partial>> {
+    + SettingsView()
+}
+UserControl <|-- SettingsView
+@enduml

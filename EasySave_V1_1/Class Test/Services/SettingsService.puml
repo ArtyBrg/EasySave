@@ -1,0 +1,7 @@
+@startuml
+class SettingsService <<static>> {
+    - <<const>> SettingsPath : string = "settings.json"
+    + {static} Save(settings:AppSettings) : void
+    + {static} Load() : AppSettings
+}
+@enduml

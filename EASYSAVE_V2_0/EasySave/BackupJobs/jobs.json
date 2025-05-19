@@ -1,0 +1,20 @@
+[
+  {
+    "Id": 1,
+    "Name": "Test",
+    "SourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures",
+    "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams",
+    "IsSelected": false,
+    "Type": "Complete",
+    "IsEncryptionEnabled": false
+  },
+  {
+    "Id": 2,
+    "Name": "Test 2",
+    "SourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams",
+    "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures",
+    "IsSelected": false,
+    "Type": "Complete",
+    "IsEncryptionEnabled": false
+  }
+]

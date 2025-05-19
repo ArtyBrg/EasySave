@@ -1,0 +1,14 @@
+@startuml
+class AppSettings {
+    + Language : string <<get>> <<set>> = "EN"
+}
+class BusinessSoftware {
+    + Name : string <<get>> <<set>> = "Aucun"
+    + FullPath : string <<get>> <<set>> = ""
+}
+class "List`1"<T> {
+}
+AppSettings o-> "LogFormat" LogFormat
+AppSettings o-> "ExtensionsToCrypt<string>" "List`1"
+AppSettings o-> "BusinessSoftware" BusinessSoftware
+@enduml

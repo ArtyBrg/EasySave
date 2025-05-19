@@ -1,0 +1,30 @@
+[
+  {
+    "Name": "Test",
+    "Timestamp": "2025-05-18 19:51:41",
+    "State": "END",
+    "TotalFiles": 9,
+    "TotalSize": 325667,
+    "Progress": 100,
+    "FilesRemaining": 0,
+    "RemainingSize": 0,
+    "CurrentSourceFile": "",
+    "CurrentTargetFile": "",
+    "SourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\usecase.puml.crypt",
+    "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\usecase.puml.crypt"
+  },
+  {
+    "Name": "Test 2",
+    "Timestamp": "2025-05-18 19:51:41",
+    "State": "END",
+    "TotalFiles": 13,
+    "TotalSize": 331347,
+    "Progress": 100,
+    "FilesRemaining": 0,
+    "RemainingSize": 0,
+    "CurrentSourceFile": "",
+    "CurrentTargetFile": "",
+    "SourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\usecase.puml.crypt",
+    "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\usecase.puml.crypt"
+  }
+]

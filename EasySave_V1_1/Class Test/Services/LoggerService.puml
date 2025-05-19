@@ -1,0 +1,10 @@
+@startuml
+class LoggerService {
+    + LoggerService(logDirectory:string)
+    + SetLogFormat(format:LogFormat) : void
+    + Log(message:string) : void
+    + LogError(errorMessage:string) : void
+    + LogFileTransfer(backupName:string, sourcePath:string, targetPath:string, size:long, transferTimeMs:double) : void
+}
+LoggerService --> "_dailyLogger" DailyLogger
+@enduml

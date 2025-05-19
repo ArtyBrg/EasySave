@@ -1,0 +1,18 @@
+@startuml
+class AppViewModel {
+    - _logContent : string
+    - _errorMessage : string
+    - _currentLanguage : string
+    + AppViewModel()
+    + LogContent : string <<get>> <<set>>
+    + ErrorMessage : string <<get>> <<set>>
+    + CurrentLanguage : string <<get>> <<set>>
+    - OnLogMessageAdded(sender:object, message:string) : void
+    + ChangeLanguages(language:string) : void
+}
+ViewModelBase <|-- AppViewModel
+AppViewModel --> "_languageService" LanguageService
+AppViewModel --> "_loggerService" LoggerService
+AppViewModel --> "Translations" TranslationProvider
+AppViewModel o-> "_logBuilder" StringBuilder
+@enduml
