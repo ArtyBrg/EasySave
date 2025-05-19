@@ -45,11 +45,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Reference Include="CryptoSoft">
-	    <HintPath>..\CryptoSoft\bin\Debug\net8.0\CryptoSoft.dll</HintPath>
-	  </Reference>
+	  <ProjectReference Include="..\..\CryptoSoft\CryptoSoft.csproj" />
+	  <ProjectReference Include="..\..\LoggerLib\LoggerLib.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Reference Include="LoggerLib">
-	    <HintPath>..\LoggerLib\bin\Debug\net8.0\LoggerLib.dll</HintPath>
+	    <HintPath>..\..\LoggerLib\bin\Debug\net8.0\LoggerLib.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 

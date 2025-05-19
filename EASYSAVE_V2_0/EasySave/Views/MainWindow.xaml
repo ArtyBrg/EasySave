@@ -108,6 +108,7 @@
 
         <!-- Contenu principal - changement de vue via ContentControl -->
         <ContentControl Grid.Row="1" x:Name="MainContent">
+
             <ContentControl.Style>
                 <Style TargetType="{x:Type ContentControl}">
                     <Style.Triggers>

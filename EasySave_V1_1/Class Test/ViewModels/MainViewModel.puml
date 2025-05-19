@@ -1,0 +1,13 @@
+@startuml
+class MainViewModel {
+    + MainViewModel(backupManagerViewModel:BackupManagerViewModel, languageService:LanguageService)
+    + SetLanguage(language:string) : void
+    + GetTranslation(key:string) : string
+    + CreateBackupJob(name:string, source:string, target:string, type:string) : BackupJobViewModel
+    + ExecuteBackupJobs(jobIds:IEnumerable<int>) : void
+    + GetAllJobs() : IEnumerable<BackupJobViewModel>
+    + JobNameExists(name:string) : bool
+}
+MainViewModel --> "_backupManagerViewModel" BackupManagerViewModel
+MainViewModel --> "_languageService" LanguageService
+@enduml

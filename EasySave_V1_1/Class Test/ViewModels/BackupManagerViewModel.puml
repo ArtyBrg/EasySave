@@ -1,0 +1,18 @@
+@startuml
+class BackupManagerViewModel {
+    - _nextId : int = 1
+    + BackupManagerViewModel(fileSystemService:FileSystemService, loggerService:LoggerService, stateService:StateService)
+    - <<readonly>> _jobsFilePath : string = "jobs.json"
+    - SaveJobsToFile() : void
+    - LoadJobsFromFile() : void
+    + CreateJob(name:string, source:string, target:string, type:string) : BackupJobViewModel
+    + ExecuteJobs(jobIds:IEnumerable<int>) : void
+    + GetAllJobs() : IEnumerable<BackupJobViewModel>
+}
+class "List`1"<T> {
+}
+BackupManagerViewModel o-> "_jobs<BackupJobViewModel>" "List`1"
+BackupManagerViewModel --> "_fileSystemService" FileSystemService
+BackupManagerViewModel --> "_loggerService" LoggerService
+BackupManagerViewModel --> "_stateService" StateService
+@enduml

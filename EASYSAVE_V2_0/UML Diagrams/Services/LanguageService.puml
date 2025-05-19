@@ -1,0 +1,12 @@
+@startuml
+class LanguageService {
+    + SetLanguage(languageCode:string) : void
+    + LoadLanguageFromSettings() : void
+    + GetString(key:string) : string
+}
+class Settings {
+    + Language : string <<get>> <<set>>
+}
+LanguageService o-> "_resourceManager" ResourceManager
+LanguageService +-- Settings
+@enduml

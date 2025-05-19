@@ -1,0 +1,37 @@
+@startuml
+!include .\\App.xaml.puml
+!include .\\AssemblyInfo.puml
+!include .\\ConsoleApp.puml
+!include .\\Program.puml
+!include .\\Converters\BooleanToVisibilityConverter.puml
+!include .\\Converters\JobStatusConverter.puml
+!include .\\Converters\LanguageButtonColorConverter.puml
+!include .\\Converters\RadioButtonCheckedConverter.puml
+!include .\\Helpers\BindingProxy.puml
+!include .\\Models\AppSettings.puml
+!include .\\Models\BackupJob.puml
+!include .\\Models\BackupState.puml
+!include .\\Models\JsonLogEntry.puml
+!include .\\Services\FileSystemService.puml
+!include .\\Services\LanguageService.puml
+!include .\\Services\LoggerService.puml
+!include .\\Services\PersistenceService.puml
+!include .\\Services\SettingsService.puml
+!include .\\Services\StateService.puml
+!include .\\Services\TranslationProvider.puml
+!include .\\ViewModels\AppViewModel.puml
+!include .\\ViewModels\BackupJobViewModel.puml
+!include .\\ViewModels\BackupManagerViewModel.puml
+!include .\\ViewModels\MainViewModel.puml
+!include .\\ViewModels\RelayCommand.puml
+!include .\\ViewModels\SettingsViewModel.puml
+!include .\\ViewModels\ViewModelBase.puml
+!include .\\Views\BusinessSoftwarePopup.xaml.puml
+!include .\\Views\CreateJobView.xaml.puml
+!include .\\Views\DecryptView.xaml.puml
+!include .\\Views\HomeView.xaml.puml
+!include .\\Views\ListJobsView.xaml.puml
+!include .\\Views\LogsView.xaml.puml
+!include .\\Views\MainWindow.xaml.puml
+!include .\\Views\SettingsView.xaml.puml
+@enduml
