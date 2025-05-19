@@ -9,13 +9,15 @@ namespace EasySave
     class Program
     {
 
-
+        // Parses an input string representing job IDs, which can be ranges (e.g., "1-5") or lists separated by semicolons (e.g., "1;2;3")
         private static List<int> ParseJobIds(string input)
         {
+            // Checks if the input is empty or null
             var jobIds = new List<int>();
 
             if (input.Contains('-'))
             {
+                // If the input contains a dash, assume it is a range
                 var parts = input.Split('-');
                 if (parts.Length == 2 && int.TryParse(parts[0], out int start) && int.TryParse(parts[1], out int end))
                 {
@@ -25,6 +27,7 @@ namespace EasySave
             }
             else if (input.Contains(';'))
             {
+                // If the input contains a semicolon, assume it is a list
                 var parts = input.Split(';');
                 foreach (var part in parts)
                 {
@@ -40,9 +43,10 @@ namespace EasySave
             return jobIds.Distinct().ToList();
         }
 
+        // Main entry point of the application
         static void Main(string[] args)
         {
-            
+
 
             Console.WriteLine("=== EasySave Backup Application ===");
             Console.WriteLine("Version 1.1 MVVM\n");
@@ -51,43 +55,43 @@ namespace EasySave
 
             try
             {
-                // Initialiser les services
-                var loggerService = new LoggerService();
-                var stateService = new StateService(loggerService);
-                var fileSystemService = new FileSystemService(loggerService);
-                var languageService = new LanguageService();
-                languageService.LoadLanguageFromSettings();
+                // Initialize services
+                var loggerService = new LoggerService(); // Logging service
+                var stateService = new StateService(loggerService); // Backup state management service
+                var fileSystemService = new FileSystemService(loggerService); // File system management service
+                var languageService = new LanguageService(); // Language management service
+                languageService.LoadLanguageFromSettings(); // Load language from settings
 
-                // Initialiser les ViewModels
+                // Initialize ViewModels
                 var backupManagerViewModel = new BackupManagerViewModel(fileSystemService, loggerService, stateService);
                 var mainViewModel = new MainViewModel(backupManagerViewModel, languageService);
 
                 if (args.Length > 0)
                 {
-                    Console.WriteLine("Mode automatique avec arguments détecté.");
+                    Console.WriteLine("Automatic mode with detected arguments.");
 
                     var jobIds = ParseJobIds(args[0]);
                     if (!jobIds.Any())
                     {
-                        Console.WriteLine("Aucun ID valide fourni.");
+                        Console.WriteLine("No valid ID provided.");
                         return;
                     }
 
                     try
                     {
                         backupManagerViewModel.ExecuteJobs(jobIds);
-                        Console.WriteLine("Sauvegardes exécutées avec succès.");
+                        Console.WriteLine("Backups executed successfully.");
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Erreur lors de l'exécution des sauvegardes :");
+                        Console.WriteLine("Error while executing backups:");
                         Console.WriteLine(ex.Message);
                     }
 
-                    return; // Sortir proprement
+                    return;
                 }
 
-                // Initialiser et démarrer la vue
+                // Initialize and start the view
                 var consoleView = new ConsoleView(mainViewModel);
                 consoleView.Run();
             }

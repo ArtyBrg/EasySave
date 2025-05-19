@@ -1,4 +1,5 @@
-﻿namespace EasySave.Models
+﻿// Models/BackupState.cs
+namespace EasySave.Models
 {
     public class BackupState
     {

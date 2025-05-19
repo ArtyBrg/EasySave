@@ -7,15 +7,19 @@ using LoggerLib;
 
 namespace EasySave.Views
 {
+    // Console-based view for the EasySave application
     public class ConsoleView
     {
+        // ViewModel for managing backup jobs and translations
         private readonly MainViewModel _viewModel;
 
+        // Constructor that initializes the view with the provided ViewModel
         public ConsoleView(MainViewModel viewModel)
         {
             _viewModel = viewModel;
         }
 
+        // Main entry point for the console application
         public void Run()
         {
             try
@@ -29,17 +33,19 @@ namespace EasySave.Views
             }
         }
 
+        // Initializes the language settings for the application
         private void InitializeLanguage()
         {
             Console.WriteLine("\n");
-            Console.WriteLine(_viewModel.GetTranslation("Select language"));
+            Console.WriteLine(_viewModel.GetTranslation("Select language")); // "Select language"
             string? input;
             do
             {
                 input = Console.ReadLine()?.Trim();
+                // Check if the input is empty or null
                 if (string.IsNullOrEmpty(input))
                 {
-                    Console.WriteLine(_viewModel.GetTranslation("LanguageEmptyError"));
+                    Console.WriteLine(_viewModel.GetTranslation("LanguageEmptyError")); // "Language cannot be empty"
                     continue;
                 }
 
@@ -56,6 +62,7 @@ namespace EasySave.Views
             } while (true);
         }
 
+        // Main loop for the console application
         private void MainMenuLoop()
         {
             while (true)
@@ -90,6 +97,7 @@ namespace EasySave.Views
             }
         }
 
+        // Displays the main menu options to the user
         private void DisplayMainMenu()
         {
             Console.WriteLine("\n");
@@ -103,6 +111,7 @@ namespace EasySave.Views
             Console.WriteLine(_viewModel.GetTranslation("Main menu select option"));
         }
 
+        // Prompts the user to create a new backup job
         private void CreateBackupJob()
         {
             Console.WriteLine("\n");
@@ -151,6 +160,7 @@ namespace EasySave.Views
             }
         }
 
+        // Prompts the user to execute backup jobs
         private void ExecuteBackupJobs()
         {
             Console.WriteLine("\n");
@@ -178,6 +188,7 @@ namespace EasySave.Views
                 return;
             }
 
+            // Parse the input to get a list of job IDs
             var selectedIds = ParseJobSelection(input);
 
             if (!selectedIds.Any())
@@ -198,10 +209,12 @@ namespace EasySave.Views
             }
         }
 
+        // Displays the list of backup jobs to the user
         private void ListBackupJobs()
         {
             Console.WriteLine("\n");
             Console.WriteLine(_viewModel.GetTranslation("List job title"));
+            // Get all jobs from the ViewModel
             var jobs = _viewModel.GetAllJobs().ToList();
 
             if (!jobs.Any())
@@ -221,15 +234,19 @@ namespace EasySave.Views
             }
         }
 
+        // Parses the user input for job selection
         private static HashSet<int> ParseJobSelection(string input)
         {
+            // Split the input by commas and semicolons
             var ids = new HashSet<int>();
+            // Split the input by commas and semicolons
             var parts = input.Split(';', StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var part in parts)
             {
                 if (part.Contains('-'))
                 {
+                    // Handle ranges (e.g., 1-5)
                     var range = part.Split('-', StringSplitOptions.RemoveEmptyEntries);
                     if (range.Length == 2 &&
                         int.TryParse(range[0], out int start) &&
@@ -250,6 +267,7 @@ namespace EasySave.Views
             return ids;
         }
 
+        // Prompts the user to select the log format
         private void SettingsLog()
         {
             var settingsVm = new SettingsViewModel();
@@ -269,6 +287,7 @@ namespace EasySave.Views
             }
         }
 
+        // Prompts the user for input and validates it
         private string GetUserInput(string prompt)
         {
             Console.WriteLine(prompt);

@@ -1,0 +1,16 @@
+@startuml
+class ConsoleView {
+    + ConsoleView(viewModel:MainViewModel)
+    + Run() : void
+    - InitializeLanguage() : void
+    - MainMenuLoop() : void
+    - DisplayMainMenu() : void
+    - CreateBackupJob() : void
+    - ExecuteBackupJobs() : void
+    - ListBackupJobs() : void
+    - {static} ParseJobSelection(input:string) : HashSet<int>
+    - SettingsLog() : void
+    - GetUserInput(prompt:string) : string
+}
+ConsoleView --> "_viewModel" MainViewModel
+@enduml

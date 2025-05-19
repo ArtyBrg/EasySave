@@ -4,8 +4,8 @@
 
 ## 🧾 Documentation des diagrammes UML
 
-**Projet : EasySave – Version 1.0**  
-**Date :** `8 mai 2025`  
+**Projet : EasySave – Version 1.1**  
+**Date :** `19 mai 2025`  
 **Groupe :** `Groupe 2`
 **Chef de projet :** `Bruno RIECKENBERG`
 
@@ -15,7 +15,7 @@
 
 1. [Diagramme de cas d’utilisation (Use Case)](#1-diagramme-de-cas-dutilisation-use-case)
     
-2. [Diagramme de séquence](#2-diagramme-de-s%C3%A9quence)
+2. [Diagramme de séquence](#2-diagramme-de-séquence)
     
 3. [Diagramme de classes](#3-diagramme-de-classes)
     
@@ -114,8 +114,8 @@ Ces diagrammes ont permis de :
 
 ## UML Diagram Documentation
 
-**Project:** EasySave – Version 1.0  
-**Date:** `May 8, 2025`  
+**Project:** EasySave – Version 1.1 
+**Date:** `May 19, 2025`  
 **Team:** `Group 2`
 **Project manager:** `Bruno RIECKENBERG`
 

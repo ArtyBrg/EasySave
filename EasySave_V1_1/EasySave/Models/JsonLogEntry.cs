@@ -1,4 +1,5 @@
-﻿namespace EasySave.Models
+﻿// Models/JsonLogEntry.cs
+namespace EasySave.Models
 {
     public class JsonLogEntry
     {

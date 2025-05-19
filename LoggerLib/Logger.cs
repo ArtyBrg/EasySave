@@ -7,40 +7,41 @@ using System.Xml.Serialization;
 
 namespace LoggerLib
 {
-    // LoggerLib is a library for logging file transfer operations in JSON or XML format.
+    // Enum for log format options
     public enum LogFormat
     {
         Json,
         Xml
     }
 
-    // JsonLogEntry represents a single log entry for a file transfer operation.
+    // Class representing a log entry
     public class JsonLogEntry
     {
+        /// Properties for the log entry
         public string Name { get; set; } // Name of the backup job
         public string FileSource { get; set; } // Source file path
         public string FileTarget { get; set; } // Target file path
         public long FileSize { get; set; } // Size of the file in bytes
         public double FileTransferTime { get; set; } // Time taken to transfer the file in milliseconds
-        public string Time { get; set; } // Time of the log entry
-        public double EncryptionTime { get; set; } // Time taken to encrypt the file in milliseconds
-
+        public string Time { get; set; } // Timestamp of the log entry
     }
 
     [XmlRoot("LogEntries")]
+    // Class for XML serialization of log entries
     public class XmlLogEntryList
     {
         [XmlElement("LogEntry")]
+        // List of log entries
         public List<JsonLogEntry> Entries { get; set; } = new();
     }
 
-    // DailyLogger is a class for logging file transfer operations to a daily log file.
+    // Class for logging file transfers and errors
     public class DailyLogger
     {
         private readonly string _logDirectory;
         private LogFormat _logFormat;
 
-        // Constructor to initialize the logger with a specified log directory and format.
+        // Constructor to initialize the logger with a directory and format
         public DailyLogger(string logDirectory = "Logs", LogFormat logFormat = LogFormat.Json)
         {
             _logDirectory = logDirectory;
@@ -48,13 +49,13 @@ namespace LoggerLib
             Directory.CreateDirectory(_logDirectory);
         }
 
-        // Set the log format (JSON or XML).
+        // Method to set the log format dynamically
         public void SetLogFormat(LogFormat format)
         {
             _logFormat = format;
         }
 
-        // Log a file transfer operation.
+        // Method to log a file transfer entry
         public void Log(JsonLogEntry entry)
         {
             string extension = _logFormat == LogFormat.Json ? "json" : "xml";
@@ -70,7 +71,7 @@ namespace LoggerLib
             }
         }
 
-        // Log a file transfer operation in JSON format.
+        // Method to log a message in the console
         private void LogJson(JsonLogEntry entry, string path)
         {
             List<JsonLogEntry> logEntries = new();
@@ -90,6 +91,7 @@ namespace LoggerLib
 
             logEntries.Add(entry);
 
+            // Serialize the log entries to JSON and write to the file
             var options = new JsonSerializerOptions
             {
                 WriteIndented = true,
@@ -99,7 +101,7 @@ namespace LoggerLib
             File.WriteAllText(path, JsonSerializer.Serialize(logEntries, options));
         }
 
-        // Log a file transfer operation in XML format.
+        // Method to log an XML entry
         private void LogXml(JsonLogEntry entry, string path)
         {
             XmlLogEntryList logEntries = new();
@@ -125,9 +127,10 @@ namespace LoggerLib
             xmlSerializer.Serialize(writeStream, logEntries);
         }
 
-        // Log a file transfer operation with additional details.
-        public void LogFileTransfer(string backupName, string sourcePath, string targetPath, long size, double transferTimeMs, double encryptionTimeMs)
+        // Method to log a message in the console
+        public void LogFileTransfer(string backupName, string sourcePath, string targetPath, long size, double transferTimeMs)
         {
+            // Log the file transfer in the console
             var entry = new JsonLogEntry
             {
                 Name = backupName,
@@ -135,7 +138,6 @@ namespace LoggerLib
                 FileTarget = Path.GetFullPath(targetPath),
                 FileSize = size,
                 FileTransferTime = transferTimeMs,
-                EncryptionTime = encryptionTimeMs,
                 Time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
             };
 
