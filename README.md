@@ -2,8 +2,8 @@
 
 ## 🌐 Language / Langue
 
-- [🇫🇷 Français](#français)
-- [🇬🇧 English](#english)
+- [🇫🇷 Français](#-français)
+- [🇬🇧 English](#-english)
 
 ---
 
