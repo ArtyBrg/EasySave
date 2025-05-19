@@ -1,5 +1,6 @@
 ﻿namespace EasySave.Models
 {
+    // json log entry model
     public class JsonLogEntry
     {
         public string Name { get; set; }

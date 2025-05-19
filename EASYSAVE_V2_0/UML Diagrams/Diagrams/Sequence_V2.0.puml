@@ -1,0 +1,109 @@
+@startuml SequenceDiagram
+==JobCreation==
+actor User
+participant MainWindow
+participant MainViewModel
+participant BackupManagerViewModel
+participant PersistenceService
+participant StateService
+
+User -> MainWindow: Fill job details and click Create
+MainWindow -> MainViewModel: CreateBackupJob()
+MainViewModel -> BackupManagerViewModel: CreateJob(params)
+BackupManagerViewModel -> BackupManagerViewModel: Validate inputs
+BackupManagerViewModel -> BackupManagerViewModel: Create new BackupJob
+BackupManagerViewModel -> StateService: UpdateState(Created)
+BackupManagerViewModel -> PersistenceService: SaveJobs()
+PersistenceService -> PersistenceService: Serialize to JSON
+BackupManagerViewModel --> MainViewModel: New job created
+MainViewModel --> MainWindow: Navigate to JobsList
+MainWindow --> User: Show new job in list
+
+==BackupJobExecution==
+actor User
+participant MainWindow
+participant BackupManagerViewModel
+participant BackupJobViewModel
+participant FileSystemService
+participant LoggerService
+participant StateService
+participant CryptoSoft
+
+User -> MainWindow: Click Execute Job
+MainWindow -> BackupManagerViewModel: ExecuteSelectedJobAsync()
+BackupManagerViewModel -> BackupJobViewModel: ExecuteAsync()
+BackupJobViewModel -> FileSystemService: GetAllFiles(sourcePath)
+FileSystemService --> BackupJobViewModel: List of files
+loop For each file
+    BackupJobViewModel -> FileSystemService: CopyFileWithProgress()
+    FileSystemService -> FileSystemService: Copy file
+    BackupJobViewModel -> StateService: UpdateState()
+    alt If encryption enabled
+        BackupJobViewModel -> CryptoSoft: TransformFile()
+    end
+    BackupJobViewModel -> LoggerService: LogFileTransfer()
+end
+BackupJobViewModel -> StateService: UpdateState(Completed)
+BackupJobViewModel --> BackupManagerViewModel: Job completed
+BackupManagerViewModel --> MainWindow: Update UI
+MainWindow --> User: Show completion status
+
+==StateUpdate==
+participant BackupJobViewModel
+participant StateService
+participant StateFile
+participant MainWindow
+
+BackupJobViewModel -> StateService: UpdateState(jobName, status)
+StateService -> StateService: Create/update state object
+StateService -> StateFile: Serialize to JSON
+StateService -> MainWindow: Raise StateUpdated event
+MainWindow -> MainWindow: Update progress UI
+
+==LoggingSequence==
+participant BackupJobViewModel
+participant LoggerService
+participant DailyLogger
+participant LogsView
+
+BackupJobViewModel -> LoggerService: LogFileTransfer()
+LoggerService -> DailyLogger: LogFileTransfer()
+DailyLogger -> DailyLogger: Write to file (JSON/XML)
+LoggerService -> LoggerService: Raise LogMessageAdded
+LogsView -> LogsView: Update log display
+
+==LanguageChange==
+actor User
+participant MainWindow
+participant AppViewModel
+participant LanguageService
+participant SettingsService
+participant TranslationProvider
+
+User -> MainWindow: Select language (FR/EN)
+MainWindow -> AppViewModel: ChangeLanguage(langCode)
+AppViewModel -> LanguageService: SetLanguage(langCode)
+LanguageService -> SettingsService: Load()
+LanguageService -> LanguageService: Set culture
+LanguageService -> SettingsService: Save(updated settings)
+AppViewModel -> TranslationProvider: Refresh()
+TranslationProvider -> MainWindow: Update all bindings
+MainWindow --> User: UI updates to new language
+
+==BusinessSoftwareDetection==
+participant Timer
+participant SettingsViewModel
+participant Process
+participant BusinessSoftwarePopup
+participant LoggerService
+
+Timer -> SettingsViewModel: CheckBusinessSoftwareRunning()
+SettingsViewModel -> Process: GetProcesses()
+Process --> SettingsViewModel: List of processes
+alt If business software running
+    SettingsViewModel -> BusinessSoftwarePopup: Show()
+    SettingsViewModel -> LoggerService: Log detection
+else
+    SettingsViewModel -> BusinessSoftwarePopup: Close() if open
+end
+@enduml

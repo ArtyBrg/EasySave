@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace EasySave_WPF
 {
+    // Console application to execute backup jobs
     public class ConsoleApp
     {
         public void Run(string[] args)
@@ -24,7 +25,7 @@ namespace EasySave_WPF
             var jobIds = ParseJobIds(args[0]);
             if (!jobIds.Any())
             {
-                Console.WriteLine("Aucun ID de job valide.");
+                Console.WriteLine("Aucune Id valides.");
                 return;
             }
 
@@ -35,6 +36,7 @@ namespace EasySave_WPF
             }).GetAwaiter().GetResult();
         }
 
+        // Parse job IDs from the command line arguments
         private List<int> ParseJobIds(string input)
         {
             var list = new List<int>();

@@ -16,6 +16,7 @@ using EasySave_WPF;
 
 namespace EasySave.ViewModels
 {
+    // Manages the backup job view model, including properties and commands for executing, pausing, and stopping backup jobs.
     public class BackupJobViewModel : ViewModelBase
     {
 
@@ -32,12 +33,14 @@ namespace EasySave.ViewModels
         private CancellationTokenSource _cts = new CancellationTokenSource();
         private bool _isEncryptionEnabled;
 
+        // Property to indicate if encryption is enabled
         public bool IsEncryptionEnabled
         {
             get => _isEncryptionEnabled;
             set => SetProperty(ref _isEncryptionEnabled, value);
         }
 
+        // Constructor with default values
         public BackupJobViewModel()
             : this(
                 new BackupJob
@@ -53,6 +56,7 @@ namespace EasySave.ViewModels
         {
         }
 
+        // Constructor with parameters
         public BackupJobViewModel(BackupJob backupJob,
                                 FileSystemService fileSystemService,
                                 LoggerService loggerService,
@@ -83,6 +87,7 @@ namespace EasySave.ViewModels
             }
         }
 
+        /// Properties for SourcePath, TargetPath, Type, IsSelected
         public string SourcePath
         {
             get => _backupJob.SourcePath;
@@ -135,6 +140,7 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Properties for IsRunning, Progress, IsPaused, StopRequested
         public bool IsRunning
         {
             get => _isRunning;
@@ -165,12 +171,14 @@ namespace EasySave.ViewModels
 
         public BackupJob GetBackupJob() => _backupJob;
 
+        // Command to execute the backup job
         private void PauseJob()
         {
             IsPaused = !IsPaused;
             _loggerService.Log($"Backup job {Name} {(IsPaused ? "paused" : "resumed")}");
         }
 
+        // Command to stop the backup job
         public void StopJob()
         {
             try
@@ -186,6 +194,7 @@ namespace EasySave.ViewModels
 
         public async Task ExecuteAsync(CancellationToken cancellationToken = default)
         {
+            // Check if the job is already running
             if (IsRunning)
             {
                 _loggerService.Log($"Job {Name} is already running");
@@ -209,6 +218,7 @@ namespace EasySave.ViewModels
                 {
                     try
                     {
+                        // Execute the backup job based on the type (Complete or Differential)
                         if (Type == "Complete")
                             ExecuteCompleteBackup(cancellationToken);
                         else
@@ -221,6 +231,7 @@ namespace EasySave.ViewModels
                     }
                 }, cancellationToken).ConfigureAwait(false);
 
+                // Check if the job was stopped by the user
                 if (!StopRequested)
                 {
                     _stateService.UpdateState(Name, "Completed", 100);
@@ -245,14 +256,17 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Method to execute a complete backup
         private void ExecuteCompleteBackup(CancellationToken cancellationToken)
         {
+            // Check if the source and target directories exist
             if (!Directory.Exists(SourcePath))
             {
                 _loggerService.LogError($"Source directory does not exist: {SourcePath}");
                 throw new DirectoryNotFoundException($"Source directory does not exist: {SourcePath}");
             }
 
+            // Check if the target directory exists, and create it if it doesn't
             if (!Directory.Exists(TargetPath) && !CreateDirectoryIfNotExists(TargetPath))
             {
                 _loggerService.LogError($"Cannot create target directory: {TargetPath}");
@@ -269,6 +283,7 @@ namespace EasySave.ViewModels
 
             for (int i = 0; i < allFiles.Count && !StopRequested; i++)
             {
+                // Check if the job was stopped by the user
                 if (StopRequested)
                 {
                     _loggerService.Log($"Job {Name} stopped by user before file {i + 1}/{totalFiles}");
@@ -280,6 +295,7 @@ namespace EasySave.ViewModels
                     Thread.Sleep(500);
                 }
 
+                // Check if the job was stopped by the user
                 if (StopRequested) return;
 
                 string sourceFile = allFiles[i];
@@ -289,6 +305,7 @@ namespace EasySave.ViewModels
                 var extension = Path.GetExtension(sourceFile).ToLower();
                 IsEncryptionEnabled = settings.ExtensionsToCrypt.Any(e => e.Equals(extension, StringComparison.OrdinalIgnoreCase));
 
+                // Check if the target directory exists, and create it if it doesn't
                 if (IsEncryptionEnabled)
                 {
                     targetFile += ".crypt";
@@ -310,6 +327,7 @@ namespace EasySave.ViewModels
                     totalFiles - (i + 1)
                 );
 
+                // Check if the job was stopped by the user
                 if (i < allFiles.Count - 1 && !StopRequested)
                 {
                     Thread.Sleep(100);
@@ -317,14 +335,17 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Method to execute a differential backup
         private void ExecuteDifferentialBackup(CancellationToken cancellationToken)
         {
+            // Check if the source and target directories exist
             if (!Directory.Exists(SourcePath))
             {
                 _loggerService.LogError($"Source directory does not exist: {SourcePath}");
                 throw new DirectoryNotFoundException($"Source directory does not exist: {SourcePath}");
             }
 
+            // Check if the target directory exists, and create it if it doesn't
             if (!Directory.Exists(TargetPath) && !CreateDirectoryIfNotExists(TargetPath))
             {
                 _loggerService.LogError($"Cannot create target directory: {TargetPath}");
@@ -340,6 +361,7 @@ namespace EasySave.ViewModels
 
             try
             {
+                // Get all files in the source directory
                 if (lastBackup == DateTime.MinValue)
                 {
                     modifiedFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories).ToList();
@@ -354,6 +376,7 @@ namespace EasySave.ViewModels
                         string relativePath = sourceFile.Substring(SourcePath.Length).TrimStart(Path.DirectorySeparatorChar);
                         string targetFile = Path.Combine(TargetPath, relativePath);
 
+                        // Check if the target file exists
                         if (!File.Exists(targetFile))
                         {
                             modifiedFiles.Add(sourceFile);
@@ -363,6 +386,7 @@ namespace EasySave.ViewModels
                         DateTime sourceLastWrite = File.GetLastWriteTime(sourceFile);
                         DateTime targetLastWrite = File.GetLastWriteTime(targetFile);
 
+                        // Check if the source file is newer than the target file
                         if (sourceLastWrite > targetLastWrite)
                         {
                             modifiedFiles.Add(sourceFile);
@@ -384,6 +408,7 @@ namespace EasySave.ViewModels
 
             for (int i = 0; i < modifiedFiles.Count && !StopRequested; i++)
             {
+                // Check if the job was stopped by the user
                 if (StopRequested)
                 {
                     _loggerService.Log($"Job {Name} stopped by user before file {i + 1}/{totalFiles}");
@@ -395,6 +420,7 @@ namespace EasySave.ViewModels
                     Thread.Sleep(500);
                 }
 
+                // Check if the job was stopped by the user
                 if (StopRequested) return;
 
                 string sourceFile = modifiedFiles[i];
@@ -405,6 +431,7 @@ namespace EasySave.ViewModels
                 IsEncryptionEnabled = settings.ExtensionsToCrypt.Any(e => e.Equals(extension, StringComparison.OrdinalIgnoreCase));
 
                 string finalTargetFile = targetFile;
+                // Check if the target directory exists, and create it if it doesn't
                 if (IsEncryptionEnabled)
                 {
                     finalTargetFile += ".crypt";
@@ -426,6 +453,7 @@ namespace EasySave.ViewModels
                     totalFiles - (i + 1)
                 );
 
+                // Check if the job was stopped by the user
                 if (i < modifiedFiles.Count - 1 && !StopRequested)
                 {
                     Thread.Sleep(100);
@@ -433,8 +461,10 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Method to copy a file with progress tracking
         private void CopyFileWithProgress(string sourceFile, string targetFile, int currentIndex, int totalFiles, long totalSize, List<string> extensionsToCrypt)
         {
+            // Check if the source file exists
             var targetDir = Path.GetDirectoryName(targetFile);
             if (!Directory.Exists(targetDir))
             {
@@ -465,6 +495,7 @@ namespace EasySave.ViewModels
                         double progress = (double)(currentIndex * totalSize + totalBytesRead) / (totalFiles * totalSize) * 100;
                         System.Windows.Application.Current.Dispatcher.InvokeAsync(() => Progress = progress);
 
+                        // Check if the job was stopped by the user
                         if (StopRequested)
                         {
                             _loggerService.Log($"Copy of {sourceFile} interrupted by user");
@@ -478,6 +509,7 @@ namespace EasySave.ViewModels
 
                 double encryptionTimeMs = 0;
 
+                // Encrypt the file if the extension is in the list
                 if (IsEncryptionEnabled)
                 {
                     Stopwatch sc = Stopwatch.StartNew();
@@ -512,6 +544,7 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Method to decrypt a file
         public void DecryptFile(string encryptedFilePath, string? outputFilePath = null)
         {
             try
@@ -521,6 +554,7 @@ namespace EasySave.ViewModels
 
                 string restoredPath = outputFilePath ?? encryptedFilePath.Replace(".crypt", "");
 
+                // Check if the restored file already exists
                 if (File.Exists(restoredPath))
                     File.Delete(restoredPath);
 
@@ -534,14 +568,17 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Method to get the last complete backup date
         private DateTime GetLastCompleteBackupDate()
         {
+            // Check if the target directory exists
             if (!Directory.Exists(TargetPath))
                 return DateTime.MinValue;
 
             try
             {
                 var stateFile = Path.Combine(TargetPath, ".lastbackup");
+                // Check if the state file exists and read the last backup date
                 if (File.Exists(stateFile))
                 {
                     string dateStr = File.ReadAllText(stateFile);
@@ -558,6 +595,7 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Method to update the last backup date
         private void UpdateLastBackupDate()
         {
             try
@@ -571,6 +609,7 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Method to create a directory if it doesn't exist
         private bool CreateDirectoryIfNotExists(string path)
         {
             try

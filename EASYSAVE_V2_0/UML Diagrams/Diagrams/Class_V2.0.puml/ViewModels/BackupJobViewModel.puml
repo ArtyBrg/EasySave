@@ -1,0 +1,39 @@
+@startuml
+class BackupJobViewModel {
+    - <<readonly>> encryptionKey : string = "crypto123"
+    - _isRunning : bool
+    - _progress : double
+    - _isPaused : bool
+    - _stopRequested : bool
+    - _isEncryptionEnabled : bool
+    + IsEncryptionEnabled : bool <<get>> <<set>>
+    + BackupJobViewModel()
+    + BackupJobViewModel(backupJob:BackupJob, fileSystemService:FileSystemService, loggerService:LoggerService, stateService:StateService)
+    + Id : int <<get>>
+    + Name : string <<get>> <<set>>
+    + SourcePath : string <<get>> <<set>>
+    + TargetPath : string <<get>> <<set>>
+    + Type : string <<get>> <<set>>
+    + IsSelected : bool <<get>> <<set>>
+    + IsRunning : bool <<get>>
+    + Progress : double <<get>> <<set>>
+    + IsPaused : bool <<get>>
+    + StopRequested : bool <<get>>
+    + GetBackupJob() : BackupJob
+    - PauseJob() : void
+    + StopJob() : void
+    + <<async>> ExecuteAsync(cancellationToken:CancellationToken) : Task
+    - ExecuteCompleteBackup(cancellationToken:CancellationToken) : void
+    - ExecuteDifferentialBackup(cancellationToken:CancellationToken) : void
+    - CopyFileWithProgress(sourceFile:string, targetFile:string, currentIndex:int, totalFiles:int, totalSize:long, extensionsToCrypt:List<string>) : void
+    + DecryptFile(encryptedFilePath:string, outputFilePath:string?) : void
+    - GetLastCompleteBackupDate() : DateTime
+    - UpdateLastBackupDate() : void
+    - CreateDirectoryIfNotExists(path:string) : bool
+}
+ViewModelBase <|-- BackupJobViewModel
+BackupJobViewModel --> "_backupJob" BackupJob
+BackupJobViewModel --> "_fileSystemService" FileSystemService
+BackupJobViewModel --> "_loggerService" LoggerService
+BackupJobViewModel --> "_stateService" StateService
+@enduml

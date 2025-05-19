@@ -6,6 +6,7 @@ using EasySave.Models;
 
 namespace EasySave.Services
 {
+    //Manages the logging of the application
     public class LoggerService
     {
         private DailyLogger _dailyLogger;
@@ -13,6 +14,7 @@ namespace EasySave.Services
 
         public event EventHandler<string> LogMessageAdded;
 
+        //Constructor for the LoggerService
         public LoggerService(string logDirectory = "Logs")
         {
             var settings = SettingsService.Load();
@@ -22,11 +24,13 @@ namespace EasySave.Services
             LoadExistingLogs();
         }
 
+        //Load existing logs from the log directory
         private void LoadExistingLogs()
         {
             try
             {
                 string logFilePath = Path.Combine(_logDirectory, $"{DateTime.Now:yyyy-MM-dd}.json");
+                // Check if the log file exists
                 if (File.Exists(logFilePath))
                 {
                     string existingContent = File.ReadAllText(logFilePath);
@@ -46,6 +50,7 @@ namespace EasySave.Services
             Log("Logger service initialized");
         }
 
+        //Set the log format for the logger
         public void SetLogFormat(LogFormat format)
         {
             try
@@ -62,18 +67,21 @@ namespace EasySave.Services
             }
         }
 
+        //Log a message to the console and the log file
         public void Log(string message)
         {
             string logMessage = $"[LOG] {DateTime.Now:yyyy-MM-dd HH:mm:ss}: {message}";
             LogMessageAdded?.Invoke(this, logMessage);
         }
 
+        //Log a message to the console and the log file
         public void LogError(string message)
         {
             string errorMessage = $"[ERROR] {DateTime.Now:yyyy-MM-dd HH:mm:ss}: {message}";
             LogMessageAdded?.Invoke(this, errorMessage);
         }
 
+        //Log a file transfer
         public void LogFileTransfer(string backupName, string sourcePath, string targetPath, long size, double transferTimeMs, double encryptionTimeMs)
         {
             try

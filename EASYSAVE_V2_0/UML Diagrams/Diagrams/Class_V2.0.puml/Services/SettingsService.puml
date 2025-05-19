@@ -1,0 +1,7 @@
+@startuml
+class SettingsService <<static>> {
+    - {static} <<readonly>> SettingsPath : string
+    + {static} Save(settings:AppSettings) : void
+    + {static} Load() : AppSettings
+}
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class ViewModelBase {
+    +  <<event>> PropertyChanged : PropertyChangedEventHandler? 
+    # <<virtual>> OnPropertyChanged(propertyName:string?) : void
+    # SetProperty(storage:T, value:T, propertyName:string?) : bool
+    + ChangeLanguage(langCode:string) : void
+}
+INotifyPropertyChanged <|-- ViewModelBase
+ViewModelBase --> "Translations" TranslationProvider
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class BindingProxy {
+    # <<override>> CreateInstanceCore() : Freezable
+    + Data : object <<get>> <<set>>
+}
+@enduml

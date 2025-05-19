@@ -7,6 +7,7 @@ using EasySave.Models;
 
 namespace EasySave.Services
 {
+    /// Manages the state of backup jobs
     public class StateService
     {
         private string StateFile = Path.Combine(AppContext.BaseDirectory, @"..\\..\\..\\", "States", "state.json");
@@ -21,6 +22,7 @@ namespace EasySave.Services
             LoadStates();
         }
 
+        // Update the state of a backup job
         public void UpdateState(string jobName, string status, double progress,
                                 string sourcePath = "", string targetPath = "",
                                 int totalFiles = 0, long totalSize = 0, int filesLeft = 0,
@@ -69,6 +71,7 @@ namespace EasySave.Services
             }
         }
 
+        // Get the state of a backup job
         private void LoadStates()
         {
             try
@@ -93,6 +96,7 @@ namespace EasySave.Services
             }
         }
 
+        // Save the state of a backup job
         private void SaveStates()
         {
             try
@@ -107,6 +111,7 @@ namespace EasySave.Services
             }
         }
 
+        // Get the state of a backup job
         public IEnumerable<BackupState> GetAllStates() => _states.AsReadOnly();
     }
 }
