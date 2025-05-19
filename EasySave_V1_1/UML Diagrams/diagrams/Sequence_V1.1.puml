@@ -1,0 +1,69 @@
+@startuml EasySave_Sequence_Diagram
+
+actor User
+participant ConsoleView
+participant MainViewModel
+participant BackupManagerViewModel
+participant BackupJobViewModel
+participant FileSystemService
+participant LoggerService
+participant StateService
+participant DailyLogger
+participant LanguageService
+participant SettingsService
+
+== Initialization ==
+User -> ConsoleView: Launch application
+ConsoleView -> LanguageService: LoadLanguageFromSettings()
+LanguageService -> SettingsService: Load()
+SettingsService --> LanguageService: settings
+LanguageService -> ConsoleView: Set UI language
+
+== Language Selection ==
+User -> ConsoleView: Select "Change language"
+ConsoleView -> MainViewModel: SetLanguage(langCode)
+MainViewModel -> LanguageService: SetLanguage(langCode)
+LanguageService -> SettingsService: Save(updated settings)
+LanguageService --> ConsoleView: Update UI strings
+
+== Backup Job Creation ==
+User -> ConsoleView: Select "Create backup job"
+ConsoleView -> MainViewModel: CreateBackupJob(name, src, target, type)
+MainViewModel -> BackupManagerViewModel: CreateJob(...)
+BackupManagerViewModel -> BackupJobViewModel: new(job, services)
+BackupManagerViewModel -> StateService: UpdateState("Created")
+BackupManagerViewModel --> MainViewModel: jobViewModel
+MainViewModel --> ConsoleView: Creation confirmation
+
+== Backup Execution ==
+User -> ConsoleView: Select "Execute jobs"
+ConsoleView -> MainViewModel: ExecuteBackupJobs(ids)
+MainViewModel -> BackupManagerViewModel: ExecuteJobs(ids)
+
+loop For each job
+    BackupManagerViewModel -> BackupJobViewModel: Execute()
+    
+    BackupJobViewModel -> StateService: UpdateState("Active")
+    BackupJobViewModel -> FileSystemService: GetAllFiles()
+    BackupJobViewModel -> StateService: UpdateState("InProgress")
+    
+    loop For each file
+        BackupJobViewModel -> FileSystemService: CopyFile()
+        FileSystemService -> LoggerService: LogFileTransfer()
+        LoggerService -> DailyLogger: LogFileTransfer()
+        BackupJobViewModel -> StateService: UpdateProgress()
+    end
+    
+    BackupJobViewModel -> StateService: UpdateState("Completed")
+end
+
+BackupManagerViewModel --> MainViewModel: Execution results
+MainViewModel --> ConsoleView: Completion report
+
+== Log Settings Change ==
+User -> ConsoleView: Select "Change log format"
+ConsoleView -> SettingsViewModel: ChangeLogFormat(format)
+SettingsViewModel -> SettingsService: Save(settings)
+LoggerService -> DailyLogger: SetLogFormat()
+
+@enduml

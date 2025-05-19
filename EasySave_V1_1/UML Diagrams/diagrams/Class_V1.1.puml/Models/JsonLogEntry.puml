@@ -1,0 +1,10 @@
+@startuml
+class JsonLogEntry {
+    + Name : string <<get>> <<set>>
+    + FileSource : string <<get>> <<set>>
+    + FileTarget : string <<get>> <<set>>
+    + FileSize : long <<get>> <<set>>
+    + FileTransferTime : double <<get>> <<set>>
+    + Time : string <<get>> <<set>>
+}
+@enduml
