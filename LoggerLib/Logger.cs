@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
@@ -23,6 +23,7 @@ namespace LoggerLib
         public string FileTarget { get; set; } // Target file path
         public long FileSize { get; set; } // Size of the file in bytes
         public double FileTransferTime { get; set; } // Time taken to transfer the file in milliseconds
+        public double EncryptionTime { get; set; } // Time taken to encrypt the file in milliseconds
         public string Time { get; set; } // Timestamp of the log entry
     }
 
@@ -128,7 +129,7 @@ namespace LoggerLib
         }
 
         // Method to log a message in the console
-        public void LogFileTransfer(string backupName, string sourcePath, string targetPath, long size, double transferTimeMs)
+        public void LogFileTransfer(string backupName, string sourcePath, string targetPath, long size, double transferTimeMs, double encryptiontime)
         {
             // Log the file transfer in the console
             var entry = new JsonLogEntry
@@ -138,6 +139,7 @@ namespace LoggerLib
                 FileTarget = Path.GetFullPath(targetPath),
                 FileSize = size,
                 FileTransferTime = transferTimeMs,
+                EncryptionTime = encryptiontime,
                 Time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
             };
 
