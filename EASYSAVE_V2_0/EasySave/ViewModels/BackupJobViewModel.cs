@@ -33,6 +33,7 @@ namespace EasySave.ViewModels
         private CancellationTokenSource _cts = new CancellationTokenSource();
         private bool _isEncryptionEnabled;
 
+
         // Property to indicate if encryption is enabled
         public bool IsEncryptionEnabled
         {
@@ -184,6 +185,7 @@ namespace EasySave.ViewModels
             try
             {
                 StopRequested = true;
+                Progress = 0; // Resets progress bar to zero
                 _loggerService.Log($"Job {Name} stop requested");
             }
             catch (Exception ex)
@@ -191,6 +193,7 @@ namespace EasySave.ViewModels
                 _loggerService.LogError($"Error requesting stop for job {Name}: {ex.Message}");
             }
         }
+
 
         public async Task ExecuteAsync(CancellationToken cancellationToken = default)
         {
