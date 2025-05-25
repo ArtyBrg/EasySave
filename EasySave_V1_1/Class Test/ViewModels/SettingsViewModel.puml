@@ -1,8 +1,0 @@
-@startuml
-class SettingsViewModel {
-    + SettingsViewModel()
-    + ChangeLogFormat(newFormat:LogFormat) : void
-    + GetCurrentFormat() : LogFormat
-}
-SettingsViewModel --> "Settings" AppSettings
-@enduml

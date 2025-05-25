@@ -180,7 +180,8 @@ namespace EasySave.ViewModels
             if (!selectedJobs.Any()) return;
 
             IsExecutingJobs = true;
-            foreach (var job in selectedJobs)
+
+            var tasks = selectedJobs.Select(async job =>
             {
                 try
                 {
@@ -190,7 +191,10 @@ namespace EasySave.ViewModels
                 {
                     _loggerService.LogError($"Error executing job {job.Name}: {ex.Message}");
                 }
-            }
+            }).ToList();
+
+            await Task.WhenAll(tasks);
+
             IsExecutingJobs = false;
         }
 

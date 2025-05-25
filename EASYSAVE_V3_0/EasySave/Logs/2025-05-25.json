@@ -1,0 +1,470 @@
+[
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\classes.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\classes.puml.crypt",
+    "FileSize": 1865,
+    "FileTransferTime": 2.9297,
+    "EncryptionTime": 2.0166,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Test",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\classes.png",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\classes.png",
+    "FileSize": 124469,
+    "FileTransferTime": 11.4148,
+    "EncryptionTime": 0,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Test",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.png",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.png",
+    "FileSize": 85548,
+    "FileTransferTime": 6.6712,
+    "EncryptionTime": 0,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\components.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\components.puml.crypt",
+    "FileSize": 1050,
+    "FileTransferTime": 4.7076,
+    "EncryptionTime": 34.7687,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Components_V1.1.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Components_V1.1.puml.crypt",
+    "FileSize": 1052,
+    "FileTransferTime": 1.6499,
+    "EncryptionTime": 1.4803,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Test",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\components.png",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\components.png",
+    "FileSize": 58494,
+    "FileTransferTime": 7.7923,
+    "EncryptionTime": 0,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Components_V1.1.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Components_V1.1.puml.crypt",
+    "FileSize": 1052,
+    "FileTransferTime": 0.81,
+    "EncryptionTime": 1.9411,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\sequence.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\sequence.puml.crypt",
+    "FileSize": 2014,
+    "FileTransferTime": 2.3265,
+    "EncryptionTime": 1.4826,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Test",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Component_V1.1.png",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Component_V1.1.png",
+    "FileSize": 58128,
+    "FileTransferTime": 7.1094,
+    "EncryptionTime": 0,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\sequence.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\sequence.puml.crypt",
+    "FileSize": 2014,
+    "FileTransferTime": 0.8493,
+    "EncryptionTime": 1.8352,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Sequence_V1.1.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Sequence_V1.1.puml.crypt",
+    "FileSize": 2526,
+    "FileTransferTime": 15.5372,
+    "EncryptionTime": 1.6202,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Test",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\sequence.png",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\sequence.png",
+    "FileSize": 121739,
+    "FileTransferTime": 12.5394,
+    "EncryptionTime": 0,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Sequence_V1.1.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Sequence_V1.1.puml.crypt",
+    "FileSize": 2526,
+    "FileTransferTime": 0.8318,
+    "EncryptionTime": 1.9434,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\usecase.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\usecase.puml.crypt",
+    "FileSize": 751,
+    "FileTransferTime": 1.4992,
+    "EncryptionTime": 1.5799,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Test",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Sequence_V1.1.png",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Sequence_V1.1.png",
+    "FileSize": 40444,
+    "FileTransferTime": 7.0328,
+    "EncryptionTime": 0,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\usecase.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\usecase.puml.crypt",
+    "FileSize": 751,
+    "FileTransferTime": 1.0625,
+    "EncryptionTime": 1.9225,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Usecase_V1.1.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Usecase_V1.1.puml.crypt",
+    "FileSize": 837,
+    "FileTransferTime": 1.857,
+    "EncryptionTime": 1.5071,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Test",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\usecase.png",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\usecase.png",
+    "FileSize": 15252,
+    "FileTransferTime": 9.6834,
+    "EncryptionTime": 0,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Usecase_V1.1.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Usecase_V1.1.puml.crypt",
+    "FileSize": 837,
+    "FileTransferTime": 0.5786,
+    "EncryptionTime": 1.9601,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\include.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\include.puml.crypt",
+    "FileSize": 631,
+    "FileTransferTime": 1.3232,
+    "EncryptionTime": 1.1921,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Test",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Usecase_V1.1.png",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Usecase_V1.1.png",
+    "FileSize": 48024,
+    "FileTransferTime": 8.1512,
+    "EncryptionTime": 0,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\include.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\include.puml.crypt",
+    "FileSize": 631,
+    "FileTransferTime": 0.79,
+    "EncryptionTime": 1.4021,
+    "Time": "2025-05-25 21:52:43"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Program.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Program.puml.crypt",
+    "FileSize": 137,
+    "FileTransferTime": 1.2767,
+    "EncryptionTime": 2.0245,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Program.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Program.puml.crypt",
+    "FileSize": 137,
+    "FileTransferTime": 0.6266,
+    "EncryptionTime": 1.6974,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Models\\AppSettings.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Models\\AppSettings.puml.crypt",
+    "FileSize": 131,
+    "FileTransferTime": 1.5741,
+    "EncryptionTime": 2.0303,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Models\\AppSettings.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Models\\AppSettings.puml.crypt",
+    "FileSize": 131,
+    "FileTransferTime": 0.5452,
+    "EncryptionTime": 1.5993,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Models\\BackupJob.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Models\\BackupJob.puml.crypt",
+    "FileSize": 286,
+    "FileTransferTime": 2.159,
+    "EncryptionTime": 2.2033,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Models\\BackupJob.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Models\\BackupJob.puml.crypt",
+    "FileSize": 286,
+    "FileTransferTime": 0.5385,
+    "EncryptionTime": 1.9587,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Models\\BackupState.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Models\\BackupState.puml.crypt",
+    "FileSize": 414,
+    "FileTransferTime": 2.0024,
+    "EncryptionTime": 1.5688,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Models\\BackupState.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Models\\BackupState.puml.crypt",
+    "FileSize": 414,
+    "FileTransferTime": 1.2857,
+    "EncryptionTime": 3.2247,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Models\\JsonLogEntry.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Models\\JsonLogEntry.puml.crypt",
+    "FileSize": 293,
+    "FileTransferTime": 2.3966,
+    "EncryptionTime": 2.7486,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Models\\JsonLogEntry.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Models\\JsonLogEntry.puml.crypt",
+    "FileSize": 293,
+    "FileTransferTime": 1.3962,
+    "EncryptionTime": 3.3453,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Services\\FileSystemService.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Services\\FileSystemService.puml.crypt",
+    "FileSize": 375,
+    "FileTransferTime": 3.6571,
+    "EncryptionTime": 2.0684,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Services\\FileSystemService.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Services\\FileSystemService.puml.crypt",
+    "FileSize": 375,
+    "FileTransferTime": 0.4668,
+    "EncryptionTime": 2.2514,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Services\\LanguageService.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Services\\LanguageService.puml.crypt",
+    "FileSize": 174,
+    "FileTransferTime": 3.8843,
+    "EncryptionTime": 2.7594,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Services\\LanguageService.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Services\\LanguageService.puml.crypt",
+    "FileSize": 174,
+    "FileTransferTime": 1.0648,
+    "EncryptionTime": 1.8869,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Services\\LoggerService.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Services\\LoggerService.puml.crypt",
+    "FileSize": 1208,
+    "FileTransferTime": 13.7535,
+    "EncryptionTime": 1.5501,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Services\\LoggerService.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Services\\LoggerService.puml.crypt",
+    "FileSize": 1208,
+    "FileTransferTime": 0.6685,
+    "EncryptionTime": 1.5161,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Services\\SettingsService.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Services\\SettingsService.puml.crypt",
+    "FileSize": 203,
+    "FileTransferTime": 3.85,
+    "EncryptionTime": 3.1609,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Services\\SettingsService.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Services\\SettingsService.puml.crypt",
+    "FileSize": 203,
+    "FileTransferTime": 0.5231,
+    "EncryptionTime": 1.4878,
+    "Time": "2025-05-25 21:52:44"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Services\\StateService.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Services\\StateService.puml.crypt",
+    "FileSize": 466,
+    "FileTransferTime": 4.2227,
+    "EncryptionTime": 1.7786,
+    "Time": "2025-05-25 21:52:45"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Services\\StateService.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Services\\StateService.puml.crypt",
+    "FileSize": 466,
+    "FileTransferTime": 0.5822,
+    "EncryptionTime": 1.7421,
+    "Time": "2025-05-25 21:52:45"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\ViewModels\\BackupJobViewModel.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\ViewModels\\BackupJobViewModel.puml.crypt",
+    "FileSize": 850,
+    "FileTransferTime": 1.7155,
+    "EncryptionTime": 1.8573,
+    "Time": "2025-05-25 21:52:45"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\ViewModels\\BackupJobViewModel.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\ViewModels\\BackupJobViewModel.puml.crypt",
+    "FileSize": 850,
+    "FileTransferTime": 0.92,
+    "EncryptionTime": 2.132,
+    "Time": "2025-05-25 21:52:45"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\ViewModels\\BackupManagerViewModel.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\ViewModels\\BackupManagerViewModel.puml.crypt",
+    "FileSize": 706,
+    "FileTransferTime": 3.745,
+    "EncryptionTime": 3.2759,
+    "Time": "2025-05-25 21:52:45"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\ViewModels\\BackupManagerViewModel.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\ViewModels\\BackupManagerViewModel.puml.crypt",
+    "FileSize": 706,
+    "FileTransferTime": 6.233,
+    "EncryptionTime": 1.453,
+    "Time": "2025-05-25 21:52:45"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\ViewModels\\MainViewModel.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\ViewModels\\MainViewModel.puml.crypt",
+    "FileSize": 607,
+    "FileTransferTime": 4.2611,
+    "EncryptionTime": 2.0453,
+    "Time": "2025-05-25 21:52:45"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\ViewModels\\MainViewModel.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\ViewModels\\MainViewModel.puml.crypt",
+    "FileSize": 607,
+    "FileTransferTime": 1.1658,
+    "EncryptionTime": 1.6738,
+    "Time": "2025-05-25 21:52:45"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\ViewModels\\SettingsViewModel.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\ViewModels\\SettingsViewModel.puml.crypt",
+    "FileSize": 212,
+    "FileTransferTime": 1.6847,
+    "EncryptionTime": 1.2947,
+    "Time": "2025-05-25 21:52:45"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\ViewModels\\SettingsViewModel.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\ViewModels\\SettingsViewModel.puml.crypt",
+    "FileSize": 212,
+    "FileTransferTime": 0.5231,
+    "EncryptionTime": 1.8672,
+    "Time": "2025-05-25 21:52:45"
+  },
+  {
+    "Name": "Arthur 1",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Views\\ConsoleView.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Views\\ConsoleView.puml.crypt",
+    "FileSize": 480,
+    "FileTransferTime": 3.4819,
+    "EncryptionTime": 2.5221,
+    "Time": "2025-05-25 21:52:45"
+  },
+  {
+    "Name": "Test 2",
+    "FileSource": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Views\\ConsoleView.puml",
+    "FileTarget": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\pictures\\Class_V1.1.puml\\Views\\ConsoleView.puml.crypt",
+    "FileSize": 480,
+    "FileTransferTime": 0.533,
+    "EncryptionTime": 1.4003,
+    "Time": "2025-05-25 21:52:45"
+  }
+]
