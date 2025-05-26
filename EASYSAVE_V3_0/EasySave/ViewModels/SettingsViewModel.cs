@@ -69,18 +69,17 @@ namespace EasySave.ViewModels
                                 WindowStartupLocation = WindowStartupLocation.CenterOwner
                             };
 
-                            // Met l'application en pause
+                           
                             Application.Current.MainWindow.IsEnabled = false;
                             _businessPopupWindow.Show();
 
-                            // ➕ PAUSE AUTOMATIQUE DES JOBS
-                            _loggerService?.Log("Logiciel métier détecté. Mise en pause automatique des jobs...");
+                            _loggerService?.Log("Job software detected. Automatic pause of jobs...");
                             foreach (var job in App.AppViewModel.ActiveBackupJobs)
                             {
                                 if (job.IsRunning && !job.IsPaused)
                                 {
                                     job.PauseJob();
-                                    _loggerService?.Log($"Job \"{job.Name}\" mis en pause automatiquement.");
+                                    _loggerService?.Log($"Job \"{job.Name}\" paused automatically.");
                                 }
                             }
                         }
@@ -94,20 +93,20 @@ namespace EasySave.ViewModels
 
                             Application.Current.MainWindow.IsEnabled = true;
 
-                            // Met la fenêtre principale en avant
+                            // Highlights the main window
                             Application.Current.MainWindow.Activate();
                             Application.Current.MainWindow.Topmost = true;
                             Application.Current.MainWindow.Topmost = false;
                             Application.Current.MainWindow.Focus();
 
-                            // ➕ REPRISE AUTOMATIQUE DES JOBS
-                            _loggerService?.Log("Logiciel métier fermé. Reprise automatique des jobs...");
+                            // AUTOMATIC JOB RESUMPTION
+                            _loggerService?.Log("Closed business software. Automatic resumption of jobs...");
                             foreach (var job in App.AppViewModel.ActiveBackupJobs)
                             {
                                 if (job.IsPaused)
                                 {
-                                    job.PauseJob(); // Toggle pour reprise
-                                    _loggerService?.Log($"Job \"{job.Name}\" repris automatiquement.");
+                                    job.PauseJob(); // Toggle to resume
+                                    _loggerService?.Log($"Job \"{job.Name}\" resumed automatically.");
                                 }
                             }
                         }
