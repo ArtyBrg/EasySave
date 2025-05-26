@@ -25,5 +25,14 @@
     "IsSelected": false,
     "Type": "Complete",
     "IsEncryptionEnabled": false
+  },
+  {
+    "Id": 4,
+    "Name": "brulux",
+    "SourcePath": "C:\\Users\\Brulux\\Pictures\\Screenshots",
+    "TargetPath": "C:\\Users\\Brulux\\Pictures",
+    "IsSelected": false,
+    "Type": "Complete",
+    "IsEncryptionEnabled": false
   }
 ]

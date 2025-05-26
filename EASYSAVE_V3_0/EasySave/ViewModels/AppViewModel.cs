@@ -5,6 +5,7 @@ using LoggerLib;
 using System.Reflection.Metadata;
 using System.Text;
 using EasySave_WPF;
+using System.Collections.ObjectModel;
 
 namespace EasySave.ViewModels
 {
@@ -21,6 +22,9 @@ namespace EasySave.ViewModels
 
         private string _errorMessage;
         private string _currentLanguage;
+
+        public ObservableCollection<BackupJobViewModel> ActiveBackupJobs { get; } = new ObservableCollection<BackupJobViewModel>();
+
 
         // Constructor for the AppViewModel
         public AppViewModel()

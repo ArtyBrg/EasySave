@@ -40,5 +40,19 @@
     "CurrentSourceFile": "",
     "CurrentTargetFile": "",
     "Timestamp": "2025-05-25 21:32:59"
+  },
+  {
+    "Name": "brulux",
+    "State": "END",
+    "Progress": 100,
+    "SourcePath": "C:\\Users\\Brulux\\Pictures\\Screenshots\\desktop.ini",
+    "TargetPath": "C:\\Users\\Brulux\\Pictures\\desktop.ini",
+    "TotalFiles": 63,
+    "TotalSize": 10629622,
+    "FilesRemaining": 0,
+    "RemainingSize": 0,
+    "CurrentSourceFile": "",
+    "CurrentTargetFile": "",
+    "Timestamp": "2025-05-26 16:35:14"
   }
 ]
