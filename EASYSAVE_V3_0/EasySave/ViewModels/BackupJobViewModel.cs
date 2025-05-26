@@ -172,7 +172,7 @@ namespace EasySave.ViewModels
         public BackupJob GetBackupJob() => _backupJob;
 
         // Command to execute the backup job
-        private void PauseJob()
+        public void PauseJob()
         {
             IsPaused = !IsPaused;
             _loggerService.Log($"Backup job {Name} {(IsPaused ? "paused" : "resumed")}");
@@ -208,6 +208,7 @@ namespace EasySave.ViewModels
             IsPaused = false;
             Progress = 0;
             StopRequested = false;
+            App.AppViewModel.ActiveBackupJobs.Add(this);
 
             try
             {
@@ -251,6 +252,7 @@ namespace EasySave.ViewModels
             }
             finally
             {
+                App.AppViewModel.ActiveBackupJobs.Remove(this);
                 IsRunning = false;
                 StopRequested = false;
             }

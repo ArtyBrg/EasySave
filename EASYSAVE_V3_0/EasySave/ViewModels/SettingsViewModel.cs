@@ -69,10 +69,20 @@ namespace EasySave.ViewModels
                                 WindowStartupLocation = WindowStartupLocation.CenterOwner
                             };
 
-                            // Put the application inactive
+                            // Met l'application en pause
                             Application.Current.MainWindow.IsEnabled = false;
-
                             _businessPopupWindow.Show();
+
+                            // ➕ PAUSE AUTOMATIQUE DES JOBS
+                            _loggerService?.Log("Logiciel métier détecté. Mise en pause automatique des jobs...");
+                            foreach (var job in App.AppViewModel.ActiveBackupJobs)
+                            {
+                                if (job.IsRunning && !job.IsPaused)
+                                {
+                                    job.PauseJob();
+                                    _loggerService?.Log($"Job \"{job.Name}\" mis en pause automatiquement.");
+                                }
+                            }
                         }
                     }
                     else
@@ -84,11 +94,22 @@ namespace EasySave.ViewModels
 
                             Application.Current.MainWindow.IsEnabled = true;
 
-                            // Enforce the main window to the front
+                            // Met la fenêtre principale en avant
                             Application.Current.MainWindow.Activate();
-                            Application.Current.MainWindow.Topmost = true;     // Put in front
-                            Application.Current.MainWindow.Topmost = false;    // Reinitialize the main window
+                            Application.Current.MainWindow.Topmost = true;
+                            Application.Current.MainWindow.Topmost = false;
                             Application.Current.MainWindow.Focus();
+
+                            // ➕ REPRISE AUTOMATIQUE DES JOBS
+                            _loggerService?.Log("Logiciel métier fermé. Reprise automatique des jobs...");
+                            foreach (var job in App.AppViewModel.ActiveBackupJobs)
+                            {
+                                if (job.IsPaused)
+                                {
+                                    job.PauseJob(); // Toggle pour reprise
+                                    _loggerService?.Log($"Job \"{job.Name}\" repris automatiquement.");
+                                }
+                            }
                         }
                     }
                 });
@@ -98,6 +119,7 @@ namespace EasySave.ViewModels
                 _loggerService?.LogError($"Erreur pendant la détection du logiciel métier : {ex.Message}");
             }
         }
+
 
 
         public ObservableCollection<string> LogFormats { get; } = new ObservableCollection<string> { "JSON", "XML" };
