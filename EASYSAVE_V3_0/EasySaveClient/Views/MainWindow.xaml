@@ -67,7 +67,26 @@
                 <DataGridTextColumn Header="Fichier actuel source" Binding="{Binding CurrentSourceFile}" Width="2*"/>
                 <DataGridTextColumn Header="Fichier actuel cible" Binding="{Binding CurrentTargetFile}" Width="2*"/>
                 <DataGridTextColumn Header="Timestamp" Binding="{Binding Timestamp}" Width="140"/>
-            </DataGrid.Columns>
+
+                    <DataGridTemplateColumn Header="Actions">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Pause"
+        Command="{Binding DataContext.PauseCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+        CommandParameter="{Binding Name}" />
+
+                                    <Button Content="Stop"
+        Command="{Binding DataContext.StopCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+        CommandParameter="{Binding Name}" />
+
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
             </DataGrid>
         </Border>
     </Grid>

@@ -1,17 +1,17 @@
 [
   {
     "Name": "Arthur Client",
-    "State": "END",
-    "Progress": 100,
-    "SourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Views\\ConsoleView.puml",
-    "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\Backup\\Class_V1.1.puml\\Views\\ConsoleView.puml.crypt",
+    "State": "STOPPED",
+    "Progress": 63.1578947368421,
+    "SourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\diagrams\\Class_V1.1.puml\\Services\\LoggerService.puml",
+    "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\Backup\\Class_V1.1.puml\\Services\\LoggerService.puml.crypt",
     "TotalFiles": 19,
     "TotalSize": 11588,
     "FilesRemaining": 0,
     "RemainingSize": 0,
     "CurrentSourceFile": "",
     "CurrentTargetFile": "",
-    "Timestamp": "2025-05-25 21:33:00"
+    "Timestamp": "2025-05-26 16:01:18"
   },
   {
     "Name": "Arthur Remote",
@@ -25,20 +25,20 @@
     "RemainingSize": 0,
     "CurrentSourceFile": "",
     "CurrentTargetFile": "",
-    "Timestamp": "2025-05-25 21:32:58"
+    "Timestamp": "2025-05-26 12:14:53"
   },
   {
     "Name": "BLUPBLUP",
-    "State": "END",
-    "Progress": 100,
-    "SourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Class Test\\Views\\ConsoleView.puml",
-    "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\Backup\\Views\\ConsoleView.puml.crypt",
+    "State": "ERROR",
+    "Progress": 0,
+    "SourcePath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\Class Test",
+    "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\Backup",
     "TotalFiles": 16,
     "TotalSize": 7312,
     "FilesRemaining": 0,
     "RemainingSize": 0,
     "CurrentSourceFile": "",
     "CurrentTargetFile": "",
-    "Timestamp": "2025-05-25 21:32:59"
+    "Timestamp": "2025-05-26 13:42:35"
   }
 ]

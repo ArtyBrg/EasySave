@@ -32,6 +32,7 @@ namespace EasySave.ViewModels
         private System.Threading.CancellationTokenSource _cts = new System.Threading.CancellationTokenSource();
         private bool _isExecutingJobs = false;
 
+
         // Constructor for the BackupManagerViewModel
         public BackupManagerViewModel(
             FileSystemService fileSystemService,

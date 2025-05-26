@@ -47,13 +47,16 @@ namespace EasySave.ViewModels
             LoggerService loggerService)
         {
 
-            // AllocConsole();
+            AllocConsole();
 
             _backupManagerViewModel = backupManagerViewModel;
             _languageService = languageService;
             _loggerService = loggerService;
 
             _remoteConsole = new RemoteConsoleService(StateService.Instance);
+
+            // Passe le vrai ViewModel une fois ici :
+            _remoteConsole.Initialize(_backupManagerViewModel);
             StateService.Instance.SetRemoteConsole(_remoteConsole);
             _remoteConsole.Start();
 
