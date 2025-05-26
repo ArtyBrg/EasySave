@@ -1,9 +1,15 @@
 {
-  "Language": "EN",
+  "Language": "FR",
   "LogFormat": "Json",
   "ExtensionsToCrypt": [
     ".puml",
     ".docx"
+  ],
+  "PriorityExtensions": [
+    ".txt",
+    ".doc",
+    ".pdf",
+    ".xlsx"
   ],
   "BusinessSoftware": {
     "Name": "CalculatorApp",

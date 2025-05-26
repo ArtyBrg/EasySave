@@ -15,12 +15,35 @@ using System.Text;
 using System.Timers;
 using System.Windows.Threading;
 using EasySave_WPF;
+using EasySave.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EasySave.ViewModels
 {
     // ViewModel for the settings window
     public class SettingsViewModel : ViewModelBase
     {
+        
+        
+            private AppSettings _appSettings;
+
+            public SettingsViewModel(AppSettings appSettings)
+            {
+                _appSettings = appSettings;
+            }
+
+            public string PriorityExtensionsText
+        {
+            get => string.Join(", ", _appSettings.PriorityExtensions);
+            set
+            {
+                _appSettings.PriorityExtensions = value.Split(',')
+                    .Select(ext => ext.Trim())
+                    .Where(ext => !string.IsNullOrEmpty(ext))
+                    .ToList();
+            }
+        }
 
         private Window _businessPopupWindow;
 

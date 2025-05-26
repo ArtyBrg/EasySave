@@ -1,6 +1,5 @@
 ﻿using LoggerLib;
 using System.Collections.Generic;
-using LoggerLib;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -15,6 +14,11 @@ namespace EasySave.Models
         public LogFormat LogFormat { get; set; } = LogFormat.Json;
 
         public List<string> ExtensionsToCrypt { get; set; } = new List<string>();
+
+        public List<string> PriorityExtensions { get; set; } = new List<string>
+        {
+            ".txt", ".doc", ".docx", ".pdf", ".xlsx"
+        };
 
         public BusinessSoftware BusinessSoftware { get; set; } = new BusinessSoftware();
     }

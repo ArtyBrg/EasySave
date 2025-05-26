@@ -5,12 +5,50 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using EasySave.Models;
+using System.Threading.Tasks;
+using EasySave.Models;
+using System.Text.Json.Serialization;
 
 namespace EasySave.Services
 {
+    
     /// Manages the state of backup jobs
     public class StateService
     {
+        private static readonly string SettingsPath = Path.Combine(AppContext.BaseDirectory, @"..\\..\\..\\", "Settings", "settings.json");
+
+        // AJOUTEZ CETTE MÉTHODE
+        public static List<string> GetPriorityExtensions()
+        {
+            var settings = Load();
+            return settings.PriorityExtensions ?? new List<string>();
+        }
+
+        // Ensure the settings directory exists
+        public static void Save(AppSettings settings)
+        {
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                Converters = { new JsonStringEnumConverter() }
+            };
+            var json = JsonSerializer.Serialize(settings, options);
+            File.WriteAllText(SettingsPath, json);
+        }
+
+        // Load settings from the JSON file
+        public static AppSettings Load()
+        {
+            // Check if the settings file exists, if not return default settings
+            if (!File.Exists(SettingsPath))
+                return new AppSettings();
+            var json = File.ReadAllText(SettingsPath);
+            return JsonSerializer.Deserialize<AppSettings>(json, new JsonSerializerOptions
+            {
+                Converters = { new JsonStringEnumConverter() }
+            }) ?? new AppSettings();
+        }
+
         private static StateService _instance;
         public static StateService Instance => _instance ??= new StateService(new LoggerService());
 

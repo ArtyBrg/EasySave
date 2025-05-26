@@ -2,19 +2,29 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using EasySave.Models;
 using EasySave.Services;
+using System.Threading.Tasks;
+
 
 namespace EasySave.Services
 {
     // Manages file system operations such as getting files, copying files, and calculating directory size.
     public class FileSystemService
     {
+
         // Logger service for logging operations
         private readonly LoggerService _logger;
 
         public FileSystemService(LoggerService logger)
         {
             _logger = logger;
+        }
+
+        public bool CanBackupNonPriorityFile(List<BackupJob> allJobs, List<string> priorityExtensions)
+        {
+            // Vérifier si des fichiers prioritaires sont en attente sur tous les jobs
+            return !allJobs.Any(job => job.HasPendingPriorityFiles(priorityExtensions));
         }
 
         // Gets all files in the specified directory and its subdirectories.
@@ -71,5 +81,7 @@ namespace EasySave.Services
             return Directory.GetFiles(path, "*", SearchOption.AllDirectories)
                           .Sum(file => new FileInfo(file).Length);
         }
+
+
     }
 }

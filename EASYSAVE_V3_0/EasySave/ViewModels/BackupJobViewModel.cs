@@ -464,7 +464,6 @@ namespace EasySave.ViewModels
         // Method to copy a file with progress tracking
         private void CopyFileWithProgress(string sourceFile, string targetFile, int currentIndex, int totalFiles, long totalSize, List<string> extensionsToCrypt)
         {
-            // Check if the source file exists
             var targetDir = Path.GetDirectoryName(targetFile);
             if (!Directory.Exists(targetDir))
             {
@@ -495,7 +494,6 @@ namespace EasySave.ViewModels
                         double progress = (double)(currentIndex * totalSize + totalBytesRead) / (totalFiles * totalSize) * 100;
                         System.Windows.Application.Current.Dispatcher.InvokeAsync(() => Progress = progress);
 
-                        // Check if the job was stopped by the user
                         if (StopRequested)
                         {
                             _loggerService.Log($"Copy of {sourceFile} interrupted by user");
@@ -509,27 +507,46 @@ namespace EasySave.ViewModels
 
                 double encryptionTimeMs = 0;
 
-                // Encrypt the file if the extension is in the list
                 if (IsEncryptionEnabled)
                 {
-                    Stopwatch sc = Stopwatch.StartNew();
-
-                    try
+                    // Attendre si un CryptoSoft tourne déjà
+                    while (Process.GetProcessesByName("CryptoSoft").Length > 0)
                     {
-                        var fileManager = new CryptoSoft.FileManager(targetFile, encryptionKey);
-                        fileManager.TransformFile();
-
-                        sc.Stop();
-                        encryptionTimeMs = sc.Elapsed.TotalMilliseconds;
+                        Thread.Sleep(500);
                     }
-                    catch (Exception ex)
+
+                    // Création du fichier temporaire pour stocker le résultat chiffré
+                    string tempEncryptedFile = Path.GetTempFileName();
+
+                    // Lancer le chiffrement avec CryptoSoft.exe
+                    Process process = new Process();
+                    process.StartInfo.FileName = "CryptoSoft.exe";
+                    process.StartInfo.Arguments = $"\"{sourceFile}\" \"{tempEncryptedFile}\"";
+                    process.StartInfo.UseShellExecute = false;
+                    process.Start();
+                    process.WaitForExit();
+
+                    // Vérifier si CryptoSoft s’est bien exécuté
+                    if (process.ExitCode == 0)
                     {
-                        _loggerService.Log("Erreur de cryptage : " + ex.Message);
+                        // Supprimer l'original
+                        File.Delete(sourceFile);
 
-                        sc.Stop();
+                        // Déplacer le fichier temporaire chiffré à la place de l'original
+                        File.Move(tempEncryptedFile, sourceFile);
 
-                        encryptionTimeMs = -1;
+                        // Facultatif : Renommer en .enc pour indiquer que c’est chiffré
+                        // string encryptedRenamed = Path.ChangeExtension(sourceFile, ".enc");
+                        // File.Move(sourceFile, encryptedRenamed);
+
+                        _loggerService.Log($"Fichier chiffré : {sourceFile}");
                     }
+                    else
+                    {
+                        // Gérer les erreurs de chiffrement ici
+                        _loggerService.Log($"Erreur de chiffrement sur : {sourceFile}, code retour = {process.ExitCode}");
+                    }
+
                 }
                 else
                 {
@@ -543,6 +560,7 @@ namespace EasySave.ViewModels
                 _loggerService.LogError($"Error copying {sourceFile} to {targetFile}: {ex.Message}");
             }
         }
+
 
         // Method to decrypt a file
         public void DecryptFile(string encryptedFilePath, string? outputFilePath = null)
