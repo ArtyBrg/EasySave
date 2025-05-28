@@ -6,8 +6,12 @@
     "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\Backup",
     "IsSelected": false,
     "Type": "Complete",
+<<<<<<< HEAD
     "IsEncryptionEnabled": false,
     "PendingFiles": []
+=======
+    "IsEncryptionEnabled": false
+>>>>>>> parent of d92511b (fix)
   },
   {
     "Id": 2,
@@ -16,8 +20,12 @@
     "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\Backup",
     "IsSelected": false,
     "Type": "Complete",
+<<<<<<< HEAD
     "IsEncryptionEnabled": false,
     "PendingFiles": []
+=======
+    "IsEncryptionEnabled": false
+>>>>>>> parent of d92511b (fix)
   },
   {
     "Id": 3,
@@ -27,6 +35,7 @@
     "IsSelected": false,
     "Type": "Complete",
     "IsEncryptionEnabled": false
+<<<<<<< HEAD
   },
   {
     "Id": 4,
@@ -36,5 +45,7 @@
     "IsSelected": false,
     "Type": "Complete",
     "IsEncryptionEnabled": false
+=======
+>>>>>>> parent of d92511b (fix)
   }
 ]
