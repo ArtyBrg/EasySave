@@ -1,0 +1,14 @@
+@startuml
+class BackupJob {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + <<required>> SourcePath : string <<get>> <<set>>
+    + <<required>> TargetPath : string <<get>> <<set>>
+    + IsSelected : bool <<get>> <<set>>
+    + <<required>> Type : string <<get>> <<set>>
+    + IsEncryptionEnabled : bool <<get>> <<set>> = false
+}
+class "List`1"<T> {
+}
+BackupJob o-> "PendingFiles<string>" "List`1"
+@enduml

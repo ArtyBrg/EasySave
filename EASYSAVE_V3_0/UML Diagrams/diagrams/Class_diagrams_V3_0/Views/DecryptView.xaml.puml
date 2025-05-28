@@ -1,0 +1,10 @@
+@startuml
+class DecryptView <<partial>> {
+    + DecryptView(viewModel:BackupJobViewModel)
+    + DecryptView()
+    - BrowseButton_Click(sender:object, e:RoutedEventArgs) : void
+    - DecryptButton_Click(sender:object, e:RoutedEventArgs) : void
+}
+UserControl <|-- DecryptView
+DecryptView --> "_viewModel" BackupJobViewModel
+@enduml

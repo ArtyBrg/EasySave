@@ -1,0 +1,9 @@
+@startuml
+class GeneratedInternalTypeHelper <<sealed>> {
+    # <<override>> CreateInstance(type:System.Type, culture:System.Globalization.CultureInfo) : object
+    # <<override>> GetPropertyValue(propertyInfo:System.Reflection.PropertyInfo, target:object, culture:System.Globalization.CultureInfo) : object
+    # <<override>> SetPropertyValue(propertyInfo:System.Reflection.PropertyInfo, target:object, value:object, culture:System.Globalization.CultureInfo) : void
+    # <<override>> CreateDelegate(delegateType:System.Type, target:object, handler:string) : System.Delegate
+    # <<override>> AddEventHandler(eventInfo:System.Reflection.EventInfo, target:object, handler:System.Delegate) : void
+}
+@enduml

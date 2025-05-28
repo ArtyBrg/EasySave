@@ -1,0 +1,18 @@
+@startuml
+class RemoteConsoleService {
+    + RemoteConsoleService(stateService:StateService)
+    - _isRunning : bool
+    + Start() : void
+    + Initialize(backupManager:BackupManagerViewModel) : void
+    - HandleClient(client:Socket) : void
+    + SendStateUpdate(state:BackupState) : void
+}
+class NetworkMessage {
+    + Type : string <<get>> <<set>>
+}
+RemoteConsoleService --> "_stateService" StateService
+RemoteConsoleService --> "_backupManager" BackupManagerViewModel
+RemoteConsoleService --> "_lastClient" Socket
+RemoteConsoleService --> "_serverSocket" Socket
+NetworkMessage --> "Payload" JsonElement
+@enduml

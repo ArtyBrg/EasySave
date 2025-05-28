@@ -1,0 +1,7 @@
+@startuml
+class MainWindow <<partial>> {
+    - _contentLoaded : bool
+    + InitializeComponent() : void
+    - Connect(connectionId:int, target:object) : void
+}
+@enduml
