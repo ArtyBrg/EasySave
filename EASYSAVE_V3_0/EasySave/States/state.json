@@ -1,5 +1,6 @@
 [
   {
+<<<<<<< HEAD
     "Name": "Arthur Client",
     "State": "STOPPED",
     "Progress": 63.1578947368421,
@@ -21,10 +22,20 @@
     "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\Backup\\Usecase_V1.1.png",
     "TotalFiles": 4,
     "TotalSize": 232144,
+=======
+    "Name": "target",
+    "State": "END",
+    "Progress": 100,
+    "SourcePath": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\source\\Usecase_V1.1.png",
+    "TargetPath": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\target\\Usecase_V1.1.png.crypt",
+    "TotalFiles": 7,
+    "TotalSize": 238753,
+>>>>>>> d221f7538ea9c86860b5cbbcab9a990f47cec025
     "FilesRemaining": 0,
     "RemainingSize": 0,
     "CurrentSourceFile": "",
     "CurrentTargetFile": "",
+<<<<<<< HEAD
     "Timestamp": "2025-05-26 12:14:53"
   },
   {
@@ -35,10 +46,26 @@
     "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\Backup",
     "TotalFiles": 16,
     "TotalSize": 7312,
+=======
+    "Timestamp": "2025-05-28 16:24:40"
+  },
+  {
+    "Name": "tourget",
+    "State": "END",
+    "Progress": 100,
+    "SourcePath": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\source\\Usecase_V1.1.png",
+    "TargetPath": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\tourget\\Usecase_V1.1.png.crypt",
+    "TotalFiles": 7,
+    "TotalSize": 238753,
+>>>>>>> d221f7538ea9c86860b5cbbcab9a990f47cec025
     "FilesRemaining": 0,
     "RemainingSize": 0,
     "CurrentSourceFile": "",
     "CurrentTargetFile": "",
+<<<<<<< HEAD
     "Timestamp": "2025-05-26 13:42:35"
+=======
+    "Timestamp": "2025-05-28 16:24:45"
+>>>>>>> d221f7538ea9c86860b5cbbcab9a990f47cec025
   }
 ]

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.IO.Pipes;
 using System.Threading;
 
 namespace CryptoSoft
@@ -6,37 +8,108 @@ namespace CryptoSoft
     public static class Program
     {
         private static readonly string mutexName = "Global\\CryptoSoft_Mutex";
+        private static readonly string pipeName = "CryptoSoftPipe";
 
         public static void Main(string[] args)
         {
             bool createdNew;
 
-            // Création d’un mutex système global
             using (var mutex = new Mutex(true, mutexName, out createdNew))
             {
-                if (!createdNew)
+                if (createdNew)
                 {
-                    Console.WriteLine("An other CryptoSoft instance is already running.");
-                    Environment.Exit(-1); // code d’erreur mono-instance
+                    // C’est la première instance -> lancer le serveur pipe
+                    Console.WriteLine("Instance principale de CryptoSoft lancée.");
+                    StartPipeServer(); // Démarre le serveur
+                    WaitForExit();     // Attend interruption manuelle
                 }
-
-                try
+                else
                 {
-                    foreach (var arg in args)
-                    {
-                        Console.WriteLine(arg);
-                    }
 
-                    var fileManager = new FileManager(args[0], args[1]);
-                    int elapsedTime = fileManager.TransformFile();
-                    Environment.Exit(elapsedTime);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Error : " + e.Message);
-                    Environment.Exit(-99); // code d’erreur général
+                    // Une autre instance est déjà en cours -> envoyer les arguments
+                    Console.WriteLine("Instance secondaire détectée. Envoi des arguments à l'instance principale.");
+                    SendArgumentsToMainInstance(args);
                 }
             }
+        }
+
+        private static void StartPipeServer()
+        {
+            Thread serverThread = new Thread(() =>
+            {
+                while (true)
+                {
+                    using (var server = new NamedPipeServerStream(pipeName, PipeDirection.In))
+                    using (var reader = new StreamReader(server))
+                    {
+                        server.WaitForConnection();
+
+                        string? filePath = reader.ReadLine();
+                        string? key = reader.ReadLine();
+
+                        if (filePath != null && key != null)
+                        {
+                            Console.WriteLine($"Demande reçue : {filePath}");
+                            var fileManager = new FileManager(filePath, key);
+                            int time = fileManager.TransformFile();
+                            Console.WriteLine($"Fichier traité en {time} ms");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Arguments invalides reçus.");
+                        }
+
+                        server.Disconnect();
+                    }
+                }
+            });
+
+            serverThread.IsBackground = true;
+            serverThread.Start();
+        }
+
+        private static void SendArgumentsToMainInstance(string[] args)
+        {
+            try
+            {
+                using (var client = new NamedPipeClientStream(".", pipeName, PipeDirection.Out))
+                {
+                    client.Connect(2000); // 2 sec timeout
+                    using (var writer = new StreamWriter(client))
+                    {
+                        writer.AutoFlush = true;
+
+                        if (args.Length < 2)
+                        {
+                            Console.WriteLine("Pas assez d’arguments pour le chiffrement.");
+                            Environment.Exit(-2);
+                        }
+
+                        writer.WriteLine(args[0]); // FilePath
+                        writer.WriteLine(args[1]); // Key
+                    }
+
+                    Console.WriteLine("Arguments transmis avec succès.");
+                    Environment.Exit(0);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erreur d’envoi des arguments : " + ex.Message);
+                Environment.Exit(-3);
+            }
+        }
+
+        private static void WaitForExit()
+        {
+            Console.WriteLine("Appuyez sur Ctrl+C pour quitter...");
+            ManualResetEvent quitEvent = new ManualResetEvent(false);
+            Console.CancelKeyPress += (sender, e) =>
+            {
+                e.Cancel = true;
+                quitEvent.Set();
+            };
+            quitEvent.WaitOne();
         }
     }
 }
