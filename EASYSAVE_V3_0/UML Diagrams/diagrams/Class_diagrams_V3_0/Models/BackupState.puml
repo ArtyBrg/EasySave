@@ -1,0 +1,32 @@
+@startuml
+class BackupState {
+    - _name : string
+    + Name : string <<get>> <<set>>
+    - _state : string
+    + State : string <<get>> <<set>>
+    - _progress : double
+    + Progress : double <<get>> <<set>>
+    - _sourcePath : string
+    + SourcePath : string <<get>> <<set>>
+    - _targetPath : string
+    + TargetPath : string <<get>> <<set>>
+    - _totalFiles : int
+    + TotalFiles : int <<get>> <<set>>
+    - _totalSize : long
+    + TotalSize : long <<get>> <<set>>
+    - _filesRemaining : int
+    + FilesRemaining : int <<get>> <<set>>
+    - _remainingSize : long
+    + RemainingSize : long <<get>> <<set>>
+    - _currentSourceFile : string
+    + CurrentSourceFile : string <<get>> <<set>>
+    - _currentTargetFile : string
+    + CurrentTargetFile : string <<get>> <<set>>
+    - _timestamp : string
+    + Timestamp : string <<get>> <<set>>
+    +  <<event>> PropertyChanged : PropertyChangedEventHandler 
+    # OnPropertyChanged(propertyName:string) : void
+    # SetField(field:T, value:T, propertyName:string) : bool
+}
+INotifyPropertyChanged <|-- BackupState
+@enduml

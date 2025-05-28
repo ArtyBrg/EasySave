@@ -1,0 +1,23 @@
+@startuml
+class StateService {
+    - {static} <<readonly>> SettingsPath : string
+    + {static} GetPriorityExtensions() : List<string>
+    + {static} Save(settings:AppSettings) : void
+    + {static} Load() : AppSettings
+    - StateFile : string
+    +  <<event>> StateUpdated : EventHandler<BackupState> 
+    - StateService(logger:LoggerService)
+    + SetRemoteConsole(remoteConsole:RemoteConsoleService) : void
+    + UpdateState(jobName:string, status:string, progress:double, sourcePath:string, targetPath:string, totalFiles:int, totalSize:long, filesLeft:int, remainingSize:long, currentSourceFile:string, currentTargetFile:string) : void
+    - LoadStates() : void
+    - SaveStates() : void
+    + GetAllStates() : IEnumerable<BackupState>
+}
+class "List`1"<T> {
+}
+StateService --> "_instance" StateService
+StateService --> "Instance" StateService
+StateService o-> "_states<BackupState>" "List`1"
+StateService --> "_logger" LoggerService
+StateService --> "_remoteConsole" RemoteConsoleService
+@enduml

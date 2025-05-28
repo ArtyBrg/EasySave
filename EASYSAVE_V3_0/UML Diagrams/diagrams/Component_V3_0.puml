@@ -1,0 +1,87 @@
+```
+
+@startuml
+title Component Diagram – EasySave v3.0
+
+/' ✦ EXTERNES '/
+database "Log File\n(JSON / XML)"           as LogFile
+database "State File\n(JSON)"               as StateFile
+file     "Language Resources\n(.resx / JSON)" as LangRes
+component "CryptoSoft.exe\n(Mono-instance)" as CryptoSoft
+component "Business App\n(user-defined)"    as BizApp
+component "Remote Console\n(Socket GUI)"    as RemoteConsole
+
+/' ✦ COEUR TECHNIQUE '/
+package "Core Functionality" {
+    [EasySave Core]              as Core
+    [Logger.dll]                 as Logger
+    [Localization Module]        as Localizer
+    [CryptoService]              as CryptoSvc
+    [BizApp Watcher]             as BizWatcher
+    [Transfer Manager]           as TransferMgr
+    [Priority Manager]           as PriorityMgr
+    [Network Load Monitor (optional)]       as NetworkMonitor
+}
+
+note right of Core
+Manages unlimited jobs (parallel)  
+Play / Pause / Stop per job  
+Progress tracking (real-time)  
+Triggers pause on BizApp activity  
+Controls via remote console (socket)
+end note
+
+note bottom of TransferMgr
+Manages file transfers in parallel  
+Blocks concurrent transfers of >n KB files  
+Respects network load & priority rules
+end note
+
+note bottom of PriorityMgr
+Ensures prioritized files are saved first  
+Blocks non-priority until priorities cleared  
+Loads extension list from settings
+end note
+
+note right of NetworkMonitor
+Reduces parallelism if network load  
+exceeds threshold (configurable)
+end note
+
+note right of CryptoSvc
+Mono-instance enforcement  
+Queues requests to CryptoSoft.exe  
+Encrypts only if extension allowed
+end note
+
+note bottom of BizWatcher
+Pauses all jobs if BizApp is active  
+Auto-resume when inactive  
+Logs forced pauses/resumes
+end note
+
+/' ✦ INTERFACE UTILISATEUR '/
+package "GUI Application (WPF)" {
+    [EasySave UI]                as GUI
+}
+
+/' ✦ DEPENDANCES '/
+GUI          --> Core
+RemoteConsole --> Core : socket control
+Core         --> Logger           : uses
+Core         --> Localizer        : internationalization
+Core         --> CryptoSvc        : encrypts
+Core         --> BizWatcher       : job monitor
+Core         --> TransferMgr      : delegate file I/O
+Core         --> PriorityMgr      : check rules
+Core         --> NetworkMonitor   : monitor traffic
+Core         --> LogFile          : write logs
+Core         --> StateFile        : write state
+Logger       --> LogFile          : append
+Localizer    --> LangRes          : load resources
+CryptoSvc    --> CryptoSoft       : CLI call (mono-instance)
+BizWatcher   --> BizApp           : detect process
+
+@enduml
+
+```

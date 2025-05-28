@@ -1,0 +1,7 @@
+@startuml
+class App <<partial>> {
+    - _contentLoaded : bool
+    + InitializeComponent() : void
+    + {static} Main() : void
+}
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class SettingsService <<static>> {
+    - {static} <<readonly>> SettingsPath : string
+    + {static} GetPriorityExtensions() : List<string>
+    + {static} Save(settings:AppSettings) : void
+    + {static} Load() : AppSettings
+}
+@enduml
