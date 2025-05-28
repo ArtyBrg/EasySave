@@ -138,6 +138,39 @@ namespace EasySave.ViewModels
             }
         }
 
+
+        // Liste des fichiers à prioriser
+        private ObservableCollection<string> _priorityFiles = new ObservableCollection<string>();
+        public ObservableCollection<string> PriorityFiles
+        {
+            get => _priorityFiles;
+            set
+            {
+                _priorityFiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Fichier à ajouter à la liste
+        private string _fileToPrioritize= "";
+        public string FileToPrioritize
+        {
+            get => _fileToPrioritize;
+            set
+            {
+                if (_fileToPrioritize != value)
+                {
+                    _fileToPrioritize = value;
+                    OnPropertyChanged();
+                }
+                
+            }
+        }
+
+
+
+
+
         // Extensions to encrypt
         private string _fileExtensionToCrypt = "";
         public string FileExtensionToCrypt
@@ -216,6 +249,12 @@ namespace EasySave.ViewModels
         public ICommand ApplySettingsCommand { get; private set; }
 
 
+        public ICommand AddPriorityFileCommand { get; private set; }
+        public ICommand RemovePriorityFileCommand { get; private set; }
+
+
+
+
         // Constructor
         public SettingsViewModel(LoggerService loggerService)
         {
@@ -231,6 +270,11 @@ namespace EasySave.ViewModels
             BrowseBusinessSoftwareCommand = new RelayCommand<object>(BrowseBusinessSoftware);
             UseCalculatorCommand = new RelayCommand<object>(UseCalculator);
             ApplySettingsCommand = new RelayCommand(ApplySettings);
+
+            AddPriorityFileCommand = new RelayCommand<object>(AddPriorityFile);
+            RemovePriorityFileCommand = new RelayCommand<string>(RemovePriorityFile);
+
+
 
             LoadRunningProcesses();
             LoadSettings();
@@ -262,6 +306,40 @@ namespace EasySave.ViewModels
             // Logic to change the language of the application
             _loggerService?.Log($"Language setting changed to {language}");
         }
+
+
+        private void AddPriorityFile(object parameter)
+        {
+            if (string.IsNullOrWhiteSpace(FileToPrioritize))
+                return;
+
+            // Format of the priority
+            string priority = FileToPrioritize.Trim();
+            if (!priority.StartsWith("."))
+                priority = "." + priority;
+
+            // Verification if the priority is already in the list
+            if (!PriorityFiles.Contains(priority))
+            {
+                PriorityFiles.Add(priority);
+                _loggerService?.Log($"priority added to encryption list: {priority}");
+            }
+
+            // Reinitialization of the input field
+            FileToPrioritize = "";
+        }
+
+        private void RemovePriorityFile(string priority)
+        {
+            if (priority != null)
+            {
+                PriorityFiles.Remove(priority);
+                _loggerService?.Log($"Priority removed from priority list: {priority}");
+            }
+        }
+
+
+
 
         private void AddExtension(object parameter)
         {
@@ -426,58 +504,66 @@ namespace EasySave.ViewModels
 
                 // Apply the settings if the file exists
                 if (settings != null)
+                {
+                    SelectedLanguage = settings.Language;
+                    _loggerService?.Log($"Language loaded from settings: {SelectedLanguage}");
+                    SelectedLogFormat = settings.LogFormat;
+                    _loggerService?.Log($"Log format loaded from settings: {SelectedLogFormat}");
+
+                    // Charge of the extensions to crypt
+                    ExtensionsToCrypt.Clear();
+                    int i = 0;
+                    foreach (var extension in settings.ExtensionsToCrypt)
                     {
-                        SelectedLanguage = settings.Language;
-                        _loggerService?.Log($"Language loaded from settings: {SelectedLanguage}");
-                        SelectedLogFormat = settings.LogFormat;
-                        _loggerService?.Log($"Log format loaded from settings: {SelectedLogFormat}");
+                        i += 1;
+                        ExtensionsToCrypt.Add(extension);
+                        _loggerService?.Log($"Extension to crypt number {i} loaded from settings: {extension}");
+                    }
 
-                        // Charge of the extensions to crypt
-                        ExtensionsToCrypt.Clear();
-                        int i = 0;
-                        foreach (var extension in settings.ExtensionsToCrypt)
-                        {
-                            i += 1;
-                            ExtensionsToCrypt.Add(extension);
-                            _loggerService?.Log($"Extension to crypt number {i} loaded from settings: {extension}");
-                        }
+                    PriorityFiles.Clear();
+                    // Charge of the priority files
+                    foreach (var priority in settings.PriorityExtensions)
+                    {
+                        PriorityFiles.Add(priority);
+                        _loggerService?.Log($"Priority file loaded from settings: {priority}");
+                    }
 
-                        // Charge of the business software
-                        if (!string.IsNullOrEmpty(settings.BusinessSoftware.Name) && settings.BusinessSoftware.Name != "Aucun")
-                        {
-                            CurrentBusinessSoftware = settings.BusinessSoftware.Name;
+                    // Charge of the business software
+                    if (!string.IsNullOrEmpty(settings.BusinessSoftware.Name) && settings.BusinessSoftware.Name != "Aucun")
+                    {
+                        CurrentBusinessSoftware = settings.BusinessSoftware.Name;
 
                         // Addition of the business software to the list if not already present
                         var businessSoftware = new ProcessInfo
-                            {
-                                Name = settings.BusinessSoftware.Name,
-                                FullPath = settings.BusinessSoftware.FullPath
-                            };
+                        {
+                            Name = settings.BusinessSoftware.Name,
+                            FullPath = settings.BusinessSoftware.FullPath
+                        };
 
-                            if (!AvailableProcesses.Any(p => p.FullPath == businessSoftware.FullPath))
-                            {
-                                AvailableProcesses.Add(businessSoftware);
-                            }
+                        if (!AvailableProcesses.Any(p => p.FullPath == businessSoftware.FullPath))
+                        {
+                            AvailableProcesses.Add(businessSoftware);
+                        }
 
                         // Selection of the business software
-                            SelectedBusinessSoftware = businessSoftware;
-                            _loggerService?.Log($"Business software loaded from settings: {SelectedBusinessSoftware}");
-                        }
+                        SelectedBusinessSoftware = businessSoftware;
+                        _loggerService?.Log($"Business software loaded from settings: {SelectedBusinessSoftware}");
+                    }
 
                     // Apply the log format
                     if (_loggerService != null)
+                    {
+                        try
                         {
-                            try
-                            {
-                                LogFormat format = settings.LogFormat;
-                                _loggerService.SetLogFormat(format);
-                            }
-                            catch (Exception ex)
-                            {
-                                _loggerService.LogError($"Failed to set log format from settings: {ex.Message}");
-                            }
+                            LogFormat format = settings.LogFormat;
+                            _loggerService.SetLogFormat(format);
+                        }
+                        catch (Exception ex)
+                        {
+                            _loggerService.LogError($"Failed to set log format from settings: {ex.Message}");
                         }
                     }
+                }
 
                 else
                 {
@@ -485,6 +571,10 @@ namespace EasySave.ViewModels
                     ExtensionsToCrypt.Add(".txt");
                     ExtensionsToCrypt.Add(".docx");
                     ExtensionsToCrypt.Add(".pdf");
+
+                    PriorityFiles.Add(".txt");
+                    PriorityFiles.Add(".docx");
+                    PriorityFiles.Add(".pdf");
 
                     // Create and save the default settings
                     SaveSettings();
@@ -498,6 +588,9 @@ namespace EasySave.ViewModels
                 _loggerService?.LogError($"Error loading settings: {ex.Message}");
 
                 // Charge of the default extensions
+                PriorityFiles.Add(".txt");
+                PriorityFiles.Add(".docx");
+                PriorityFiles.Add(".pdf");
                 ExtensionsToCrypt.Add(".txt");
                 ExtensionsToCrypt.Add(".docx");
                 ExtensionsToCrypt.Add(".pdf");
@@ -523,6 +616,7 @@ namespace EasySave.ViewModels
                 {
                     Language = SelectedLanguage,
                     LogFormat = SelectedLogFormat,
+                    PriorityExtensions = PriorityFiles.ToList(),
                     ExtensionsToCrypt = ExtensionsToCrypt.ToList(),
                     BusinessSoftware = new EasySave.Models.BusinessSoftware
                     {

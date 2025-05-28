@@ -170,13 +170,53 @@
                     </StackPanel>
                 </Border>
 
+
+                <!-- Extensions à prioriser -->
+                <Border Style="{StaticResource SettingsCardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Translations[PriorizeFile]}" Style="{StaticResource SettingsTitleStyle}"/>
+                        <TextBlock Text="{Binding Translations[SettingPriorization]}" Margin="0,0,0,5" Foreground="#4A5568"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding FileToPrioritize, Mode=TwoWay}" 
+                    Height="32" Padding="8,5" Margin="0,5,10,5"
+                    BorderBrush="#DDDDDD"/>
+                            <Button Grid.Column="1" Content="{Binding Translations[ButtonAdd]}" Width="80" Height="32"
+                    Command="{Binding AddPriorityFileCommand}" Style="{StaticResource RoundedHoverBlueButton}"
+                    Background="#2196F3" Foreground="White" BorderThickness="0"/>
+                        </Grid>
+                        <ListView ItemsSource="{Binding PriorityFiles}" 
+                Height="100" Margin="0,5,0,0" BorderBrush="#DDDDDD" BorderThickness="1">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                                        <Button Grid.Column="1" Content="X" Width="24" Height="24"
+                                Command="{Binding DataContext.RemovePriorityFileCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                CommandParameter="{Binding}"
+                                Background="#F44336" Foreground="White" BorderThickness="0"
+                                Margin="5,0,0,0"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </Border>
+
                 <!-- Logiciel métier -->
                 <Border Style="{StaticResource SettingsCardStyle}">
                     <StackPanel>
                         <TextBlock Text="{Binding Translations[SettingSoftware]}" Style="{StaticResource SettingsTitleStyle}"/>
                         <TextBlock TextWrapping="Wrap" Margin="0,0,0,10" Text="{Binding Translations[SoftText]}" Foreground="#4A5568"/>
-                        
-                        
+
+
 
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -208,7 +248,7 @@
                         </StackPanel>
                     </StackPanel>
                 </Border>
-
+                
                 <!-- Bouton d'application -->
                 <Button Content="{Binding Translations[ButtonApply]}" 
                         Command="{Binding ApplySettingsCommand}"
