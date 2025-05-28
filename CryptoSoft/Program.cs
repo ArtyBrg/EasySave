@@ -1,24 +1,42 @@
-﻿namespace CryptoSoft;
+﻿using System;
+using System.Threading;
 
-public static class Program
+namespace CryptoSoft
 {
-    public static void Main(string[] args)
+    public static class Program
     {
-        try
-        {
-            foreach (var arg in args)
-            {
-                Console.WriteLine(arg);
-            }
+        private static readonly string mutexName = "Global\\CryptoSoft_Mutex";
 
-            var fileManager = new FileManager(args[0], args[1]);
-            int ElapsedTime = fileManager.TransformFile();
-            Environment.Exit(ElapsedTime);
-        }
-        catch (Exception e)
+        public static void Main(string[] args)
         {
-            Console.WriteLine(e.Message);
-            Environment.Exit(-99);
+            bool createdNew;
+
+            // Création d’un mutex système global
+            using (var mutex = new Mutex(true, mutexName, out createdNew))
+            {
+                if (!createdNew)
+                {
+                    Console.WriteLine("An other CryptoSoft instance is already running.");
+                    Environment.Exit(-1); // code d’erreur mono-instance
+                }
+
+                try
+                {
+                    foreach (var arg in args)
+                    {
+                        Console.WriteLine(arg);
+                    }
+
+                    var fileManager = new FileManager(args[0], args[1]);
+                    int elapsedTime = fileManager.TransformFile();
+                    Environment.Exit(elapsedTime);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error : " + e.Message);
+                    Environment.Exit(-99); // code d’erreur général
+                }
+            }
         }
     }
 }

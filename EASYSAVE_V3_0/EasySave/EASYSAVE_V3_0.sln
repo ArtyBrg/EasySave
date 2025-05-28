@@ -33,6 +33,7 @@ Global
 		{22ACCEFE-F26F-46C0-9110-39A1E890A04B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22ACCEFE-F26F-46C0-9110-39A1E890A04B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22ACCEFE-F26F-46C0-9110-39A1E890A04B}.Release|Any CPU.Build.0 = Release|Any CPU
+
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

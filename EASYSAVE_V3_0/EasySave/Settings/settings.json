@@ -5,6 +5,10 @@
     ".puml",
     ".docx"
   ],
+  "PriorityExtensions": [
+    ".yml",
+    ".txt"
+  ],
   "BusinessSoftware": {
     "Name": "CalculatorApp",
     "FullPath": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsCalculator_11.2502.2.0_x64__8wekyb3d8bbwe\\CalculatorApp.exe"

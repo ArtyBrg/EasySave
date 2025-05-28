@@ -32,7 +32,7 @@ namespace EasySave_WPF
             Task.Run(async () =>
             {
                 await backupManager.ExecuteJobsAsync(jobIds);
-                Console.WriteLine("Jobs exécutés.");
+                Console.WriteLine("Jobs exÃ©cutÃ©s.");
             }).GetAwaiter().GetResult();
         }
 
