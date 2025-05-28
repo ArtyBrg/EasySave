@@ -34,7 +34,7 @@ namespace EasySaveClient.ViewModels
         }
 
         public ICommand PauseCommand { get; }
-        public ICommand ResumeCommand { get; }
+        public ICommand PlayCommand { get; }
         public ICommand StopCommand { get; }
 
         public MainViewModel()
@@ -51,6 +51,13 @@ namespace EasySaveClient.ViewModels
                 var jobName = param as string;
                 if (!string.IsNullOrEmpty(jobName))
                     SendCommandToServer(jobName, "Stop");
+            });
+
+            PlayCommand = new RelayCommand(param =>
+            {
+                var jobName = param as string;
+                if (!string.IsNullOrEmpty(jobName))
+                    SendCommandToServer(jobName, "Play");
             });
 
             ConnectToServer();
@@ -162,6 +169,13 @@ namespace EasySaveClient.ViewModels
             var state = (sender as FrameworkElement)?.DataContext as BackupState;
             if (state != null)
                 SendCommandToServer(state.Name, "Stop");
+        }
+
+        private void Play_Click(object sender, RoutedEventArgs e)
+        {
+            var state = (sender as FrameworkElement)?.DataContext as BackupState;
+            if (state != null)
+                SendCommandToServer(state.Name, "Play");
         }
 
 

@@ -47,7 +47,7 @@ namespace EasySave.ViewModels
             LoggerService loggerService)
         {
 
-            AllocConsole();
+            // AllocConsole();
 
             _backupManagerViewModel = backupManagerViewModel;
             _languageService = languageService;

@@ -72,14 +72,17 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Content="Pause"
-        Command="{Binding DataContext.PauseCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-        CommandParameter="{Binding Name}" />
+                                    <Button Content="▶" ToolTip="Execute" Width="30" Height="24" Margin="2" Background="#27AE60" Foreground="White"
+                                    Command="{Binding DataContext.PlayCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                    CommandParameter="{Binding Name}"/>
+                                    
+                                    <Button Content="⏸" ToolTip="Pause/Resume" Width="30" Height="24" Margin="2" Background="#F39C12" 
+                                    Foreground="White" Command="{Binding DataContext.PauseCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                    CommandParameter="{Binding Name}" />
 
-                                    <Button Content="Stop"
-        Command="{Binding DataContext.StopCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-        CommandParameter="{Binding Name}" />
-
+                                    <Button Content="⏹" ToolTip="Stop" Width="30" Height="24" Margin="2" Background="#C0392B" Foreground="White"
+                                    Command="{Binding DataContext.StopCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                    CommandParameter="{Binding Name}" />
 
                                 </StackPanel>
                             </DataTemplate>

@@ -102,14 +102,14 @@ namespace EasySave.Services
 
                         if (_backupManager == null)
                         {
-                            Console.WriteLine("❌ _backupManager est NULL !");
+                            Console.WriteLine("_backupManager est NULL !");
                             return;
                         }
 
                         var job = _backupManager.Jobs.FirstOrDefault(j => j.Name == jobName);
                         if (job == null)
                         {
-                            Console.WriteLine($"❌ Job '{jobName}' introuvable !");
+                            Console.WriteLine($"Job '{jobName}' introuvable !");
                             return;
                         }
 
@@ -124,6 +124,11 @@ namespace EasySave.Services
                                 Console.WriteLine($"Exécution StopJob() pour {jobName}");
                                 job.StopJob();
                                 Console.WriteLine($"StopJob() terminé pour {jobName}");
+                                break;
+                            case "play":
+                                Console.WriteLine($"Exécution ExecuteAsync() pour {jobName}");
+                                job.ExecuteAsync();
+                                Console.WriteLine($"ExecuteAsync() terminé pour {jobName}");
                                 break;
                             default:
                                 Console.WriteLine($"Action '{action}' non reconnue");

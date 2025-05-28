@@ -169,7 +169,7 @@
                     </DataGridTemplateColumn>
 
                     <DataGridTemplateColumn Header="Actions" 
-                                           Width="150">
+                                           Width="200">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" 
@@ -207,6 +207,16 @@
                                             Margin="2"
                                             Background="#3498DB" 
                                             Foreground="White"/>
+                                    <Button Content="🗑️" 
+                                            Command="{Binding DataContext.BackupManager.DeleteSelectedJobsCommand, 
+                                            RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                            ToolTip="Delete" 
+                                            Width="30" 
+                                            Height="24" 
+                                            Margin="2"
+                                            Background="#C0392B" 
+                                            Foreground="White"/>
+
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

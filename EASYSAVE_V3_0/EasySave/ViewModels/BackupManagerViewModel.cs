@@ -56,7 +56,7 @@ namespace EasySave.ViewModels
             ExecuteAllJobsCommand = new RelayCommand(async _ => await ExecuteAllJobsAsync(), _ => _jobs.Count > 0 && !_isExecutingJobs && !_jobs.Any(j => j.IsRunning));
             ConfirmEditCommand = new RelayCommand(_ => ConfirmEdit());
             CancelEditCommand = new RelayCommand(_ => CancelEdit());
-            DeleteSelectedJobsCommand = new RelayCommand(DeleteSelectedJobsWithConfirmation);
+            DeleteSelectedJobsCommand = new RelayCommand(DeleteSelectedJobsWithConfirmation, _ => Jobs.Any(j => j.IsSelected));
             RequestEditJobCommand = new RelayCommand(parameter => RequestEditJob(parameter as BackupJobViewModel));
             ExecuteJobsSequentiallyCommand = new RelayCommand(async _ => await ExecuteJobsSequentially(), _ => _jobs.Any(j => j.IsSelected && !j.IsRunning && !_isExecutingJobs));
             CancelAllJobsCommand = new RelayCommand(_ => CancelAllRunningJobs(), _ => _jobs.Any(j => j.IsRunning));
@@ -108,6 +108,8 @@ namespace EasySave.ViewModels
                 ((RelayCommand)ExecuteSelectedJobCommand).RaiseCanExecuteChanged();
                 ((RelayCommand)ExecuteAllJobsCommand).RaiseCanExecuteChanged();
                 ((RelayCommand)ExecuteJobsSequentiallyCommand).RaiseCanExecuteChanged();
+                ((RelayCommand)DeleteSelectedJobsCommand).RaiseCanExecuteChanged();
+
             }
         }
 
@@ -252,6 +254,7 @@ namespace EasySave.ViewModels
                 SaveJobsToFile();
             }
         }
+
 
         // Request to edit a job
         public void RequestEditJob(BackupJobViewModel job)
