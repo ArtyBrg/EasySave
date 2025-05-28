@@ -20,7 +20,7 @@ namespace EasySave_WPF
             string logDir = Path.Combine(baseDir, "Logs");
             var loggerService = new LoggerService(logDir);
             var fileSystemService = new FileSystemService(loggerService);
-            var stateService = new StateService(loggerService);
+            var stateService = StateService.Instance;
             var languageService = new LanguageService();
             var persistenceService = new PersistenceService(loggerService);
 

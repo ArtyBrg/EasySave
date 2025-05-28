@@ -52,7 +52,7 @@ namespace EasySave.ViewModels
                 },
                 new FileSystemService(new LoggerService()),
                 new LoggerService(),
-                new StateService(new LoggerService()))
+                StateService.Instance)
         {
         }
 
@@ -172,7 +172,7 @@ namespace EasySave.ViewModels
         public BackupJob GetBackupJob() => _backupJob;
 
         // Command to execute the backup job
-        private void PauseJob()
+        public void PauseJob()
         {
             IsPaused = !IsPaused;
             _loggerService.Log($"Backup job {Name} {(IsPaused ? "paused" : "resumed")}");
@@ -208,6 +208,8 @@ namespace EasySave.ViewModels
             IsPaused = false;
             Progress = 0;
             StopRequested = false;
+            
+            App.AppViewModel.ActiveBackupJobs.Add(this);
 
             try
             {
@@ -251,6 +253,8 @@ namespace EasySave.ViewModels
             }
             finally
             {
+
+                App.AppViewModel.ActiveBackupJobs.Remove(this);
                 IsRunning = false;
                 StopRequested = false;
             }
@@ -273,10 +277,21 @@ namespace EasySave.ViewModels
                 throw new DirectoryNotFoundException($"Cannot create target directory: {TargetPath}");
             }
 
+            var settings = SettingsService.Load();
             var allFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories).ToList();
+
+            // Trier les fichiers selon les extensions prioritaires
+            var priorityFiles = allFiles.Where(f =>
+                settings.PriorityExtensions.Any(ext => Path.GetExtension(f).Equals(ext, StringComparison.OrdinalIgnoreCase))).ToList();
+
+            var nonPriorityFiles = allFiles.Except(priorityFiles).ToList();
+
+            // Fusionner : priorité d'abord
+            allFiles = priorityFiles.Concat(nonPriorityFiles).ToList();
+
+
             long totalSize = allFiles.Sum(f => new FileInfo(f).Length);
             int totalFiles = allFiles.Count;
-            var settings = SettingsService.Load();
 
             _stateService.UpdateState(Name, "InProgress", 0, totalFiles: totalFiles, totalSize: totalSize);
             _loggerService.Log($"Found {allFiles.Count} files to backup");
@@ -338,14 +353,12 @@ namespace EasySave.ViewModels
         // Method to execute a differential backup
         private void ExecuteDifferentialBackup(CancellationToken cancellationToken)
         {
-            // Check if the source and target directories exist
             if (!Directory.Exists(SourcePath))
             {
                 _loggerService.LogError($"Source directory does not exist: {SourcePath}");
                 throw new DirectoryNotFoundException($"Source directory does not exist: {SourcePath}");
             }
 
-            // Check if the target directory exists, and create it if it doesn't
             if (!Directory.Exists(TargetPath) && !CreateDirectoryIfNotExists(TargetPath))
             {
                 _loggerService.LogError($"Cannot create target directory: {TargetPath}");
@@ -361,7 +374,6 @@ namespace EasySave.ViewModels
 
             try
             {
-                // Get all files in the source directory
                 if (lastBackup == DateTime.MinValue)
                 {
                     modifiedFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories).ToList();
@@ -376,7 +388,6 @@ namespace EasySave.ViewModels
                         string relativePath = sourceFile.Substring(SourcePath.Length).TrimStart(Path.DirectorySeparatorChar);
                         string targetFile = Path.Combine(TargetPath, relativePath);
 
-                        // Check if the target file exists
                         if (!File.Exists(targetFile))
                         {
                             modifiedFiles.Add(sourceFile);
@@ -386,13 +397,23 @@ namespace EasySave.ViewModels
                         DateTime sourceLastWrite = File.GetLastWriteTime(sourceFile);
                         DateTime targetLastWrite = File.GetLastWriteTime(targetFile);
 
-                        // Check if the source file is newer than the target file
                         if (sourceLastWrite > targetLastWrite)
                         {
                             modifiedFiles.Add(sourceFile);
                         }
                     }
                 }
+
+                // PRIORISATION des fichiers selon settings.json
+                var priorityFiles = modifiedFiles
+                    .Where(f => settings.PriorityExtensions
+                        .Any(ext => Path.GetExtension(f).Equals(ext, StringComparison.OrdinalIgnoreCase)))
+                    .ToList();
+
+                var nonPriorityFiles = modifiedFiles.Except(priorityFiles).ToList();
+                modifiedFiles = priorityFiles.Concat(nonPriorityFiles).ToList();
+
+                _loggerService.Log($"Prioritized {priorityFiles.Count} files for backup first.");
             }
             catch (Exception ex)
             {
@@ -408,7 +429,6 @@ namespace EasySave.ViewModels
 
             for (int i = 0; i < modifiedFiles.Count && !StopRequested; i++)
             {
-                // Check if the job was stopped by the user
                 if (StopRequested)
                 {
                     _loggerService.Log($"Job {Name} stopped by user before file {i + 1}/{totalFiles}");
@@ -420,7 +440,6 @@ namespace EasySave.ViewModels
                     Thread.Sleep(500);
                 }
 
-                // Check if the job was stopped by the user
                 if (StopRequested) return;
 
                 string sourceFile = modifiedFiles[i];
@@ -431,7 +450,6 @@ namespace EasySave.ViewModels
                 IsEncryptionEnabled = settings.ExtensionsToCrypt.Any(e => e.Equals(extension, StringComparison.OrdinalIgnoreCase));
 
                 string finalTargetFile = targetFile;
-                // Check if the target directory exists, and create it if it doesn't
                 if (IsEncryptionEnabled)
                 {
                     finalTargetFile += ".crypt";
@@ -453,7 +471,6 @@ namespace EasySave.ViewModels
                     totalFiles - (i + 1)
                 );
 
-                // Check if the job was stopped by the user
                 if (i < modifiedFiles.Count - 1 && !StopRequested)
                 {
                     Thread.Sleep(100);
@@ -461,10 +478,31 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Vérifie s’il y a des fichiers prioritaires dans ceux en attente
+        public bool HasPendingPriorityFiles(List<string> priorityExtensions)
+        {
+            if (_backupJob.PendingFiles == null || !_backupJob.PendingFiles.Any())
+                return false;
+
+            return _backupJob.PendingFiles.Any(filePath =>
+            {
+                var extension = Path.GetExtension(filePath).ToLower();
+                return priorityExtensions.Contains(extension);
+            });
+        }
+
+        // Vérifie si une extension de fichier est prioritaire
+        public bool IsFileExtensionPriority(string filePath, List<string> priorityExtensions)
+        {
+            var extension = Path.GetExtension(filePath).ToLower();
+            return priorityExtensions.Contains(extension);
+        }
+
+
+
         // Method to copy a file with progress tracking
         private void CopyFileWithProgress(string sourceFile, string targetFile, int currentIndex, int totalFiles, long totalSize, List<string> extensionsToCrypt)
         {
-            // Check if the source file exists
             var targetDir = Path.GetDirectoryName(targetFile);
             if (!Directory.Exists(targetDir))
             {
@@ -495,7 +533,6 @@ namespace EasySave.ViewModels
                         double progress = (double)(currentIndex * totalSize + totalBytesRead) / (totalFiles * totalSize) * 100;
                         System.Windows.Application.Current.Dispatcher.InvokeAsync(() => Progress = progress);
 
-                        // Check if the job was stopped by the user
                         if (StopRequested)
                         {
                             _loggerService.Log($"Copy of {sourceFile} interrupted by user");
@@ -509,27 +546,46 @@ namespace EasySave.ViewModels
 
                 double encryptionTimeMs = 0;
 
-                // Encrypt the file if the extension is in the list
                 if (IsEncryptionEnabled)
                 {
-                    Stopwatch sc = Stopwatch.StartNew();
-
-                    try
+                    // Attendre si un CryptoSoft tourne déjà
+                    while (Process.GetProcessesByName("CryptoSoft").Length > 0)
                     {
-                        var fileManager = new CryptoSoft.FileManager(targetFile, encryptionKey);
-                        fileManager.TransformFile();
-
-                        sc.Stop();
-                        encryptionTimeMs = sc.Elapsed.TotalMilliseconds;
+                        Thread.Sleep(500);
                     }
-                    catch (Exception ex)
+
+                    // Création du fichier temporaire pour stocker le résultat chiffré
+                    string tempEncryptedFile = Path.GetTempFileName();
+
+                    // Lancer le chiffrement avec CryptoSoft.exe
+                    Process process = new Process();
+                    process.StartInfo.FileName = "CryptoSoft.exe";
+                    process.StartInfo.Arguments = $"\"{sourceFile}\" \"{tempEncryptedFile}\"";
+                    process.StartInfo.UseShellExecute = false;
+                    process.Start();
+                    process.WaitForExit();
+
+                    // Vérifier si CryptoSoft s’est bien exécuté
+                    if (process.ExitCode == 0)
                     {
-                        _loggerService.Log("Erreur de cryptage : " + ex.Message);
+                        // Supprimer l'original
+                        File.Delete(sourceFile);
 
-                        sc.Stop();
+                        // Déplacer le fichier temporaire chiffré à la place de l'original
+                        File.Move(tempEncryptedFile, sourceFile);
 
-                        encryptionTimeMs = -1;
+                        // Facultatif : Renommer en .enc pour indiquer que c’est chiffré
+                        // string encryptedRenamed = Path.ChangeExtension(sourceFile, ".enc");
+                        // File.Move(sourceFile, encryptedRenamed);
+
+                        _loggerService.Log($"Fichier chiffré : {sourceFile}");
                     }
+                    else
+                    {
+                        // Gérer les erreurs de chiffrement ici
+                        _loggerService.Log($"Erreur de chiffrement sur : {sourceFile}, code retour = {process.ExitCode}");
+                    }
+
                 }
                 else
                 {

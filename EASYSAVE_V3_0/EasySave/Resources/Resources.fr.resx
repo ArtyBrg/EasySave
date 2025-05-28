@@ -264,4 +264,10 @@
   <data name="ButtonSave" xml:space="preserve">
     <value>Sauvegarder</value>
   </data>
+  <data name="PriorizeFile" xml:space="preserve">
+    <value>Priorisation des fichiers :</value>
+  </data>
+  <data name="SettingPriorization" xml:space="preserve">
+    <value>Extensions de fichiers à prioriser lors des sauvegardes :</value>
+  </data>
 </root>

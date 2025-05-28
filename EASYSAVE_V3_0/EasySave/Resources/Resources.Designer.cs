@@ -349,6 +349,15 @@ namespace EASYSAVE_V3_0.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à File priorization:.
+        /// </summary>
+        internal static string PriorizeFile {
+            get {
+                return ResourceManager.GetString("PriorizeFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Business software selected:.
         /// </summary>
         internal static string SelectedSoftware {
@@ -390,6 +399,15 @@ namespace EASYSAVE_V3_0.Resources {
         internal static string SettingLogText {
             get {
                 return ResourceManager.GetString("SettingLogText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à File extensions to be priorized during backups:.
+        /// </summary>
+        internal static string SettingPriorization {
+            get {
+                return ResourceManager.GetString("SettingPriorization", resourceCulture);
             }
         }
         

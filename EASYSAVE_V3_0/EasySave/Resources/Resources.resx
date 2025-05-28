@@ -264,4 +264,10 @@
   <data name="ButtonSave" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="PriorizeFile" xml:space="preserve">
+    <value>File priorization:</value>
+  </data>
+  <data name="SettingPriorization" xml:space="preserve">
+    <value>File extensions to be priorized during backups:</value>
+  </data>
 </root>

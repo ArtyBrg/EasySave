@@ -8,16 +8,21 @@ using System.Text;
 using EasySave.Models;
 using System.ComponentModel;
 using EasySave_WPF;
+using System.Runtime.InteropServices;
 
 namespace EasySave.ViewModels
 {
     // MainViewModel is the main view model for the application.
     public class MainViewModel : ViewModelBase
     {
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool AllocConsole();
+
         // Services
         private readonly BackupManagerViewModel _backupManagerViewModel;
         private readonly LanguageService _languageService;
         private readonly LoggerService _loggerService;
+        private readonly RemoteConsoleService _remoteConsole;
 
         // Properties
         private string _selectedViewName;
@@ -31,7 +36,6 @@ namespace EasySave.ViewModels
         private string _newJobType;
         private string _errorMessage;
 
-
         // Properties for language management
         private string _currentLanguage = null;
 
@@ -41,10 +45,15 @@ namespace EasySave.ViewModels
             LanguageService languageService,
             LoggerService loggerService)
         {
+
+            // AllocConsole();
             _backupManagerViewModel = backupManagerViewModel;
             _languageService = languageService;
             _loggerService = loggerService;
 
+            _remoteConsole = new RemoteConsoleService(StateService.Instance);
+            StateService.Instance.SetRemoteConsole(_remoteConsole);
+            _remoteConsole.Start();
             InitLanguage();
 
             // Initialization

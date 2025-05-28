@@ -16,6 +16,8 @@ namespace EasySave.Models
 
         public List<string> ExtensionsToCrypt { get; set; } = new List<string>();
 
+        public List<string> PriorityExtensions { get; set; } = new List<string>();
+      
         public BusinessSoftware BusinessSoftware { get; set; } = new BusinessSoftware();
     }
 

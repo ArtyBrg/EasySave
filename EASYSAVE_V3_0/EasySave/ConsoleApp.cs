@@ -15,7 +15,7 @@ namespace EasySave_WPF
         {
             var loggerService = new LoggerService();
             var fileSystemService = new FileSystemService(loggerService);
-            var stateService = new StateService(loggerService);
+            var stateService = StateService.Instance;
             var languageService = new LanguageService();
             var persistenceService = new PersistenceService(loggerService);
             languageService.LoadLanguageFromSettings();
@@ -32,7 +32,7 @@ namespace EasySave_WPF
             Task.Run(async () =>
             {
                 await backupManager.ExecuteJobsAsync(jobIds);
-                Console.WriteLine("Jobs exécutés.");
+                Console.WriteLine("Jobs exÃ©cutÃ©s.");
             }).GetAwaiter().GetResult();
         }
 
