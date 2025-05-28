@@ -208,6 +208,7 @@ namespace EasySave.ViewModels
             IsPaused = false;
             Progress = 0;
             StopRequested = false;
+            
             App.AppViewModel.ActiveBackupJobs.Add(this);
 
             try
@@ -252,6 +253,7 @@ namespace EasySave.ViewModels
             }
             finally
             {
+
                 App.AppViewModel.ActiveBackupJobs.Remove(this);
                 IsRunning = false;
                 StopRequested = false;
@@ -274,7 +276,6 @@ namespace EasySave.ViewModels
                 _loggerService.LogError($"Cannot create target directory: {TargetPath}");
                 throw new DirectoryNotFoundException($"Cannot create target directory: {TargetPath}");
             }
-
 
             var settings = SettingsService.Load();
             var allFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories).ToList();
@@ -403,7 +404,7 @@ namespace EasySave.ViewModels
                     }
                 }
 
-                // 🔽 PRIORISATION des fichiers selon settings.json
+                // PRIORISATION des fichiers selon settings.json
                 var priorityFiles = modifiedFiles
                     .Where(f => settings.PriorityExtensions
                         .Any(ext => Path.GetExtension(f).Equals(ext, StringComparison.OrdinalIgnoreCase)))
@@ -476,7 +477,6 @@ namespace EasySave.ViewModels
                 }
             }
         }
-
 
         // Vérifie s’il y a des fichiers prioritaires dans ceux en attente
         public bool HasPendingPriorityFiles(List<string> priorityExtensions)
@@ -599,7 +599,6 @@ namespace EasySave.ViewModels
                 _loggerService.LogError($"Error copying {sourceFile} to {targetFile}: {ex.Message}");
             }
         }
-
 
         // Method to decrypt a file
         public void DecryptFile(string encryptedFilePath, string? outputFilePath = null)

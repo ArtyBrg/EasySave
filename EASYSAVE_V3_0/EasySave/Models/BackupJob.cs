@@ -19,7 +19,5 @@ namespace EasySave.Models
         public bool IsEncryptionEnabled { get; set; } = false;
 
         public List<string> PendingFiles { get; set; } = new List<string>();
-
-
     }
 }

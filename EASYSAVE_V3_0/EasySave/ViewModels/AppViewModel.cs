@@ -24,8 +24,6 @@ namespace EasySave.ViewModels
         private string _currentLanguage;
 
         public ObservableCollection<BackupJobViewModel> ActiveBackupJobs { get; } = new ObservableCollection<BackupJobViewModel>();
-
-
         // Constructor for the AppViewModel
         public AppViewModel()
         {

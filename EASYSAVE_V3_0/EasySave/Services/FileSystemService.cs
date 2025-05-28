@@ -7,13 +7,11 @@ using EasySave.Services;
 using System.Threading.Tasks;
 using EasySave.ViewModels;
 
-
 namespace EasySave.Services
 {
     // Manages file system operations such as getting files, copying files, and calculating directory size.
     public class FileSystemService
     {
-
         // Logger service for logging operations
         private readonly LoggerService _logger;
 
@@ -27,7 +25,6 @@ namespace EasySave.Services
             // Vérifier si des fichiers prioritaires sont en attente sur tous les jobs
             return !allJobs.Any(job => job.HasPendingPriorityFiles(priorityExtensions));
         }
-
         // Gets all files in the specified directory and its subdirectories.
         public IEnumerable<string> GetAllFiles(string path)
         {
@@ -82,7 +79,5 @@ namespace EasySave.Services
             return Directory.GetFiles(path, "*", SearchOption.AllDirectories)
                           .Sum(file => new FileInfo(file).Length);
         }
-
-
     }
 }

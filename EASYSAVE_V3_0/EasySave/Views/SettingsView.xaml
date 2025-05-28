@@ -170,7 +170,6 @@
                     </StackPanel>
                 </Border>
 
-
                 <!-- Extensions à prioriser -->
                 <Border Style="{StaticResource SettingsCardStyle}">
                     <StackPanel>
@@ -209,14 +208,11 @@
                         </ListView>
                     </StackPanel>
                 </Border>
-
                 <!-- Logiciel métier -->
                 <Border Style="{StaticResource SettingsCardStyle}">
                     <StackPanel>
                         <TextBlock Text="{Binding Translations[SettingSoftware]}" Style="{StaticResource SettingsTitleStyle}"/>
                         <TextBlock TextWrapping="Wrap" Margin="0,0,0,10" Text="{Binding Translations[SoftText]}" Foreground="#4A5568"/>
-
-
 
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -248,7 +244,7 @@
                         </StackPanel>
                     </StackPanel>
                 </Border>
-                
+              
                 <!-- Bouton d'application -->
                 <Button Content="{Binding Translations[ButtonApply]}" 
                         Command="{Binding ApplySettingsCommand}"

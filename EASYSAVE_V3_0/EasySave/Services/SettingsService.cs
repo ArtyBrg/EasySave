@@ -29,7 +29,6 @@ namespace EasySave.Services
             var json = JsonSerializer.Serialize(settings, options);
             File.WriteAllText(SettingsPath, json);
         }
-
         public static AppSettings Load()
         {
             if (!File.Exists(SettingsPath))

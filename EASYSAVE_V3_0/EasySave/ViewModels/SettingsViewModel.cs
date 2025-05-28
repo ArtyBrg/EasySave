@@ -118,9 +118,7 @@ namespace EasySave.ViewModels
                 _loggerService?.LogError($"Erreur pendant la détection du logiciel métier : {ex.Message}");
             }
         }
-
-
-
+        
         public ObservableCollection<string> LogFormats { get; } = new ObservableCollection<string> { "JSON", "XML" };
         // Logs formats
         private LogFormat _selectedLogFormat;
@@ -137,7 +135,6 @@ namespace EasySave.ViewModels
 
             }
         }
-
 
         // Liste des fichiers à prioriser
         private ObservableCollection<string> _priorityFiles = new ObservableCollection<string>();
@@ -166,11 +163,7 @@ namespace EasySave.ViewModels
                 
             }
         }
-
-
-
-
-
+        
         // Extensions to encrypt
         private string _fileExtensionToCrypt = "";
         public string FileExtensionToCrypt
@@ -247,14 +240,9 @@ namespace EasySave.ViewModels
         public ICommand BrowseBusinessSoftwareCommand { get; private set; }
         public ICommand UseCalculatorCommand { get; private set; }
         public ICommand ApplySettingsCommand { get; private set; }
-
-
         public ICommand AddPriorityFileCommand { get; private set; }
         public ICommand RemovePriorityFileCommand { get; private set; }
-
-
-
-
+        
         // Constructor
         public SettingsViewModel(LoggerService loggerService)
         {
@@ -270,12 +258,9 @@ namespace EasySave.ViewModels
             BrowseBusinessSoftwareCommand = new RelayCommand<object>(BrowseBusinessSoftware);
             UseCalculatorCommand = new RelayCommand<object>(UseCalculator);
             ApplySettingsCommand = new RelayCommand(ApplySettings);
-
             AddPriorityFileCommand = new RelayCommand<object>(AddPriorityFile);
             RemovePriorityFileCommand = new RelayCommand<string>(RemovePriorityFile);
-
-
-
+            
             LoadRunningProcesses();
             LoadSettings();
 
@@ -307,7 +292,6 @@ namespace EasySave.ViewModels
             _loggerService?.Log($"Language setting changed to {language}");
         }
 
-
         private void AddPriorityFile(object parameter)
         {
             if (string.IsNullOrWhiteSpace(FileToPrioritize))
@@ -337,9 +321,6 @@ namespace EasySave.ViewModels
                 _loggerService?.Log($"Priority removed from priority list: {priority}");
             }
         }
-
-
-
 
         private void AddExtension(object parameter)
         {
