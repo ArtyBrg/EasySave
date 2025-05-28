@@ -198,6 +198,11 @@ namespace EasySave.ViewModels
         // Constructor
         public SettingsViewModel(LoggerService loggerService)
         {
+
+
+            _maxSimultaneousLargeFileSizeKo = MaxSimultaneousLargeFileSizeKo; 
+
+
             _loggerService = loggerService;
 
             _loggerService.LogMessageAdded += OnLogMessageAdded;
@@ -219,6 +224,24 @@ namespace EasySave.ViewModels
             _businessSoftwareCheckTimer.Start();
 
         }
+
+
+
+
+        private int _maxSimultaneousLargeFileSizeKo;
+        public int MaxSimultaneousLargeFileSizeKo
+        {
+            get => _maxSimultaneousLargeFileSizeKo;
+            set
+            {
+                if (SetProperty(ref _maxSimultaneousLargeFileSizeKo, value))
+                {
+                    MaxSimultaneousLargeFileSizeKo = value;
+                    SaveSettings();
+                }
+            }
+        }
+
 
         private void OnLogMessageAdded(object sender, string message)
         {
@@ -441,7 +464,10 @@ namespace EasySave.ViewModels
                         // Selection of the business software
                             SelectedBusinessSoftware = businessSoftware;
                             _loggerService?.Log($"Business software loaded from settings: {SelectedBusinessSoftware}");
-                        }
+
+                        // Charge of the maximum size of large files
+                        MaxSimultaneousLargeFileSizeKo = settings.MaxSimultaneousLargeFileSizeKo; 
+                    }
 
                     // Apply the log format
                     if (_loggerService != null)
@@ -507,7 +533,8 @@ namespace EasySave.ViewModels
                     {
                         Name = CurrentBusinessSoftware,
                         FullPath = SelectedBusinessSoftware?.FullPath ?? ""
-                    }
+                    },
+                    MaxSimultaneousLargeFileSizeKo = MaxSimultaneousLargeFileSizeKo
                 };
 
                 // Serialize the settings object to JSON

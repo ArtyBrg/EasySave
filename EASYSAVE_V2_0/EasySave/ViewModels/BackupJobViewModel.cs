@@ -19,7 +19,7 @@ namespace EasySave.ViewModels
     // Manages the backup job view model, including properties and commands for executing, pausing, and stopping backup jobs.
     public class BackupJobViewModel : ViewModelBase
     {
-
+        private static readonly SemaphoreSlim LargeFileSemaphore = new(1, 1); // Semaphore to limit concurrent access to large file operations
         private readonly BackupJob _backupJob;
         private readonly FileSystemService _fileSystemService;
         private readonly LoggerService _loggerService;
@@ -32,7 +32,6 @@ namespace EasySave.ViewModels
         private bool _stopRequested;
         private CancellationTokenSource _cts = new CancellationTokenSource();
         private bool _isEncryptionEnabled;
-
 
         // Property to indicate if encryption is enabled
         public bool IsEncryptionEnabled
@@ -194,7 +193,6 @@ namespace EasySave.ViewModels
             }
         }
 
-
         public async Task ExecuteAsync(CancellationToken cancellationToken = default)
         {
             // Check if the job is already running
@@ -280,6 +278,7 @@ namespace EasySave.ViewModels
             long totalSize = allFiles.Sum(f => new FileInfo(f).Length);
             int totalFiles = allFiles.Count;
             var settings = SettingsService.Load();
+            int maxLargeFileSizeKo = settings.MaxSimultaneousLargeFileSizeKo;
 
             _stateService.UpdateState(Name, "InProgress", 0, totalFiles: totalFiles, totalSize: totalSize);
             _loggerService.Log($"Found {allFiles.Count} files to backup");
@@ -358,6 +357,7 @@ namespace EasySave.ViewModels
             DateTime lastBackup = GetLastCompleteBackupDate();
             _loggerService.Log($"Last complete backup was at {lastBackup}");
             var settings = SettingsService.Load();
+            int maxLargeFileSizeKo = settings.MaxSimultaneousLargeFileSizeKo;
             _loggerService.Log($"Encryption: {(IsEncryptionEnabled ? "Enabled" : "Disabled")}");
 
             var modifiedFiles = new List<string>();
@@ -467,12 +467,9 @@ namespace EasySave.ViewModels
         // Method to copy a file with progress tracking
         private void CopyFileWithProgress(string sourceFile, string targetFile, int currentIndex, int totalFiles, long totalSize, List<string> extensionsToCrypt)
         {
-            // Check if the source file exists
             var targetDir = Path.GetDirectoryName(targetFile);
             if (!Directory.Exists(targetDir))
-            {
                 Directory.CreateDirectory(targetDir);
-            }
 
             Stopwatch sw = Stopwatch.StartNew();
             long fileSize = 0;
@@ -483,28 +480,45 @@ namespace EasySave.ViewModels
                 var fileInfo = new FileInfo(sourceFile);
                 fileSize = fileInfo.Length;
 
-                using (var sourceStream = new FileStream(sourceFile, FileMode.Open, FileAccess.Read, FileShare.Read))
-                using (var targetStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write, FileShare.None))
+                // Retrieves size limit from parameters
+                var settings = SettingsService.Load();
+                int maxLargeFileSizeKo = settings.MaxSimultaneousLargeFileSizeKo;
+                bool isLargeFile = fileSize > maxLargeFileSizeKo * 1024;
+
+                // If it's a large file, wait for the semaphore
+                if (isLargeFile)
+                    LargeFileSemaphore.Wait();
+
+                try
                 {
-                    var buffer = new byte[81920];
-                    int bytesRead;
-                    long totalBytesRead = 0;
-
-                    while ((bytesRead = sourceStream.Read(buffer, 0, buffer.Length)) > 0 && !StopRequested)
+                    using (var sourceStream = new FileStream(sourceFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    using (var targetStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write, FileShare.None))
                     {
-                        targetStream.Write(buffer, 0, bytesRead);
-                        totalBytesRead += bytesRead;
+                        var buffer = new byte[81920];
+                        int bytesRead;
+                        long totalBytesRead = 0;
 
-                        double progress = (double)(currentIndex * totalSize + totalBytesRead) / (totalFiles * totalSize) * 100;
-                        System.Windows.Application.Current.Dispatcher.InvokeAsync(() => Progress = progress);
-
-                        // Check if the job was stopped by the user
-                        if (StopRequested)
+                        while ((bytesRead = sourceStream.Read(buffer, 0, buffer.Length)) > 0 && !StopRequested)
                         {
-                            _loggerService.Log($"Copy of {sourceFile} interrupted by user");
-                            return;
+                            targetStream.Write(buffer, 0, bytesRead);
+                            totalBytesRead += bytesRead;
+
+                            double progress = (double)(currentIndex * totalSize + totalBytesRead) / (totalFiles * totalSize) * 100;
+                            System.Windows.Application.Current.Dispatcher.InvokeAsync(() => Progress = progress);
+
+                            if (StopRequested)
+                            {
+                                _loggerService.Log($"Copy of {sourceFile} interrupted by user");
+                                return;
+                            }
                         }
                     }
+                }
+                finally
+                {
+                    // Free the semaphore if it was a large file
+                    if (isLargeFile)
+                        LargeFileSemaphore.Release();
                 }
 
                 sw.Stop();
@@ -530,7 +544,6 @@ namespace EasySave.ViewModels
                         _loggerService.Log("Erreur de cryptage : " + ex.Message);
 
                         sc.Stop();
-
                         encryptionTimeMs = -1;
                     }
                 }

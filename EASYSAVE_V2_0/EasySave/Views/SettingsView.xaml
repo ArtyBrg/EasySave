@@ -131,6 +131,22 @@
                     </StackPanel>
                 </Border>
 
+
+                <!-- Taille max fichier simultané -->
+                <Border Style="{StaticResource SettingsCardStyle}">
+                    <StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="{Binding Translations[Taille max fichier simultané (Ko) :]}" Style="{StaticResource SettingsTitleStyle}"/>
+                            <TextBox Text="{Binding MaxSimultaneousLargeFileSizeKo, UpdateSourceTrigger=PropertyChanged}" 
+                                 Width="100" 
+                                 VerticalAlignment="Center"
+                                 Margin="10,0,0,0"/>
+                        </StackPanel>
+
+                    </StackPanel>
+                </Border>
+
                 <!-- Extensions à crypter -->
                 <Border Style="{StaticResource SettingsCardStyle}">
                     <StackPanel>
