@@ -6,7 +6,8 @@
     "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\Backup",
     "IsSelected": false,
     "Type": "Complete",
-    "IsEncryptionEnabled": false
+    "IsEncryptionEnabled": false,
+    "PendingFiles": []
   },
   {
     "Id": 2,
@@ -15,7 +16,8 @@
     "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\Backup",
     "IsSelected": false,
     "Type": "Complete",
-    "IsEncryptionEnabled": false
+    "IsEncryptionEnabled": false,
+    "PendingFiles": []
   },
   {
     "Id": 3,
@@ -24,6 +26,17 @@
     "TargetPath": "C:\\Users\\Utilisateur\\Arthur\\Cours\\A3\\G\u00E9nie Logiciel\\Projet\\EasySave_V1_1\\UML Diagrams\\Backup",
     "IsSelected": false,
     "Type": "Complete",
-    "IsEncryptionEnabled": false
+    "IsEncryptionEnabled": false,
+    "PendingFiles": []
+  },
+  {
+    "Id": 4,
+    "Name": "prior",
+    "SourcePath": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\source",
+    "TargetPath": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\target",
+    "IsSelected": false,
+    "Type": "Complete",
+    "IsEncryptionEnabled": false,
+    "PendingFiles": []
   }
 ]

@@ -6,10 +6,8 @@
     ".docx"
   ],
   "PriorityExtensions": [
-    ".txt",
-    ".doc",
-    ".pdf",
-    ".xlsx"
+    ".yml",
+    ".txt"
   ],
   "BusinessSoftware": {
     "Name": "CalculatorApp",

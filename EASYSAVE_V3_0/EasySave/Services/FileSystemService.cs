@@ -5,6 +5,7 @@ using System.Linq;
 using EasySave.Models;
 using EasySave.Services;
 using System.Threading.Tasks;
+using EasySave.ViewModels;
 
 
 namespace EasySave.Services
@@ -21,7 +22,7 @@ namespace EasySave.Services
             _logger = logger;
         }
 
-        public bool CanBackupNonPriorityFile(List<BackupJob> allJobs, List<string> priorityExtensions)
+        public bool CanBackupNonPriorityFile(List<BackupJobViewModel> allJobs, List<string> priorityExtensions)
         {
             // Vérifier si des fichiers prioritaires sont en attente sur tous les jobs
             return !allJobs.Any(job => job.HasPendingPriorityFiles(priorityExtensions));

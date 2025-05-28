@@ -40,5 +40,19 @@
     "CurrentSourceFile": "",
     "CurrentTargetFile": "",
     "Timestamp": "2025-05-25 21:32:59"
+  },
+  {
+    "Name": "prior",
+    "State": "END",
+    "Progress": 100,
+    "SourcePath": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\source\\Usecase_V1.1.png",
+    "TargetPath": "C:\\Users\\chamd\\Documents\\FISE A3\\BLOC_GENIELOG\\PROJET\\ACTUAL\\target\\Usecase_V1.1.png",
+    "TotalFiles": 7,
+    "TotalSize": 238753,
+    "FilesRemaining": 0,
+    "RemainingSize": 0,
+    "CurrentSourceFile": "",
+    "CurrentTargetFile": "",
+    "Timestamp": "2025-05-28 12:16:13"
   }
 ]

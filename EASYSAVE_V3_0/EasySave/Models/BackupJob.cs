@@ -20,23 +20,6 @@ namespace EasySave.Models
 
         public List<string> PendingFiles { get; set; } = new List<string>();
 
-        public bool HasPendingPriorityFiles(List<string> priorityExtensions)
-        {
-            if (PendingFiles == null || !PendingFiles.Any())
-                return false;
-
-            return PendingFiles.Any(filePath =>
-            {
-                var extension = Path.GetExtension(filePath).ToLower();
-                return priorityExtensions.Contains(extension);
-            });
-        }
-
-        public bool IsFileExtensionPriority(string filePath, List<string> priorityExtensions)
-        {
-            var extension = Path.GetExtension(filePath).ToLower();
-            return priorityExtensions.Contains(extension);
-        }
 
     }
 }
