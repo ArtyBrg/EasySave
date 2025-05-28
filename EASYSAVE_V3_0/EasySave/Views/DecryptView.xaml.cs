@@ -17,7 +17,7 @@ namespace EasySave_WPF.Views
             _viewModel = viewModel;
         }
 
-        public DecryptView() : this(new BackupJobViewModel())
+        public DecryptView() : this(BackupJobViewModel.Instance)
         {
         }
 

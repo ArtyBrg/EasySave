@@ -4,10 +4,12 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using EasySave.Models;   
 using EasySave.Services;
 
@@ -16,6 +18,8 @@ namespace EasySaveClient.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool AllocConsole();
         public ObservableCollection<BackupState> BackupStates { get; set; } = new();
 
         private TcpClient _client;
@@ -29,9 +33,36 @@ namespace EasySaveClient.ViewModels
             set => SetProperty(ref _progress, value);
         }
 
+        public ICommand PauseCommand { get; }
+        public ICommand PlayCommand { get; }
+        public ICommand StopCommand { get; }
+
         public MainViewModel()
         {
+            PauseCommand = new RelayCommand(param =>
+            {
+                var jobName = param as string;
+                if (!string.IsNullOrEmpty(jobName))
+                    SendCommandToServer(jobName, "Pause");
+            });
+
+            StopCommand = new RelayCommand(param =>
+            {
+                var jobName = param as string;
+                if (!string.IsNullOrEmpty(jobName))
+                    SendCommandToServer(jobName, "Stop");
+            });
+
+            PlayCommand = new RelayCommand(param =>
+            {
+                var jobName = param as string;
+                if (!string.IsNullOrEmpty(jobName))
+                    SendCommandToServer(jobName, "Play");
+            });
+
             ConnectToServer();
+
+            AllocConsole();
         }
 
         private async void ConnectToServer()
@@ -125,7 +156,56 @@ namespace EasySaveClient.ViewModels
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private void Pause_Click(object sender, RoutedEventArgs e)
+        {
+            var state = (sender as FrameworkElement)?.DataContext as BackupState;
+            if (state != null)
+                SendCommandToServer(state.Name, "Pause");
+        }
+
+        private void Stop_Click(object sender, RoutedEventArgs e)
+        {
+            var state = (sender as FrameworkElement)?.DataContext as BackupState;
+            if (state != null)
+                SendCommandToServer(state.Name, "Stop");
+        }
+
+        private void Play_Click(object sender, RoutedEventArgs e)
+        {
+            var state = (sender as FrameworkElement)?.DataContext as BackupState;
+            if (state != null)
+                SendCommandToServer(state.Name, "Play");
+        }
+
+
+        public void SendCommandToServer(string jobName, string action)
+        {
+            var message = new NetworkMessage
+            {
+                Type = "Command",
+                Payload = JsonSerializer.SerializeToElement(new
+                {
+                    JobName = jobName,
+                    Action = action
+                })
+            };
+
+            var json = JsonSerializer.Serialize(message);
+            var data = Encoding.UTF8.GetBytes(json);
+
+            Console.WriteLine($"Envoi commande : {action} sur {jobName}");
+
+            try
+            {
+                if (_client != null && _client.Connected)
+                    _stream.Write(data, 0, data.Length);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur envoi commande : {ex.Message}");
+            }
+        }
+
     }
-
-
 }

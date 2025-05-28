@@ -19,6 +19,8 @@ namespace EasySave.ViewModels
     // Manages the backup job view model, including properties and commands for executing, pausing, and stopping backup jobs.
     public class BackupJobViewModel : ViewModelBase
     {
+        private static BackupJobViewModel _instance;
+        public static BackupJobViewModel Instance => _instance ??= new BackupJobViewModel();
 
         private readonly BackupJob _backupJob;
         private readonly FileSystemService _fileSystemService;
@@ -41,7 +43,7 @@ namespace EasySave.ViewModels
         }
 
         // Constructor with default values
-        public BackupJobViewModel()
+        private BackupJobViewModel()
             : this(
                 new BackupJob
                 {
