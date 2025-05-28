@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Forms;
+using System.Windows;
 using System.Windows.Input;
 using EasySave.Models;
 using EasySave.Services;
@@ -548,44 +548,25 @@ namespace EasySave.ViewModels
 
                 if (IsEncryptionEnabled)
                 {
-                    // Attendre si un CryptoSoft tourne déjà
-                    while (Process.GetProcessesByName("CryptoSoft").Length > 0)
+                    Stopwatch sc = Stopwatch.StartNew();
+
+                    try
                     {
-                        Thread.Sleep(500);
+                        var fileManager = new CryptoSoft.FileManager(targetFile, encryptionKey);
+                        fileManager.TransformFile();
+
+                        sc.Stop();
+                        encryptionTimeMs = sc.Elapsed.TotalMilliseconds;
                     }
+                    catch (Exception ex)
 
-                    // Création du fichier temporaire pour stocker le résultat chiffré
-                    string tempEncryptedFile = Path.GetTempFileName();
 
-                    // Lancer le chiffrement avec CryptoSoft.exe
-                    Process process = new Process();
-                    process.StartInfo.FileName = "CryptoSoft.exe";
-                    process.StartInfo.Arguments = $"\"{sourceFile}\" \"{tempEncryptedFile}\"";
-                    process.StartInfo.UseShellExecute = false;
-                    process.Start();
-                    process.WaitForExit();
-
-                    // Vérifier si CryptoSoft s’est bien exécuté
-                    if (process.ExitCode == 0)
                     {
-                        // Supprimer l'original
-                        File.Delete(sourceFile);
+                        _loggerService.Log("Erreur de cryptage : " + ex.Message);
+                        sc.Stop();
+                        encryptionTimeMs = -1;
 
-                        // Déplacer le fichier temporaire chiffré à la place de l'original
-                        File.Move(tempEncryptedFile, sourceFile);
-
-                        // Facultatif : Renommer en .enc pour indiquer que c’est chiffré
-                        // string encryptedRenamed = Path.ChangeExtension(sourceFile, ".enc");
-                        // File.Move(sourceFile, encryptedRenamed);
-
-                        _loggerService.Log($"Fichier chiffré : {sourceFile}");
                     }
-                    else
-                    {
-                        // Gérer les erreurs de chiffrement ici
-                        _loggerService.Log($"Erreur de chiffrement sur : {sourceFile}, code retour = {process.ExitCode}");
-                    }
-
                 }
                 else
                 {

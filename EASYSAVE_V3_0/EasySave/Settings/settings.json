@@ -2,8 +2,8 @@
   "Language": "FR",
   "LogFormat": "Json",
   "ExtensionsToCrypt": [
-    ".puml",
-    ".docx"
+    ".png",
+    ".txt"
   ],
   "PriorityExtensions": [
     ".yml",
