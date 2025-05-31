@@ -270,4 +270,10 @@
   <data name="SettingPriorization" xml:space="preserve">
     <value>File extensions to be priorized during backups:</value>
   </data>
+  <data name="SettingMaxSize" xml:space="preserve">
+    <value>Maximum file size: (KB)</value>
+  </data>
+  <data name="SettingMaxSizeText" xml:space="preserve">
+    <value>Select max file size in KB:</value>
+  </data>
 </root>

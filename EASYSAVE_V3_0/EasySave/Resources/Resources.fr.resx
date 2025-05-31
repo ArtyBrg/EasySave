@@ -270,4 +270,10 @@
   <data name="SettingPriorization" xml:space="preserve">
     <value>Extensions de fichiers à prioriser lors des sauvegardes :</value>
   </data>
+  <data name="SettingMaxSize" xml:space="preserve">
+    <value>Taille maximale des fichiers : (Ko)</value>
+  </data>
+  <data name="SettingMaxSizeText" xml:space="preserve">
+    <value>Sélectionnez la taille maximale du fichier en Ko :</value>
+  </data>
 </root>

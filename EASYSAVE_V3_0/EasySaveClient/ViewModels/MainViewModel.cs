@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
@@ -39,6 +40,7 @@ namespace EasySaveClient.ViewModels
 
         public MainViewModel()
         {
+
             PauseCommand = new RelayCommand(param =>
             {
                 var jobName = param as string;
@@ -62,7 +64,7 @@ namespace EasySaveClient.ViewModels
 
             ConnectToServer();
 
-            AllocConsole();
+            // AllocConsole();
         }
 
         private async void ConnectToServer()
@@ -76,10 +78,10 @@ namespace EasySaveClient.ViewModels
 
                 while (true)
                 {
-                    var line = await reader.ReadLineAsync(); // Lis jusqu’au \n
+                    var line = await reader.ReadLineAsync();
                     if (line == null) break;
 
-                    Console.WriteLine("Données reçues : " + line);
+                    Console.WriteLine("Data received: " + line);
 
                     try
                     {
@@ -88,7 +90,6 @@ namespace EasySaveClient.ViewModels
                         {
                             var payloadText = message.Payload.GetRawText();
 
-                            // Vérifie s’il s’agit d’un tableau (liste) ou d’un seul objet
                             if (payloadText.TrimStart().StartsWith("["))
                             {
                                 var states = JsonSerializer.Deserialize<List<BackupState>>(payloadText);
@@ -109,7 +110,6 @@ namespace EasySaveClient.ViewModels
                                         BackupStates.Add(state);
                                     else
                                     {
-                                        // Mise à jour manuelle des propriétés si déjà présent
                                         existing.State = state.State;
                                         existing.Progress = state.Progress;
                                         existing.SourcePath = state.SourcePath;
@@ -125,20 +125,19 @@ namespace EasySaveClient.ViewModels
                                 });
                             }
                         }
-
                     }
                     catch (JsonException ex)
                     {
-                        MessageBox.Show("Erreur JSON : " + ex.Message);
+                        ShowErrorAndExit("JSON parsing error: " + ex.Message);
                     }
                 }
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erreur de connexion : " + ex.Message);
+                ShowErrorAndExit("Connection error: " + ex.Message);
             }
         }
+
 
         protected bool SetProperty<T>(ref T storage, T value, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
         {
@@ -205,6 +204,16 @@ namespace EasySaveClient.ViewModels
             {
                 Console.WriteLine($"Erreur envoi commande : {ex.Message}");
             }
+        }
+
+        private void ShowErrorAndExit(string message)
+        {
+            // Assure d'appeler depuis le thread UI
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Application.Current.Shutdown();
+            });
         }
 
     }

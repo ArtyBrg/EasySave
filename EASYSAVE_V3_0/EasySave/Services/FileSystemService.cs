@@ -24,7 +24,6 @@ namespace EasySave.Services
         {
             _logger = logger;
 
-            // Charge le seuil depuis les paramètres
             var settings = SettingsService.Instance.Load();
             _maxLargeFileSizeBytes = settings.MaxParallelLargeFileSizeKo * 1024;
         }

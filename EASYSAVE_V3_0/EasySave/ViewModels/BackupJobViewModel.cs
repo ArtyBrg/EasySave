@@ -186,7 +186,9 @@ namespace EasySave.ViewModels
             try
             {
                 StopRequested = true;
+                Progress = 0;
                 _loggerService.Log($"Job {Name} stop requested");
+                _stateService.UpdateState(Name, "Stopped", 0);
             }
             catch (Exception ex)
             {
@@ -255,11 +257,24 @@ namespace EasySave.ViewModels
             }
             finally
             {
+                if (StopRequested)
+                {
+                    Console.WriteLine($"Job {Name} was stopped, resetting progress to 0");
+                    Progress = 0;
+                    _stateService.UpdateState(Name, "Stopped", 0);
+                }
+                else
+                {
+                    // La sauvegarde s'est terminée normalement, laisse Progress à 100
+                    Console.WriteLine($"Job {Name} completed normally, progress remains at {Progress}");
+                    _stateService.UpdateState(Name, "Ended", Progress);
+                }
 
                 App.AppViewModel.ActiveBackupJobs.Remove(this);
                 IsRunning = false;
                 StopRequested = false;
             }
+
         }
 
         // Method to execute a complete backup

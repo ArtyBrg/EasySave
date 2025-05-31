@@ -403,6 +403,24 @@ namespace EASYSAVE_V3_0.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Maximum file size: (KB).
+        /// </summary>
+        internal static string SettingMaxSize {
+            get {
+                return ResourceManager.GetString("SettingMaxSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Select max file size in KB:.
+        /// </summary>
+        internal static string SettingMaxSizeText {
+            get {
+                return ResourceManager.GetString("SettingMaxSizeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à File extensions to be priorized during backups:.
         /// </summary>
         internal static string SettingPriorization {

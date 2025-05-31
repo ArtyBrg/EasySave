@@ -179,6 +179,20 @@ namespace EasySave.ViewModels
             }
         }
 
+        private int _maxParallelLargeFileSizeKo = 0;
+        public int MaxParallelLargeFileSizeKo
+        {
+            get => _maxParallelLargeFileSizeKo;
+            set
+            {
+                if (_maxParallelLargeFileSizeKo != value)
+                {
+                    _maxParallelLargeFileSizeKo = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private ObservableCollection<string> _extensionsToCrypt = new ObservableCollection<string>();
         public ObservableCollection<string> ExtensionsToCrypt
         {
@@ -418,6 +432,7 @@ namespace EasySave.ViewModels
             _loggerService?.Log($"- Log format: {SelectedLogFormat}");
             _loggerService?.Log($"- Extensions to encrypt: {string.Join(", ", ExtensionsToCrypt)}");
             _loggerService?.Log($"- Business software: {CurrentBusinessSoftware}");
+            _loggerService?.Log($"- Max parallel large file size (Ko): {MaxParallelLargeFileSizeKo}");
             _loggerService?.Log("Settings applied successfully.");
 
             App.AppViewModel.ChangeLanguages(SelectedLanguage);
@@ -490,6 +505,8 @@ namespace EasySave.ViewModels
                     _loggerService?.Log($"Language loaded from settings: {SelectedLanguage}");
                     SelectedLogFormat = settings.LogFormat;
                     _loggerService?.Log($"Log format loaded from settings: {SelectedLogFormat}");
+                    MaxParallelLargeFileSizeKo = settings.MaxParallelLargeFileSizeKo;
+                    _loggerService?.Log($"Max parallel large file size (Ko) loaded from settings: {MaxParallelLargeFileSizeKo}");
 
                     // Charge of the extensions to crypt
                     ExtensionsToCrypt.Clear();
@@ -603,7 +620,8 @@ namespace EasySave.ViewModels
                     {
                         Name = CurrentBusinessSoftware,
                         FullPath = SelectedBusinessSoftware?.FullPath ?? ""
-                    }
+                    },
+                    MaxParallelLargeFileSizeKo = MaxParallelLargeFileSizeKo
                 };
 
                 // Serialize the settings object to JSON

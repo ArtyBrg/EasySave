@@ -9,7 +9,7 @@ namespace EasySave.Models
     //Enum for log format
     public class AppSettings
     {
-        public string Language { get; set; } = "EN";
+        public string Language { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public LogFormat LogFormat { get; set; } = LogFormat.Json;
@@ -20,7 +20,7 @@ namespace EasySave.Models
       
         public BusinessSoftware BusinessSoftware { get; set; } = new BusinessSoftware();
 
-        public int MaxParallelLargeFileSizeKo { get; set; } = 10000;
+        public int MaxParallelLargeFileSizeKo { get; set; }
 
     }
 
