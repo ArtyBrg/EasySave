@@ -26,6 +26,7 @@ namespace EasySave.Services
         private Socket _serverSocket;
         private bool _isRunning;
 
+        // Starts the remote console server and listens for incoming client connections
         public void Start()
         {
             if (_backupManager == null)
@@ -40,13 +41,15 @@ namespace EasySave.Services
 
             Console.WriteLine("Console distante en écoute sur le port 8080...");
 
+            // Start a background thread to accept clients
             Thread serverThread = new Thread(() =>
             {
                 while (_isRunning)
                 {
-
+                    // Accept a new client connection
                     Socket client = _serverSocket.Accept();
                     _lastClient = client;
+                    // Handle the client in a separate thread
                     Thread clientThread = new Thread(() => HandleClient(client));
                     clientThread.Start();
                 }
@@ -56,19 +59,21 @@ namespace EasySave.Services
             serverThread.Start();
         }
 
+        // Initializes the backup manager for the service
         public void Initialize(BackupManagerViewModel backupManager)
         {
             _backupManager = backupManager;
             Console.WriteLine("BackupManager initialisé dans le serveur");
         }
 
+        // Handles communication with a connected client
         private void HandleClient(Socket client)
         {
             try
             {
                 _lastClient = client;
 
-                // Envoie l'état initial
+                // Send initial state to the client
                 var currentStates = _stateService.GetAllStates();
                 var response = JsonSerializer.Serialize(new NetworkMessage
                 {
@@ -77,10 +82,11 @@ namespace EasySave.Services
                 }) + "\n";
                 client.Send(Encoding.UTF8.GetBytes(response));
 
-                byte[] buffer = new byte[4096]; // plus grand pour éviter les coupures
+                byte[] buffer = new byte[4096];
 
                 while (client.Connected)
                 {
+                    // Receive data from the client
                     int bytesRec = client.Receive(buffer);
                     if (bytesRec == 0)
                     {
@@ -91,6 +97,7 @@ namespace EasySave.Services
                     string request = Encoding.UTF8.GetString(buffer, 0, bytesRec);
                     Console.WriteLine($"Commande reçue : {request}");
 
+                    // Deserialize the received command
                     var command = JsonSerializer.Deserialize<NetworkMessage>(request);
 
                     if (command.Type == "Command")
@@ -106,6 +113,7 @@ namespace EasySave.Services
                             return;
                         }
 
+                        // Find the job by name
                         var job = _backupManager.Jobs.FirstOrDefault(j => j.Name == jobName);
                         if (job == null)
                         {
@@ -113,6 +121,7 @@ namespace EasySave.Services
                             return;
                         }
 
+                        // Execute the requested action on the job
                         switch (action.ToLower())
                         {
                             case "pause":
@@ -139,13 +148,13 @@ namespace EasySave.Services
             }
             catch (Exception ex)
             {
+                // Log any client handling errors
                 Console.WriteLine($"Erreur client détaillée: {ex.Message}");
                 Console.WriteLine($"Stack trace: {ex.StackTrace}");
             }
         }
 
-
-
+        // Sends a state update to the last connected client
         public void SendStateUpdate(BackupState state)
         {
             try
@@ -170,12 +179,14 @@ namespace EasySave.Services
             }
             catch (Exception ex)
             {
+                // Log any errors when sending updates
                 Console.WriteLine("Erreur envoi update : " + ex.Message);
             }
         }
 
     }
 
+    // Represents a message sent over the network
     public class NetworkMessage
     {
         public string Type { get; set; }

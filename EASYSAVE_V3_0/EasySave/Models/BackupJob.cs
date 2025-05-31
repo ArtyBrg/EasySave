@@ -7,7 +7,7 @@ using EasySave.Models;
 
 namespace EasySave.Models
 {
-    // Enum for log format
+    // Class representing a backup job
     public class BackupJob
     {
         public int Id { get; set; }
@@ -18,6 +18,6 @@ namespace EasySave.Models
         public required string Type { get; set; }
         public bool IsEncryptionEnabled { get; set; } = false;
 
-        public List<string> PendingFiles { get; set; } = new List<string>();
+        public List<string> PendingFiles { get; set; } = new List<string>(); // List of files to be backed up
     }
 }

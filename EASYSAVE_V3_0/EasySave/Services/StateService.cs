@@ -11,20 +11,20 @@ using System.Text.Json.Serialization;
 
 namespace EasySave.Services
 {
-    
-    /// Manages the state of backup jobs
+    // Manages the state of backup jobs
     public class StateService
     {
+        // Path to the settings JSON file
         private static readonly string SettingsPath = Path.Combine(AppContext.BaseDirectory, @"..\\..\\..\\", "Settings", "settings.json");
 
-        // AJOUTEZ CETTE MÉTHODE
+        // Returns the list of priority file extensions from settings
         public static List<string> GetPriorityExtensions()
         {
             var settings = Load();
             return settings.PriorityExtensions ?? new List<string>();
         }
 
-        // Ensure the settings directory exists
+        // Saves the AppSettings object to the settings file in JSON format
         public static void Save(AppSettings settings)
         {
             var options = new JsonSerializerOptions
@@ -36,7 +36,7 @@ namespace EasySave.Services
             File.WriteAllText(SettingsPath, json);
         }
 
-        // Load settings from the JSON file
+        // Loads the AppSettings object from the settings file, or returns a new one if the file does not exist
         public static AppSettings Load()
         {
             // Check if the settings file exists, if not return default settings
@@ -49,28 +49,35 @@ namespace EasySave.Services
             }) ?? new AppSettings();
         }
 
+        // Singleton instance of StateService
         private static StateService _instance;
         public static StateService Instance => _instance ??= new StateService(new LoggerService());
 
+        // Path to the state JSON file
         private string StateFile = Path.Combine(AppContext.BaseDirectory, @"..\\..\\..\\", "States", "state.json");
+        // List of all backup states
         private readonly List<BackupState> _states = new();
+        // Logger for error and info messages
         private readonly LoggerService _logger;
 
+        // Event triggered when a state is updated
         public event EventHandler<BackupState> StateUpdated;
 
+        // Constructor initializes logger and loads states from file
         private StateService(LoggerService logger)
         {
             _logger = logger;
             LoadStates();
         }
 
+        // Reference to the remote console for state updates
         private RemoteConsoleService _remoteConsole;
         public void SetRemoteConsole(RemoteConsoleService remoteConsole)
         {
             _remoteConsole = remoteConsole;
         }
 
-        // Update the state of a backup job
+        // Updates the state of a backup job and notifies listeners
         public void UpdateState(string jobName, string status, double progress,
                                 string sourcePath = "", string targetPath = "",
                                 int totalFiles = 0, long totalSize = 0, int filesLeft = 0,
@@ -79,6 +86,7 @@ namespace EasySave.Services
         {
             try
             {
+                // Map status to internal state value
                 string stateValue = status.ToUpper() switch
                 {
                     "ACTIVE" => "ACTIVE",
@@ -89,6 +97,7 @@ namespace EasySave.Services
                     _ => status.ToUpper()
                 };
 
+                // Find or create the backup state for the job
                 var state = _states.FirstOrDefault(s => s.Name == jobName);
                 if (state == null)
                 {
@@ -96,6 +105,7 @@ namespace EasySave.Services
                     _states.Add(state);
                 }
 
+                // Update all state properties
                 state.State = stateValue;
                 state.Progress = progress;
                 state.SourcePath = string.IsNullOrEmpty(sourcePath) ? state.SourcePath : sourcePath;
@@ -108,22 +118,25 @@ namespace EasySave.Services
                 state.CurrentTargetFile = currentTargetFile;
                 state.Timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
+                // Send state update to remote console if available
                 Console.WriteLine("RemoteConsole is null ? " + (_remoteConsole == null));
                 if (_remoteConsole != null)
                     _remoteConsole.SendStateUpdate(state);
 
+                // Save all states to file
                 SaveStates();
 
-                // Notification in the IU
+                // Notify UI or listeners about the state update
                 StateUpdated?.Invoke(this, state);
             }
             catch (Exception ex)
             {
+                // Log any errors during state update
                 _logger.LogError($"Failed to update state: {ex.Message}");
             }
         }
 
-        // Get the state of a backup job
+        // Loads all backup states from the state file
         private void LoadStates()
         {
             try
@@ -144,11 +157,12 @@ namespace EasySave.Services
             }
             catch (Exception ex)
             {
+                // Log any errors during state loading
                 _logger.LogError($"Failed to load states: {ex.Message}");
             }
         }
 
-        // Save the state of a backup job
+        // Saves all backup states to the state file
         private void SaveStates()
         {
             try
@@ -159,11 +173,12 @@ namespace EasySave.Services
             }
             catch (Exception ex)
             {
+                // Log any errors during state saving
                 _logger.LogError($"Failed to save states: {ex.Message}");
             }
         }
 
-        // Get the state of a backup job
+        // Returns a read-only list of all backup states
         public IEnumerable<BackupState> GetAllStates() => _states.AsReadOnly();
     }
 }
