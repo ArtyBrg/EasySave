@@ -19,15 +19,22 @@ namespace EasySave.ViewModels
     // Manages the backup job view model, including properties and commands for executing, pausing, and stopping backup jobs.
     public class BackupJobViewModel : ViewModelBase
     {
+        // Singleton instance for the view model
         private static BackupJobViewModel _instance;
         public static BackupJobViewModel Instance => _instance ??= new BackupJobViewModel();
 
+        // Underlying backup job model
         private readonly BackupJob _backupJob;
+        // Service for file system operations
         private readonly FileSystemService _fileSystemService;
+        // Service for logging
         private readonly LoggerService _loggerService;
+        // Service for managing backup job states
         private readonly StateService _stateService;
+        // Key used for encryption
         private readonly string encryptionKey = "crypto123";
 
+        // Internal state fields
         private bool _isRunning;
         private double _progress;
         private bool _isPaused;
@@ -69,13 +76,16 @@ namespace EasySave.ViewModels
             _loggerService = loggerService ?? throw new ArgumentNullException(nameof(loggerService));
             _stateService = stateService ?? throw new ArgumentNullException(nameof(stateService));
 
+            // Initialize commands for UI actions
             ExecuteCommand = new RelayCommand(async _ => await ExecuteAsync(), _ => !IsRunning);
             PauseCommand = new RelayCommand(_ => PauseJob(), _ => IsRunning);
             StopCommand = new RelayCommand(_ => StopJob(), _ => IsRunning);
         }
 
+        // Backup job ID
         public int Id => _backupJob.Id;
 
+        // Backup job name
         public string Name
         {
             get => _backupJob.Name;
@@ -89,7 +99,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        /// Properties for SourcePath, TargetPath, Type, IsSelected
+        // Source directory path
         public string SourcePath
         {
             get => _backupJob.SourcePath;
@@ -103,6 +113,7 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Target directory path
         public string TargetPath
         {
             get => _backupJob.TargetPath;
@@ -116,6 +127,7 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Backup type (Complete or Differential)
         public string Type
         {
             get => _backupJob.Type;
@@ -129,6 +141,7 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Indicates if the job is selected in the UI
         public bool IsSelected
         {
             get => _backupJob.IsSelected;
@@ -142,45 +155,52 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Properties for IsRunning, Progress, IsPaused, StopRequested
+        // Indicates if the job is currently running
         public bool IsRunning
         {
             get => _isRunning;
             private set => SetProperty(ref _isRunning, value);
         }
 
+        // Progress percentage of the backup job
         public double Progress
         {
             get => _progress;
             set => SetProperty(ref _progress, value);
         }
 
+        // Indicates if the job is paused
         public bool IsPaused
         {
             get => _isPaused;
             private set => SetProperty(ref _isPaused, value);
         }
 
+        // Indicates if a stop has been requested
         public bool StopRequested
         {
             get => _stopRequested;
             private set => SetProperty(ref _stopRequested, value);
         }
 
+        // Command to execute the backup job
         public RelayCommand ExecuteCommand { get; }
+        // Command to pause the backup job
         public RelayCommand PauseCommand { get; }
+        // Command to stop the backup job
         public RelayCommand StopCommand { get; }
 
+        // Returns the underlying backup job model
         public BackupJob GetBackupJob() => _backupJob;
 
-        // Command to execute the backup job
+        // Pauses or resumes the backup job
         public void PauseJob()
         {
             IsPaused = !IsPaused;
             _loggerService.Log($"Backup job {Name} {(IsPaused ? "paused" : "resumed")}");
         }
 
-        // Command to stop the backup job
+        // Requests to stop the backup job
         public void StopJob()
         {
             try
@@ -194,6 +214,7 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Executes the backup job asynchronously
         public async Task ExecuteAsync(CancellationToken cancellationToken = default)
         {
             // Check if the job is already running
@@ -210,7 +231,8 @@ namespace EasySave.ViewModels
             IsPaused = false;
             Progress = 0;
             StopRequested = false;
-            
+
+            // Add this job to the list of active jobs in the app
             App.AppViewModel.ActiveBackupJobs.Add(this);
 
             try
@@ -255,14 +277,14 @@ namespace EasySave.ViewModels
             }
             finally
             {
-
+                // Remove this job from the list of active jobs
                 App.AppViewModel.ActiveBackupJobs.Remove(this);
                 IsRunning = false;
                 StopRequested = false;
             }
         }
 
-        // Method to execute a complete backup
+        // Executes a complete backup
         private void ExecuteCompleteBackup(CancellationToken cancellationToken)
         {
             // Check if the source and target directories exist
@@ -282,15 +304,14 @@ namespace EasySave.ViewModels
             var settings = SettingsService.Load();
             var allFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories).ToList();
 
-            // Trier les fichiers selon les extensions prioritaires
+            // Sort files by priority extensions
             var priorityFiles = allFiles.Where(f =>
                 settings.PriorityExtensions.Any(ext => Path.GetExtension(f).Equals(ext, StringComparison.OrdinalIgnoreCase))).ToList();
 
             var nonPriorityFiles = allFiles.Except(priorityFiles).ToList();
 
-            // Fusionner : priorité d'abord
+            // Merge: priority files first
             allFiles = priorityFiles.Concat(nonPriorityFiles).ToList();
-
 
             long totalSize = allFiles.Sum(f => new FileInfo(f).Length);
             int totalFiles = allFiles.Count;
@@ -307,12 +328,12 @@ namespace EasySave.ViewModels
                     return;
                 }
 
+                // Wait if paused
                 while (IsPaused && !StopRequested)
                 {
                     Thread.Sleep(500);
                 }
 
-                // Check if the job was stopped by the user
                 if (StopRequested) return;
 
                 string sourceFile = allFiles[i];
@@ -322,12 +343,13 @@ namespace EasySave.ViewModels
                 var extension = Path.GetExtension(sourceFile).ToLower();
                 IsEncryptionEnabled = settings.ExtensionsToCrypt.Any(e => e.Equals(extension, StringComparison.OrdinalIgnoreCase));
 
-                // Check if the target directory exists, and create it if it doesn't
+                // Add .crypt extension if encryption is enabled
                 if (IsEncryptionEnabled)
                 {
                     targetFile += ".crypt";
                 }
 
+                // Copy the file and track progress
                 CopyFileWithProgress(sourceFile, targetFile, i, totalFiles, totalSize, settings.ExtensionsToCrypt);
 
                 double progressValue = (i + 1) * 100.0 / totalFiles;
@@ -344,7 +366,7 @@ namespace EasySave.ViewModels
                     totalFiles - (i + 1)
                 );
 
-                // Check if the job was stopped by the user
+                // Wait a bit between files
                 if (i < allFiles.Count - 1 && !StopRequested)
                 {
                     Thread.Sleep(100);
@@ -352,7 +374,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Method to execute a differential backup
+        // Executes a differential backup
         private void ExecuteDifferentialBackup(CancellationToken cancellationToken)
         {
             if (!Directory.Exists(SourcePath))
@@ -378,11 +400,13 @@ namespace EasySave.ViewModels
             {
                 if (lastBackup == DateTime.MinValue)
                 {
+                    // No previous backup, do a complete backup
                     modifiedFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories).ToList();
                     _loggerService.Log("No previous backup found. Performing complete backup instead.");
                 }
                 else
                 {
+                    // Only backup files modified since last backup
                     var allSourceFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories);
 
                     foreach (var sourceFile in allSourceFiles)
@@ -406,7 +430,7 @@ namespace EasySave.ViewModels
                     }
                 }
 
-                // PRIORISATION des fichiers selon settings.json
+                // Prioritize files by extension
                 var priorityFiles = modifiedFiles
                     .Where(f => settings.PriorityExtensions
                         .Any(ext => Path.GetExtension(f).Equals(ext, StringComparison.OrdinalIgnoreCase)))
@@ -437,6 +461,7 @@ namespace EasySave.ViewModels
                     return;
                 }
 
+                // Wait if paused
                 while (IsPaused && !StopRequested)
                 {
                     Thread.Sleep(500);
@@ -457,6 +482,7 @@ namespace EasySave.ViewModels
                     finalTargetFile += ".crypt";
                 }
 
+                // Copy the file and track progress
                 CopyFileWithProgress(sourceFile, finalTargetFile, i, totalFiles, totalSize, settings.ExtensionsToCrypt);
 
                 double progressValue = (i + 1) * 100.0 / totalFiles;
@@ -480,7 +506,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Vérifie s’il y a des fichiers prioritaires dans ceux en attente
+        // Checks if there are pending priority files in the job
         public bool HasPendingPriorityFiles(List<string> priorityExtensions)
         {
             if (_backupJob.PendingFiles == null || !_backupJob.PendingFiles.Any())
@@ -493,16 +519,14 @@ namespace EasySave.ViewModels
             });
         }
 
-        // Vérifie si une extension de fichier est prioritaire
+        // Checks if a file extension is a priority extension
         public bool IsFileExtensionPriority(string filePath, List<string> priorityExtensions)
         {
             var extension = Path.GetExtension(filePath).ToLower();
             return priorityExtensions.Contains(extension);
         }
 
-
-
-        // Method to copy a file with progress tracking
+        // Copies a file and tracks progress, optionally encrypting it
         private void CopyFileWithProgress(string sourceFile, string targetFile, int currentIndex, int totalFiles, long totalSize, List<string> extensionsToCrypt)
         {
             var targetDir = Path.GetDirectoryName(targetFile);
@@ -561,13 +585,10 @@ namespace EasySave.ViewModels
                         encryptionTimeMs = sc.Elapsed.TotalMilliseconds;
                     }
                     catch (Exception ex)
-
-
                     {
                         _loggerService.Log("Erreur de cryptage : " + ex.Message);
                         sc.Stop();
                         encryptionTimeMs = -1;
-
                     }
                 }
                 else
@@ -583,7 +604,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Method to decrypt a file
+        // Decrypts a file that was previously encrypted
         public void DecryptFile(string encryptedFilePath, string? outputFilePath = null)
         {
             try
@@ -607,7 +628,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Method to get the last complete backup date
+        // Gets the last complete backup date for the target directory
         private DateTime GetLastCompleteBackupDate()
         {
             // Check if the target directory exists
@@ -634,7 +655,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Method to update the last backup date
+        // Updates the last backup date for the target directory
         private void UpdateLastBackupDate()
         {
             try
@@ -648,7 +669,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Method to create a directory if it doesn't exist
+        // Creates a directory if it does not exist
         private bool CreateDirectoryIfNotExists(string path)
         {
             try

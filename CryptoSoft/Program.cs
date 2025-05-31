@@ -18,21 +18,21 @@ namespace CryptoSoft
             {
                 if (createdNew)
                 {
-                    // C’est la première instance -> lancer le serveur pipe
+                    // First instance ->  start of the pipe server
                     Console.WriteLine("Instance principale de CryptoSoft lancée.");
-                    StartPipeServer(); // Démarre le serveur
-                    WaitForExit();     // Attend interruption manuelle
+                    StartPipeServer(); // Start the server
+                    WaitForExit();     // Wait for a manual interruption
                 }
                 else
                 {
 
-                    // Une autre instance est déjà en cours -> envoyer les arguments
+                    // An onther instance is already running
                     Console.WriteLine("Instance secondaire détectée. Envoi des arguments à l'instance principale.");
                     SendArgumentsToMainInstance(args);
                 }
             }
         }
-
+        // Start the named pipe server to listen for requests
         private static void StartPipeServer()
         {
             Thread serverThread = new Thread(() =>
@@ -63,16 +63,17 @@ namespace CryptoSoft
                     }
                 }
             });
-
+            // Run the server thread in the background
             serverThread.IsBackground = true;
             serverThread.Start();
         }
 
+        // Send arguments to the main instance via named pipe
         private static void SendArgumentsToMainInstance(string[] args)
         {
             try
             {
-                using (var client = new NamedPipeClientStream(".", pipeName, PipeDirection.Out))
+                using (var client = new NamedPipeClientStream(".", pipeName, PipeDirection.Out)) // connect to the named pipe server
                 {
                     client.Connect(2000); // 2 sec timeout
                     using (var writer = new StreamWriter(client))
@@ -100,6 +101,7 @@ namespace CryptoSoft
             }
         }
 
+        // Wait for a manual interruption to exit the application
         private static void WaitForExit()
         {
             Console.WriteLine("Appuyez sur Ctrl+C pour quitter...");
