@@ -199,7 +199,7 @@ namespace EasySave.ViewModels
         // Change the language of the application
         private void InitLanguage()
         {
-            var settings = SettingsService.Load();
+            var settings = SettingsService.Instance.Load();
             CurrentLanguage = settings?.Language ?? "FR";
 
             // Enforce the language setting

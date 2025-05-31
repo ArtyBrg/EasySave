@@ -25,15 +25,15 @@ namespace EasySave.Services
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
 
-            var settings = SettingsService.Load();
+            var settings = SettingsService.Instance.Load();
             settings.Language = languageCode.ToUpper();
-            SettingsService.Save(settings);
+            SettingsService.Instance.Save(settings);
         }
 
         // Load the language from the settings file
         public void LoadLanguageFromSettings()
         {
-            var settings = SettingsService.Load();
+            var settings = SettingsService.Instance.Load();
 
             if (!string.IsNullOrEmpty(settings.Language))
             {

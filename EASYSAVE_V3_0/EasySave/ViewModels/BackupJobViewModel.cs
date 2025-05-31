@@ -203,7 +203,7 @@ namespace EasySave.ViewModels
                 return;
             }
 
-            var settings = SettingsService.Load();
+            var settings = SettingsService.Instance.Load();
             _loggerService.SetLogFormat(settings.LogFormat);
 
             IsRunning = true;
@@ -279,7 +279,7 @@ namespace EasySave.ViewModels
                 throw new DirectoryNotFoundException($"Cannot create target directory: {TargetPath}");
             }
 
-            var settings = SettingsService.Load();
+            var settings = SettingsService.Instance.Load();
             var allFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories).ToList();
 
             // Trier les fichiers selon les extensions prioritaires
@@ -369,7 +369,7 @@ namespace EasySave.ViewModels
 
             DateTime lastBackup = GetLastCompleteBackupDate();
             _loggerService.Log($"Last complete backup was at {lastBackup}");
-            var settings = SettingsService.Load();
+            var settings = SettingsService.Instance.Load();
             _loggerService.Log($"Encryption: {(IsEncryptionEnabled ? "Enabled" : "Disabled")}");
 
             var modifiedFiles = new List<string>();
@@ -511,14 +511,15 @@ namespace EasySave.ViewModels
                 Directory.CreateDirectory(targetDir);
             }
 
-            Stopwatch sw = Stopwatch.StartNew();
-            long fileSize = 0;
-            double timeMs = 0;
-
             try
             {
                 var fileInfo = new FileInfo(sourceFile);
-                fileSize = fileInfo.Length;
+                long fileSize = fileInfo.Length;
+
+                // Log démarrage du transfert avec horodatage précis
+                _loggerService.Log($"Start transfer: {sourceFile} ({fileSize} octets)");
+
+                Stopwatch sw = Stopwatch.StartNew();
 
                 using (var sourceStream = new FileStream(sourceFile, FileMode.Open, FileAccess.Read, FileShare.Read))
                 using (var targetStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write, FileShare.None))
@@ -544,7 +545,7 @@ namespace EasySave.ViewModels
                 }
 
                 sw.Stop();
-                timeMs = sw.Elapsed.TotalMilliseconds;
+                double timeMs = sw.Elapsed.TotalMilliseconds;
 
                 double encryptionTimeMs = 0;
 
@@ -561,19 +562,19 @@ namespace EasySave.ViewModels
                         encryptionTimeMs = sc.Elapsed.TotalMilliseconds;
                     }
                     catch (Exception ex)
-
-
                     {
                         _loggerService.Log("Erreur de cryptage : " + ex.Message);
                         sc.Stop();
                         encryptionTimeMs = -1;
-
                     }
                 }
                 else
                 {
                     encryptionTimeMs = 0;
                 }
+
+                // Log fin du transfert avec horodatage précis
+                _loggerService.Log($"End transfer: {sourceFile} ({fileSize} octets), Duration: {timeMs} ms");
 
                 _loggerService.LogFileTransfer(Name, sourceFile, targetFile, fileSize, timeMs, encryptionTimeMs);
             }
@@ -582,6 +583,7 @@ namespace EasySave.ViewModels
                 _loggerService.LogError($"Error copying {sourceFile} to {targetFile}: {ex.Message}");
             }
         }
+
 
         // Method to decrypt a file
         public void DecryptFile(string encryptedFilePath, string? outputFilePath = null)

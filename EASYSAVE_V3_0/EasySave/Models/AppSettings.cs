@@ -19,6 +19,9 @@ namespace EasySave.Models
         public List<string> PriorityExtensions { get; set; } = new List<string>();
       
         public BusinessSoftware BusinessSoftware { get; set; } = new BusinessSoftware();
+
+        public int MaxParallelLargeFileSizeKo { get; set; } = 10000;
+
     }
 
     // Enum for log format

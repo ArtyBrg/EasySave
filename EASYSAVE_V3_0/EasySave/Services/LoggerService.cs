@@ -17,7 +17,7 @@ namespace EasySave.Services
         //Constructor for the LoggerService
         public LoggerService(string logDirectory = "Logs")
         {
-            var settings = SettingsService.Load();
+            var settings = SettingsService.Instance.Load();
             _logDirectory = logDirectory;
 
             Directory.CreateDirectory(_logDirectory);
@@ -45,7 +45,7 @@ namespace EasySave.Services
                 LogMessageAdded?.Invoke(this, $"[ERROR] Failed to load existing logs: {ex.Message}");
             }
 
-            var settings = SettingsService.Load();
+            var settings = SettingsService.Instance.Load();
             _dailyLogger = new DailyLogger(_logDirectory, settings.LogFormat);
             Log("Logger service initialized");
         }
@@ -57,9 +57,9 @@ namespace EasySave.Services
             {
                 _dailyLogger.SetLogFormat(format);
 
-                var settings = SettingsService.Load();
+                var settings = SettingsService.Instance.Load();
                 settings.LogFormat = format;
-                SettingsService.Save(settings);
+                SettingsService.Instance.Save(settings);
             }
             catch (Exception ex)
             {

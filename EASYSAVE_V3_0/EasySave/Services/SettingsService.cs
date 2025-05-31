@@ -8,18 +8,22 @@ using EasySave.Services;
 
 namespace EasySave.Services
 {
-    public static class SettingsService
+    public class SettingsService
     {
         private static readonly string SettingsPath = Path.Combine(AppContext.BaseDirectory, @"..\\..\\..\\", "Settings", "settings.json");
+        private static readonly Lazy<SettingsService> _instance = new(() => new SettingsService());
 
-        // Ajoutez cette méthode
-        public static List<string> GetPriorityExtensions()
+        public static SettingsService Instance => _instance.Value;
+
+        private SettingsService() { }
+
+        public List<string> GetPriorityExtensions()
         {
             var settings = Load();
             return settings.PriorityExtensions ?? new List<string>();
         }
 
-        public static void Save(AppSettings settings)
+        public void Save(AppSettings settings)
         {
             var options = new JsonSerializerOptions
             {
@@ -29,7 +33,8 @@ namespace EasySave.Services
             var json = JsonSerializer.Serialize(settings, options);
             File.WriteAllText(SettingsPath, json);
         }
-        public static AppSettings Load()
+
+        public AppSettings Load()
         {
             if (!File.Exists(SettingsPath))
                 return new AppSettings();

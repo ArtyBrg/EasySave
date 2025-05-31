@@ -49,7 +49,7 @@ namespace EasySave.ViewModels
         {
             try
             {
-                var settings = SettingsService.Load();
+                var settings = SettingsService.Instance.Load();
 
                 if (string.IsNullOrEmpty(settings?.BusinessSoftware?.FullPath))
                     return;
@@ -481,7 +481,7 @@ namespace EasySave.ViewModels
         {
             try
             {
-                var settings = SettingsService.Load();
+                var settings = SettingsService.Instance.Load();
 
                 // Apply the settings if the file exists
                 if (settings != null)
