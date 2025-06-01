@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace EasySave.Models
 {
+    // Represents the state of a backup operation.
     public class BackupState : INotifyPropertyChanged
     {
         private string _name;
@@ -43,9 +44,13 @@ namespace EasySave.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+
+        // Method to raise the PropertyChanged event.
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
+
+        // Method to set a field and raise the PropertyChanged event if the value has changed.
         protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(field, value))

@@ -12,19 +12,18 @@ namespace EasySave.Models
         public string Language { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public LogFormat LogFormat { get; set; } = LogFormat.Json;
+        public LogFormat LogFormat { get; set; } = LogFormat.Json; // Default log format is JSON
 
-        public List<string> ExtensionsToCrypt { get; set; } = new List<string>();
+        public List<string> ExtensionsToCrypt { get; set; } = new List<string>(); // List of file extensions to encrypt
 
         public List<string> PriorityExtensions { get; set; } = new List<string>();
       
         public BusinessSoftware BusinessSoftware { get; set; } = new BusinessSoftware();
 
         public int MaxParallelLargeFileSizeKo { get; set; }
-
     }
 
-    // Enum for log format
+    // Class representing business software details
     public class BusinessSoftware
     {
         public string Name { get; set; } = "Aucun";

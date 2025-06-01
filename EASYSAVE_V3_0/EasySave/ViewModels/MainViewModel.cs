@@ -15,10 +15,11 @@ namespace EasySave.ViewModels
     // MainViewModel is the main view model for the application.
     public class MainViewModel : ViewModelBase
     {
+        // Import for allocating a console window (for debugging)
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern bool AllocConsole();
 
-        // Services
+        // Services used by the main view model
         private readonly BackupManagerViewModel _backupManagerViewModel;
         private readonly LanguageService _languageService;
         private readonly LoggerService _loggerService;
@@ -26,50 +27,50 @@ namespace EasySave.ViewModels
 
         public RemoteConsoleService RemoteConsole => _remoteConsole;
 
-        // Properties
+        // Name of the currently selected view
         private string _selectedViewName;
+        // StringBuilder for accumulating log messages
         private StringBuilder _logBuilder = new StringBuilder();
+        // Stores the current log content as a string
         private string _logContent = string.Empty;
 
-        // Properties for creating a new job
+        // Fields for creating a new backup job
         private string _newJobName;
         private string _newJobSourcePath;
         private string _newJobTargetPath;
         private string _newJobType;
         private string _errorMessage;
 
-        // Properties for language management
+        // Field for the current language
         private string _currentLanguage = null;
 
-        // Constructor
+        // Constructor initializes services, remote console, and commands
         public MainViewModel(
             BackupManagerViewModel backupManagerViewModel,
             LanguageService languageService,
             LoggerService loggerService)
         {
-
-            // AllocConsole();
+            // AllocConsole(); // Uncomment to show a console window for debugging
             _backupManagerViewModel = backupManagerViewModel;
             _languageService = languageService;
             _loggerService = loggerService;
 
+            // Initialize remote console and connect it to the backup manager
             _remoteConsole = new RemoteConsoleService(StateService.Instance);
-
-            // Passe le vrai ViewModel une fois ici :
             _remoteConsole.Initialize(_backupManagerViewModel);
             StateService.Instance.SetRemoteConsole(_remoteConsole);
             // _remoteConsole.Start();
             InitLanguage();
 
-            // Initialization
+            // Set default view and job type
             _selectedViewName = "Home";
             _newJobType = "Complete";
 
-            // Events subscription
+            // Subscribe to log message events
             _loggerService.LogMessageAdded += OnLogMessageAdded;
             _loggerService.Log("MainViewModel initialized - Log system ready");
 
-            // Commands
+            // Initialize commands for UI actions
             NavigateCommand = new RelayCommand(Navigate);
             CreateJobCommand = new RelayCommand(CreateBackupJob, CanCreateJob);
             BrowseSourceCommand = new RelayCommand(param => BrowseSourcePath());
@@ -77,7 +78,7 @@ namespace EasySave.ViewModels
             SetLanguageCommand = new RelayCommand(param => ChangeLanguage(param as string));
         }
 
-        // Change the language of the application
+        // Handles new log messages and updates the log content
         private void OnLogMessageAdded(object sender, string message)
         {
             // Add the new log message to the StringBuilder
@@ -86,23 +87,24 @@ namespace EasySave.ViewModels
             LogContent = _logBuilder.ToString();
         }
 
-        // Change the language of the application
+        // Exposes the backup manager view model
         public BackupManagerViewModel BackupManager => _backupManagerViewModel;
-        // Property to get the list of backup jobs
+
+        // Name of the currently selected view (for navigation)
         public string SelectedViewName
         {
             get => _selectedViewName;
             set => SetProperty(ref _selectedViewName, value);
         }
 
-        // Property to get the list of backup jobs
+        // Log content to display in the UI
         public string LogContent
         {
             get => _logContent;
             set => SetProperty(ref _logContent, value);
         }
 
-        // Properties for creating a new job
+        // Name for the new backup job
         public string NewJobName
         {
             get => _newJobName;
@@ -113,7 +115,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Property for the source path of the new job
+        // Source path for the new backup job
         public string NewJobSourcePath
         {
             get => _newJobSourcePath;
@@ -124,7 +126,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Property for the target path of the new job
+        // Target path for the new backup job
         public string NewJobTargetPath
         {
             get => _newJobTargetPath;
@@ -135,21 +137,21 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Property for the type of the new job
+        // Type for the new backup job (e.g., Complete or Differential)
         public string NewJobType
         {
             get => _newJobType;
             set => SetProperty(ref _newJobType, value);
         }
 
-        // Property for the error message
+        // Error message to display in the UI
         public string ErrorMessage
         {
             get => _errorMessage;
             set => SetProperty(ref _errorMessage, value);
         }
 
-        // Property for the current language
+        // Current language code
         public string CurrentLanguage
         {
             get => _currentLanguage;
@@ -162,13 +164,15 @@ namespace EasySave.ViewModels
                 }
             }
         }
-        // Property for the list of available languages
+
+        // Commands for navigation, language, job creation, and browsing
         public ICommand NavigateCommand { get; }
         public ICommand SetLanguageCommand { get; }
         public ICommand CreateJobCommand { get; }
         public ICommand BrowseSourceCommand { get; }
         public ICommand BrowseTargetCommand { get; }
 
+        // Selected log format (JSON or XML)
         private string _selectedLogFormat = "JSON";
         public string SelectedLogFormat
         {
@@ -188,6 +192,7 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Handles navigation between views
         private void Navigate(object parameter)
         {
             if (parameter is string viewName)
@@ -198,16 +203,16 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Change the language of the application
+        // Initializes the language from settings
         private void InitLanguage()
         {
             var settings = SettingsService.Instance.Load();
             CurrentLanguage = settings?.Language ?? "FR";
-
-            // Enforce the language setting
+            // Notify UI of language change
             OnPropertyChanged(nameof(CurrentLanguage));
         }
 
+        // Creates a new backup job using the input fields
         private void CreateBackupJob(object parameter)
         {
             ErrorMessage = string.Empty;
@@ -235,6 +240,7 @@ namespace EasySave.ViewModels
 
                 _loggerService.Log($"Created new backup job: {NewJobName} ({NewJobType})");
 
+                // Reset input fields after creation
                 NewJobName = string.Empty;
                 NewJobSourcePath = string.Empty;
                 NewJobTargetPath = string.Empty;
@@ -248,7 +254,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Check if the job can be created
+        // Determines if a new job can be created (all fields must be filled)
         private bool CanCreateJob(object parameter)
         {
             return !string.IsNullOrWhiteSpace(NewJobName) &&
@@ -256,8 +262,7 @@ namespace EasySave.ViewModels
                    !string.IsNullOrWhiteSpace(NewJobTargetPath);
         }
 
-
-        // Selectipon of the source path
+        // Opens a folder browser dialog to select the source path
         private void BrowseSourcePath()
         {
             using var dialog = new FolderBrowserDialog();
@@ -268,7 +273,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Selection of the target path
+        // Opens a folder browser dialog to select the target path
         private void BrowseTargetPath()
         {
             using var dialog = new FolderBrowserDialog();
@@ -279,7 +284,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Methods for the language management
+        // Gets a localized string for the given key
         public string GetLocalizedString(string key)
         {
             return _languageService.GetString(key);

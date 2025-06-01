@@ -9,7 +9,7 @@ namespace EasySave.Services
     /// Handles the persistence of backup jobs
     public class PersistenceService
     {
-        private const string JobsFile = "jobs.json";
+        private const string JobsFile = "jobs.json"; // File path for storing backup jobs
         private readonly LoggerService _logger;
 
         public PersistenceService(LoggerService logger)
@@ -41,8 +41,8 @@ namespace EasySave.Services
         {
             try
             {
-                var options = new JsonSerializerOptions { WriteIndented = true };
-                File.WriteAllText(JobsFile, JsonSerializer.Serialize(jobs.ToList(), options));
+                var options = new JsonSerializerOptions { WriteIndented = true }; // Format the JSON output for readability
+                File.WriteAllText(JobsFile, JsonSerializer.Serialize(jobs.ToList(), options)); // Serialize the jobs to JSON and write to file
             }
             catch (Exception ex)
             {

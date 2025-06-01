@@ -21,18 +21,22 @@ namespace EasySave.ViewModels
     // ViewModel for the settings window
     public class SettingsViewModel : ViewModelBase
     {
-
+        // Popup window for business software detection
         private Window _businessPopupWindow;
 
+        // Logger service for logging messages and errors
         private readonly LoggerService _loggerService;
 
+        // Timer to check if business software is running
         private System.Timers.Timer _businessSoftwareCheckTimer;
         private bool _popupAlreadyShown = false;
 
-
+        // StringBuilder for accumulating log messages
         private StringBuilder _logBuilder = new StringBuilder();
+        // Stores the current log content as a string
         private string _logContent = string.Empty;
 
+        // Currently selected language
         private string _selectedLanguage;
         public string SelectedLanguage
         {
@@ -44,7 +48,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Check if the business software is running
+        // Checks if the business software is running and pauses/resumes jobs accordingly
         private void CheckBusinessSoftwareRunning(object sender, ElapsedEventArgs e)
         {
             try
@@ -69,11 +73,12 @@ namespace EasySave.ViewModels
                                 WindowStartupLocation = WindowStartupLocation.CenterOwner
                             };
 
-                           
+                            // Disable the main window and show popup
                             Application.Current.MainWindow.IsEnabled = false;
                             _businessPopupWindow.Show();
 
                             _loggerService?.Log("Job software detected. Automatic pause of jobs...");
+                            // Pause all running jobs
                             foreach (var job in App.AppViewModel.ActiveBackupJobs)
                             {
                                 if (job.IsRunning && !job.IsPaused)
@@ -93,13 +98,13 @@ namespace EasySave.ViewModels
 
                             Application.Current.MainWindow.IsEnabled = true;
 
-                            // Highlights the main window
+                            // Bring main window to front
                             Application.Current.MainWindow.Activate();
                             Application.Current.MainWindow.Topmost = true;
                             Application.Current.MainWindow.Topmost = false;
                             Application.Current.MainWindow.Focus();
 
-                            // AUTOMATIC JOB RESUMPTION
+                            // Resume all paused jobs
                             _loggerService?.Log("Closed business software. Automatic resumption of jobs...");
                             foreach (var job in App.AppViewModel.ActiveBackupJobs)
                             {
@@ -118,9 +123,10 @@ namespace EasySave.ViewModels
                 _loggerService?.LogError($"Erreur pendant la détection du logiciel métier : {ex.Message}");
             }
         }
-        
+
+        // List of available log formats
         public ObservableCollection<string> LogFormats { get; } = new ObservableCollection<string> { "JSON", "XML" };
-        // Logs formats
+        // Currently selected log format
         private LogFormat _selectedLogFormat;
         public LogFormat SelectedLogFormat
         {
@@ -132,11 +138,10 @@ namespace EasySave.ViewModels
 
                 LogFormat format = value;
                 _loggerService.SetLogFormat(format);
-
             }
         }
 
-        // Liste des fichiers à prioriser
+        // List of priority file extensions
         private ObservableCollection<string> _priorityFiles = new ObservableCollection<string>();
         public ObservableCollection<string> PriorityFiles
         {
@@ -148,8 +153,8 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Fichier à ajouter à la liste
-        private string _fileToPrioritize= "";
+        // File extension to add to the priority list
+        private string _fileToPrioritize = "";
         public string FileToPrioritize
         {
             get => _fileToPrioritize;
@@ -160,11 +165,10 @@ namespace EasySave.ViewModels
                     _fileToPrioritize = value;
                     OnPropertyChanged();
                 }
-                
             }
         }
-        
-        // Extensions to encrypt
+
+        // File extension to add to the encryption list
         private string _fileExtensionToCrypt = "";
         public string FileExtensionToCrypt
         {
@@ -193,6 +197,7 @@ namespace EasySave.ViewModels
             }
         }
 
+        // List of file extensions to encrypt
         private ObservableCollection<string> _extensionsToCrypt = new ObservableCollection<string>();
         public ObservableCollection<string> ExtensionsToCrypt
         {
@@ -204,7 +209,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Job logiciel
+        // List of available business software processes
         private ObservableCollection<ProcessInfo> _availableProcesses = new ObservableCollection<ProcessInfo>();
         public ObservableCollection<ProcessInfo> AvailableProcesses
         {
@@ -216,6 +221,7 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Currently selected business software
         private ProcessInfo _selectedBusinessSoftware;
         public ProcessInfo SelectedBusinessSoftware
         {
@@ -231,6 +237,7 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Name of the current business software
         private string _currentBusinessSoftware = "Aucun";
         public string CurrentBusinessSoftware
         {
@@ -245,9 +252,7 @@ namespace EasySave.ViewModels
             }
         }
 
-
-
-        // Commands
+        // Commands for UI actions
         public ICommand SetLanguageCommand { get; private set; }
         public ICommand AddExtensionCommand { get; private set; }
         public ICommand RemoveExtensionCommand { get; private set; }
@@ -256,8 +261,8 @@ namespace EasySave.ViewModels
         public ICommand ApplySettingsCommand { get; private set; }
         public ICommand AddPriorityFileCommand { get; private set; }
         public ICommand RemovePriorityFileCommand { get; private set; }
-        
-        // Constructor
+
+        // Constructor initializes logger, loads settings, and sets up commands and timers
         public SettingsViewModel(LoggerService loggerService)
         {
             _loggerService = loggerService;
@@ -274,59 +279,56 @@ namespace EasySave.ViewModels
             ApplySettingsCommand = new RelayCommand(ApplySettings);
             AddPriorityFileCommand = new RelayCommand<object>(AddPriorityFile);
             RemovePriorityFileCommand = new RelayCommand<string>(RemovePriorityFile);
-            
+
             LoadRunningProcesses();
             LoadSettings();
 
             _businessSoftwareCheckTimer = new System.Timers.Timer(2000); // 2 seconds
             _businessSoftwareCheckTimer.Elapsed += CheckBusinessSoftwareRunning;
             _businessSoftwareCheckTimer.Start();
-
         }
 
+        // Handles new log messages and updates the log content
         private void OnLogMessageAdded(object sender, string message)
         {
-            // Add the new log message to the StringBuilder
             _logBuilder.AppendLine(message);
-
-            // Update the LogContent property to reflect the new log message
             LogContent = _logBuilder.ToString();
         }
 
+        // Log content to display in the UI
         public string LogContent
         {
             get => _logContent;
             set => SetProperty(ref _logContent, value);
         }
 
+        // Sets the selected language and logs the change
         private void SetLanguage(string language)
         {
             SelectedLanguage = language;
-            // Logic to change the language of the application
             _loggerService?.Log($"Language setting changed to {language}");
         }
 
+        // Adds a file extension to the priority list
         private void AddPriorityFile(object parameter)
         {
             if (string.IsNullOrWhiteSpace(FileToPrioritize))
                 return;
 
-            // Format of the priority
             string priority = FileToPrioritize.Trim();
             if (!priority.StartsWith("."))
                 priority = "." + priority;
 
-            // Verification if the priority is already in the list
             if (!PriorityFiles.Contains(priority))
             {
                 PriorityFiles.Add(priority);
                 _loggerService?.Log($"priority added to encryption list: {priority}");
             }
 
-            // Reinitialization of the input field
             FileToPrioritize = "";
         }
 
+        // Removes a file extension from the priority list
         private void RemovePriorityFile(string priority)
         {
             if (priority != null)
@@ -336,27 +338,26 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Adds a file extension to the encryption list
         private void AddExtension(object parameter)
         {
             if (string.IsNullOrWhiteSpace(FileExtensionToCrypt))
                 return;
 
-            // Format of the extension
             string extension = FileExtensionToCrypt.Trim();
             if (!extension.StartsWith("."))
                 extension = "." + extension;
 
-            // Verification if the extension is already in the list
             if (!ExtensionsToCrypt.Contains(extension))
             {
                 ExtensionsToCrypt.Add(extension);
                 _loggerService?.Log($"Extension added to encryption list: {extension}");
             }
 
-            // Reinitialization of the input field
             FileExtensionToCrypt = "";
         }
 
+        // Removes a file extension from the encryption list
         private void RemoveExtension(string extension)
         {
             if (extension != null)
@@ -366,7 +367,7 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Open a file dialog to select the business software
+        // Opens a file dialog to select the business software
         private void BrowseBusinessSoftware(object parameter)
         {
             var openFileDialog = new OpenFileDialog
@@ -379,50 +380,44 @@ namespace EasySave.ViewModels
             {
                 string fileName = Path.GetFileName(openFileDialog.FileName);
 
-                // Creation of the ProcessInfo object
                 var processInfo = new ProcessInfo
                 {
                     Name = fileName,
                     FullPath = openFileDialog.FileName
                 };
 
-                // Addition of the process to the list if not already present
                 if (!AvailableProcesses.Any(p => p.FullPath == processInfo.FullPath))
                 {
                     AvailableProcesses.Add(processInfo);
                 }
 
-                // Selection of the process
                 SelectedBusinessSoftware = processInfo;
                 _loggerService?.Log($"Business software selected: {fileName}");
             }
         }
 
-        // Use the calculator as business software
+        // Sets the calculator as the business software
         private void UseCalculator(object parameter)
         {
             const string calculatorName = "CalculatorApp";
 
-            // Research of the calculator in the list of processes
             var calculator = AvailableProcesses.FirstOrDefault(p => p.Name.Equals(calculatorName, StringComparison.OrdinalIgnoreCase));
 
             if (calculator == null)
             {
-                // Addition of the calculator to the list if not present
                 calculator = new ProcessInfo
                 {
                     Name = calculatorName,
-                    FullPath = "CalculatorApp" // Path not necessary for the calculator
+                    FullPath = "CalculatorApp"
                 };
                 AvailableProcesses.Add(calculator);
             }
 
-            // Selection of the calculator
             SelectedBusinessSoftware = calculator;
             _loggerService?.Log("Calculator set as business software");
         }
 
-        // Apply the settings
+        // Applies and saves the settings
         private void ApplySettings(object parameter)
         {
             SaveSettings();
@@ -440,7 +435,7 @@ namespace EasySave.ViewModels
             MessageBox.Show("Paramètres enregistrés avec succès !", "EasySave", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        // Load the running processes
+        // Loads the list of running processes for business software selection
         private void LoadRunningProcesses()
         {
             try
@@ -454,7 +449,7 @@ namespace EasySave.ViewModels
                     {
                         string path = GetProcessFilePath(process);
 
-                        // Filter the processes to only include those in "C:\Program Files" or "C:\Program Files (x86)"
+                        // Only include processes from Program Files directories
                         if (path.StartsWith("C:\\Program Files") || path.StartsWith("C:\\Program Files (x86)"))
                         {
                             AvailableProcesses.Add(new ProcessInfo
@@ -466,7 +461,7 @@ namespace EasySave.ViewModels
                     }
                     catch
                     {
-                        // Access denied to the process
+                        // Ignore processes that cannot be accessed
                     }
                 }
             }
@@ -477,8 +472,7 @@ namespace EasySave.ViewModels
             }
         }
 
-
-        // Get the file path of the process
+        // Gets the file path of a process
         private string GetProcessFilePath(Process process)
         {
             try
@@ -491,14 +485,13 @@ namespace EasySave.ViewModels
             }
         }
 
-        // Load the settings from the JSON file
+        // Loads settings from the JSON file and applies them
         private void LoadSettings()
         {
             try
             {
                 var settings = SettingsService.Instance.Load();
 
-                // Apply the settings if the file exists
                 if (settings != null)
                 {
                     SelectedLanguage = settings.Language;
@@ -508,7 +501,7 @@ namespace EasySave.ViewModels
                     MaxParallelLargeFileSizeKo = settings.MaxParallelLargeFileSizeKo;
                     _loggerService?.Log($"Max parallel large file size (Ko) loaded from settings: {MaxParallelLargeFileSizeKo}");
 
-                    // Charge of the extensions to crypt
+                    // Load extensions to encrypt
                     ExtensionsToCrypt.Clear();
                     int i = 0;
                     foreach (var extension in settings.ExtensionsToCrypt)
@@ -519,19 +512,18 @@ namespace EasySave.ViewModels
                     }
 
                     PriorityFiles.Clear();
-                    // Charge of the priority files
+                    // Load priority files
                     foreach (var priority in settings.PriorityExtensions)
                     {
                         PriorityFiles.Add(priority);
                         _loggerService?.Log($"Priority file loaded from settings: {priority}");
                     }
 
-                    // Charge of the business software
+                    // Load business software
                     if (!string.IsNullOrEmpty(settings.BusinessSoftware.Name) && settings.BusinessSoftware.Name != "Aucun")
                     {
                         CurrentBusinessSoftware = settings.BusinessSoftware.Name;
 
-                        // Addition of the business software to the list if not already present
                         var businessSoftware = new ProcessInfo
                         {
                             Name = settings.BusinessSoftware.Name,
@@ -543,12 +535,11 @@ namespace EasySave.ViewModels
                             AvailableProcesses.Add(businessSoftware);
                         }
 
-                        // Selection of the business software
                         SelectedBusinessSoftware = businessSoftware;
                         _loggerService?.Log($"Business software loaded from settings: {SelectedBusinessSoftware}");
                     }
 
-                    // Apply the log format
+                    // Set log format in logger
                     if (_loggerService != null)
                     {
                         try
@@ -562,10 +553,9 @@ namespace EasySave.ViewModels
                         }
                     }
                 }
-
                 else
                 {
-                    // File not found, create a default settings file
+                    // If settings file not found, create default settings
                     ExtensionsToCrypt.Add(".txt");
                     ExtensionsToCrypt.Add(".docx");
                     ExtensionsToCrypt.Add(".pdf");
@@ -574,7 +564,6 @@ namespace EasySave.ViewModels
                     PriorityFiles.Add(".docx");
                     PriorityFiles.Add(".pdf");
 
-                    // Create and save the default settings
                     SaveSettings();
 
                     _loggerService?.Log("Created default settings file");
@@ -585,7 +574,7 @@ namespace EasySave.ViewModels
                 MessageBox.Show($"Erreur lors du chargement des paramètres : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 _loggerService?.LogError($"Error loading settings: {ex.Message}");
 
-                // Charge of the default extensions
+                // Load default extensions if error occurs
                 PriorityFiles.Add(".txt");
                 PriorityFiles.Add(".docx");
                 PriorityFiles.Add(".pdf");
@@ -595,13 +584,14 @@ namespace EasySave.ViewModels
             }
         }
 
+        // Saves the current settings to the JSON file
         private void SaveSettings()
         {
             try
             {
-                // Creation of the settings folder if it does not exist
-
                 string settingsFolder = Path.Combine(AppContext.BaseDirectory, "Settings");
+                
+                // Creation of the settings folder if it does not exist
                 if (!Directory.Exists(settingsFolder))
                 {
                     Directory.CreateDirectory(settingsFolder);
@@ -629,7 +619,6 @@ namespace EasySave.ViewModels
                 File.WriteAllText(settingsFilePath, json);
 
                 _loggerService?.Log("Settings saved successfully");
-
             }
             catch (Exception ex)
             {
@@ -639,7 +628,7 @@ namespace EasySave.ViewModels
         }
     }
 
-    // Class representing a process
+    // Class representing a process for business software selection
     public class ProcessInfo
     {
         public string Name { get; set; }
@@ -651,6 +640,7 @@ namespace EasySave.ViewModels
         }
     }
 
+    // Generic RelayCommand implementation for ICommand
     public class RelayCommand<T> : ICommand
     {
         private readonly Action<T> _execute;

@@ -12,33 +12,39 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using EasySave.Models;   
+using EasySave.Models;
 using EasySave.Services;
-
 
 namespace EasySaveClient.ViewModels
 {
+    // MainViewModel for the EasySave client application
     public class MainViewModel : INotifyPropertyChanged
     {
+        // Import for allocating a console window (for debugging)
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern bool AllocConsole();
+
+        // Collection of backup states received from the server
         public ObservableCollection<BackupState> BackupStates { get; set; } = new();
 
+        // TCP client and network stream for server communication
         private TcpClient _client;
         private NetworkStream _stream;
 
+        // Progress value for UI binding
         private double _progress;
-
         public double Progress
         {
             get => _progress;
             set => SetProperty(ref _progress, value);
         }
 
+        // Commands for controlling backup jobs
         public ICommand PauseCommand { get; }
         public ICommand PlayCommand { get; }
         public ICommand StopCommand { get; }
 
+        // Constructor initializes commands and connects to the server
         public MainViewModel(TcpClient client)
         {
             _client = client;
@@ -51,6 +57,8 @@ namespace EasySaveClient.ViewModels
             StartListening();
         }
 
+
+        // Listens to the remote server and listens for state updates
         private async void StartListening()
         {
             try
@@ -72,6 +80,7 @@ namespace EasySaveClient.ViewModels
                         {
                             var payloadText = message.Payload.GetRawText();
 
+                            // Check if payload is a list or a single object
                             if (payloadText.TrimStart().StartsWith("["))
                             {
                                 var states = JsonSerializer.Deserialize<List<BackupState>>(payloadText);
@@ -92,6 +101,7 @@ namespace EasySaveClient.ViewModels
                                         BackupStates.Add(state);
                                     else
                                     {
+                                        // Update properties if already present
                                         existing.State = state.State;
                                         existing.Progress = state.Progress;
                                         existing.SourcePath = state.SourcePath;
@@ -121,7 +131,7 @@ namespace EasySaveClient.ViewModels
             }
         }
 
-
+        // Helper method for property change notification
         protected bool SetProperty<T>(ref T storage, T value, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(storage, value))
@@ -132,6 +142,7 @@ namespace EasySaveClient.ViewModels
             return true;
         }
 
+        // Raises the PropertyChanged event
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -139,6 +150,7 @@ namespace EasySaveClient.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        // Handler for pause button click in the UI
         private void Pause_Click(object sender, RoutedEventArgs e)
         {
             var state = (sender as FrameworkElement)?.DataContext as BackupState;
@@ -146,6 +158,7 @@ namespace EasySaveClient.ViewModels
                 SendCommandToServer(state.Name, "Pause");
         }
 
+        // Handler for stop button click in the UI
         private void Stop_Click(object sender, RoutedEventArgs e)
         {
             var state = (sender as FrameworkElement)?.DataContext as BackupState;
@@ -153,6 +166,7 @@ namespace EasySaveClient.ViewModels
                 SendCommandToServer(state.Name, "Stop");
         }
 
+        // Handler for play button click in the UI
         private void Play_Click(object sender, RoutedEventArgs e)
         {
             var state = (sender as FrameworkElement)?.DataContext as BackupState;
@@ -160,7 +174,7 @@ namespace EasySaveClient.ViewModels
                 SendCommandToServer(state.Name, "Play");
         }
 
-
+        // Sends a command (Pause, Play, Stop) to the server for a specific job
         public void SendCommandToServer(string jobName, string action)
         {
             var message = new NetworkMessage
@@ -201,3 +215,4 @@ namespace EasySaveClient.ViewModels
 
     }
 }
+
