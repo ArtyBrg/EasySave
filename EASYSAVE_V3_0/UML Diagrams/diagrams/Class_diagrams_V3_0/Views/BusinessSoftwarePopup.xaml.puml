@@ -1,0 +1,6 @@
+@startuml
+class BusinessSoftwarePopup <<partial>> {
+    + BusinessSoftwarePopup(viewModel:object)
+}
+Window <|-- BusinessSoftwarePopup
+@enduml

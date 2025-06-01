@@ -1,0 +1,52 @@
+@startuml
+class BackupManagerViewModel {
+    - _nextId : int = 1
+    - _showEditDialog : bool
+    - _isExecutingJobs : bool = false
+    + BackupManagerViewModel(fileSystemService:FileSystemService, loggerService:LoggerService, stateService:StateService, persistenceService:PersistenceService)
+    + ShowEditDialog : bool <<get>> <<set>>
+    - IsExecutingJobs : bool <<get>> <<set>>
+    - LoadInitialJobs() : void
+    + SaveJobs() : void
+    + JobNameExists(name:string) : bool
+    + CreateJob(parameters:string[]) : BackupJobViewModel
+    + CanCreateJob(_:object) : bool
+    - <<async>> ExecuteSelectedJobAsync() : Task
+    - <<async>> ExecuteAllJobsAsync() : Task
+    + <<async>> ExecuteJobsAsync(jobIds:IEnumerable<int>) : Task
+    - DeleteSelectedJobsWithConfirmation(parameter:object) : void
+    + RequestEditJob(job:BackupJobViewModel) : void
+    - ConfirmEdit() : void
+    - CancelEdit() : void
+    + <<async>> ExecuteJobsSequentially() : Task
+    - CancelAllRunningJobs() : void
+    - BrowsePath(job:BackupJobViewModel, isSource:bool) : void
+    - {static} <<readonly>> JobsFileName : string
+    + SaveJobsToFile() : void
+    + LoadJobsFromFile() : void
+}
+class "ObservableCollection`1"<T> {
+}
+ViewModelBase <|-- BackupManagerViewModel
+BackupManagerViewModel o-> "_jobs<BackupJobViewModel>" "ObservableCollection`1"
+BackupManagerViewModel --> "_fileSystemService" FileSystemService
+BackupManagerViewModel --> "_loggerService" LoggerService
+BackupManagerViewModel --> "_stateService" StateService
+BackupManagerViewModel --> "_persistenceService" PersistenceService
+BackupManagerViewModel --> "_selectedJob" BackupJobViewModel
+BackupManagerViewModel --> "_jobToEdit" BackupJobViewModel
+BackupManagerViewModel --> "Jobs<BackupJobViewModel>" "ObservableCollection`1"
+BackupManagerViewModel --> "SelectedJob" BackupJobViewModel
+BackupManagerViewModel --> "JobToEdit" BackupJobViewModel
+BackupManagerViewModel --> "CreateJobCommand" ICommand
+BackupManagerViewModel --> "ExecuteSelectedJobCommand" ICommand
+BackupManagerViewModel --> "ExecuteAllJobsCommand" ICommand
+BackupManagerViewModel --> "ConfirmEditCommand" ICommand
+BackupManagerViewModel --> "CancelEditCommand" ICommand
+BackupManagerViewModel --> "DeleteSelectedJobsCommand" ICommand
+BackupManagerViewModel --> "RequestEditJobCommand" ICommand
+BackupManagerViewModel --> "ExecuteJobsSequentiallyCommand" ICommand
+BackupManagerViewModel --> "CancelAllJobsCommand" ICommand
+BackupManagerViewModel --> "BrowseSourceCommand" ICommand
+BackupManagerViewModel --> "BrowseTargetCommand" ICommand
+@enduml

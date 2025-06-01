@@ -1,0 +1,14 @@
+@startuml
+class FileSystemService {
+    - {static} <<readonly>> LargeFileLock : object
+    - {static} IsLargeFileTransferInProgress : bool = false
+    - <<readonly>> _maxLargeFileSizeBytes : int
+    + FileSystemService(logger:LoggerService)
+    + CanBackupNonPriorityFile(allJobs:List<BackupJobViewModel>, priorityExtensions:List<string>) : bool
+    + GetAllFiles(path:string) : IEnumerable<string>
+    + GetModifiedFilesSince(path:string, since:DateTime) : IEnumerable<string>
+    + CopyFile(source:string, target:string) : void
+    + GetDirectorySize(path:string) : long
+}
+FileSystemService --> "_logger" LoggerService
+@enduml

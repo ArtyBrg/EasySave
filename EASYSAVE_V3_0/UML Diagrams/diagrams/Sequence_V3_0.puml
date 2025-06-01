@@ -1,0 +1,259 @@
+@startuml EasySave3_SequenceDiagram
+
+==JobCreation==
+actor User
+participant MainWindow
+participant MainViewModel
+participant BackupManagerViewModel
+participant PriorityManager
+participant PersistenceService
+participant StateService
+
+User -> MainWindow: Fill job details and click Create
+MainWindow -> MainViewModel: CreateBackupJob()
+MainViewModel -> BackupManagerViewModel: CreateJob(params)
+BackupManagerViewModel -> BackupManagerViewModel: Validate inputs
+BackupManagerViewModel -> PriorityManager: RegisterPriorityExtensions()
+BackupManagerViewModel -> BackupManagerViewModel: Create new BackupJob
+BackupManagerViewModel -> StateService: UpdateState(Created)
+BackupManagerViewModel -> PersistenceService: SaveJobs()
+PersistenceService -> PersistenceService: Serialize to JSON
+BackupManagerViewModel --> MainViewModel: New job created
+MainViewModel --> MainWindow: Navigate to JobsList
+MainWindow --> User: Show new job in list
+
+==ParallelBackupExecution==
+actor User
+participant MainWindow
+participant BackupManagerViewModel
+participant ParallelJobManager
+participant BackupJobViewModel
+participant PriorityQueue
+participant FileSizeManager
+participant FileSystemService
+participant LoggerService
+participant StateService
+participant CryptoSoft
+participant NetworkMonitor
+
+User -> MainWindow: Click Execute Multiple Jobs
+MainWindow -> BackupManagerViewModel: ExecuteAllJobsAsync()
+BackupManagerViewModel -> ParallelJobManager: StartParallelExecution()
+
+loop For each job
+    ParallelJobManager -> BackupJobViewModel: CreateJobInstance()
+    ParallelJobManager -> BackupJobViewModel: ExecuteAsync()
+    
+    BackupJobViewModel -> FileSystemService: GetAllFiles(sourcePath)
+    FileSystemService --> BackupJobViewModel: List of files
+    
+    BackupJobViewModel -> PriorityQueue: SortFilesByPriority()
+    PriorityQueue -> PriorityQueue: Check priority extensions
+    PriorityQueue --> BackupJobViewModel: Sorted file list
+    
+    loop For each file (priority order)
+        alt If priority file exists in any job
+            BackupJobViewModel -> PriorityQueue: WaitForPriorityFiles()
+            PriorityQueue --> BackupJobViewModel: Priority files completed
+        end
+        
+        BackupJobViewModel -> FileSizeManager: CheckFileSize(file)
+        alt If file > n KB
+            FileSizeManager -> FileSizeManager: CheckLargeFileTransferLimit()
+            FileSizeManager --> BackupJobViewModel: Wait for slot
+        end
+        
+        BackupJobViewModel -> NetworkMonitor: CheckNetworkLoad()
+        alt If network overloaded
+            NetworkMonitor --> BackupJobViewModel: Reduce parallel tasks
+        end
+        
+        BackupJobViewModel -> FileSystemService: CopyFileWithProgress()
+        FileSystemService -> FileSystemService: Copy file
+        
+        alt If encryption enabled
+            BackupJobViewModel -> CryptoSoft: CheckSingleInstance()
+            CryptoSoft -> CryptoSoft: Acquire mutex lock
+            BackupJobViewModel -> CryptoSoft: TransformFile()
+            CryptoSoft -> CryptoSoft: Release mutex lock
+        end
+        
+        BackupJobViewModel -> StateService: UpdateState()
+        BackupJobViewModel -> LoggerService: LogFileTransfer()
+    end
+end
+
+ParallelJobManager --> BackupManagerViewModel: All jobs completed
+BackupManagerViewModel --> MainWindow: Update UI
+MainWindow --> User: Show completion status
+
+==RealTimeJobControl==
+actor User
+participant MainWindow
+participant JobControlViewModel
+participant BackupJobViewModel
+participant StateService
+participant RemoteConsole
+
+User -> MainWindow: Click Pause Job
+MainWindow -> JobControlViewModel: PauseJob(jobId)
+JobControlViewModel -> BackupJobViewModel: RequestPause()
+BackupJobViewModel -> BackupJobViewModel: Complete current file transfer
+BackupJobViewModel -> StateService: UpdateState(Paused)
+JobControlViewModel -> RemoteConsole: NotifyJobPaused(jobId)
+JobControlViewModel --> MainWindow: Job paused
+MainWindow --> User: Show paused status
+
+User -> MainWindow: Click Resume Job
+MainWindow -> JobControlViewModel: ResumeJob(jobId)
+JobControlViewModel -> BackupJobViewModel: Resume()
+BackupJobViewModel -> StateService: UpdateState(Running)
+JobControlViewModel -> RemoteConsole: NotifyJobResumed(jobId)
+JobControlViewModel --> MainWindow: Job resumed
+MainWindow --> User: Show running status
+
+User -> MainWindow: Click Stop Job
+MainWindow -> JobControlViewModel: StopJob(jobId)
+JobControlViewModel -> BackupJobViewModel: StopImmediate()
+BackupJobViewModel -> BackupJobViewModel: Cancel current operation
+BackupJobViewModel -> StateService: UpdateState(Stopped)
+JobControlViewModel -> RemoteConsole: NotifyJobStopped(jobId)
+JobControlViewModel --> MainWindow: Job stopped
+MainWindow --> User: Show stopped status
+
+==BusinessSoftwareDetection==
+participant Timer
+participant BusinessSoftwareMonitor
+participant Process
+participant JobControlViewModel
+participant BackupJobViewModel
+participant LoggerService
+
+Timer -> BusinessSoftwareMonitor: CheckBusinessSoftwareRunning()
+BusinessSoftwareMonitor -> Process: GetProcesses()
+Process --> BusinessSoftwareMonitor: List of processes
+
+alt If business software detected
+    BusinessSoftwareMonitor -> JobControlViewModel: PauseAllJobs()
+    loop For each running job
+        JobControlViewModel -> BackupJobViewModel: RequestPause()
+        BackupJobViewModel -> BackupJobViewModel: Complete current transfer
+        BackupJobViewModel -> StateService: UpdateState(PausedByBusiness)
+    end
+    BusinessSoftwareMonitor -> LoggerService: Log business software detection
+else If business software stopped
+    BusinessSoftwareMonitor -> JobControlViewModel: ResumeAllJobs()
+    loop For each paused job
+        JobControlViewModel -> BackupJobViewModel: Resume()
+        BackupJobViewModel -> StateService: UpdateState(Running)
+    end
+    BusinessSoftwareMonitor -> LoggerService: Log business software stopped
+end
+
+==RemoteConsoleInteraction==
+actor RemoteUser
+participant RemoteConsole
+participant SocketServer
+participant BackupManagerViewModel
+participant JobControlViewModel
+participant StateService
+
+RemoteUser -> RemoteConsole: Connect to EasySave
+RemoteConsole -> SocketServer: EstablishConnection()
+SocketServer -> SocketServer: Authenticate connection
+SocketServer --> RemoteConsole: Connection established
+
+RemoteUser -> RemoteConsole: Request job status
+RemoteConsole -> SocketServer: GetJobsStatus()
+SocketServer -> StateService: GetAllJobsState()
+StateService --> SocketServer: Jobs status data
+SocketServer --> RemoteConsole: Send status update
+RemoteConsole --> RemoteUser: Display jobs status
+
+RemoteUser -> RemoteConsole: Pause job remotely
+RemoteConsole -> SocketServer: SendPauseCommand(jobId)
+SocketServer -> JobControlViewModel: PauseJob(jobId)
+JobControlViewModel -> BackupJobViewModel: RequestPause()
+BackupJobViewModel -> StateService: UpdateState(Paused)
+StateService -> SocketServer: NotifyStateChange()
+SocketServer -> RemoteConsole: Confirm job paused
+RemoteConsole --> RemoteUser: Show pause confirmation
+
+==CryptoSoftSingleInstance==
+participant BackupJobViewModel1
+participant BackupJobViewModel2
+participant CryptoSoft
+participant Mutex
+
+BackupJobViewModel1 -> CryptoSoft: TransformFile(file1)
+CryptoSoft -> Mutex: TryAcquire("CryptoSoft_Instance")
+Mutex --> CryptoSoft: Lock acquired
+CryptoSoft -> CryptoSoft: Process file1
+
+BackupJobViewModel2 -> CryptoSoft: TransformFile(file2)
+CryptoSoft -> Mutex: TryAcquire("CryptoSoft_Instance")
+Mutex --> CryptoSoft: Wait for lock
+CryptoSoft -> CryptoSoft: Queue file2 processing
+
+CryptoSoft -> CryptoSoft: Complete file1 processing
+CryptoSoft -> Mutex: Release("CryptoSoft_Instance")
+CryptoSoft -> CryptoSoft: Process file2 (from queue)
+CryptoSoft -> Mutex: Release("CryptoSoft_Instance")
+
+==NetworkLoadMonitoring==
+participant NetworkMonitor
+participant ParallelJobManager
+participant BackupJobViewModel
+participant Timer
+
+Timer -> NetworkMonitor: CheckNetworkLoad()
+NetworkMonitor -> NetworkMonitor: Measure network usage
+alt If network load > threshold
+    NetworkMonitor -> ParallelJobManager: ReduceParallelTasks()
+    ParallelJobManager -> ParallelJobManager: Decrease concurrent jobs
+    loop For excess jobs
+        ParallelJobManager -> BackupJobViewModel: RequestPause()
+        BackupJobViewModel -> StateService: UpdateState(PausedByNetwork)
+    end
+else If network load normal
+    NetworkMonitor -> ParallelJobManager: RestoreParallelTasks()
+    ParallelJobManager -> ParallelJobManager: Increase concurrent jobs
+    loop For paused jobs
+        ParallelJobManager -> BackupJobViewModel: Resume()
+        BackupJobViewModel -> StateService: UpdateState(Running)
+    end
+end
+
+==StateAndProgressUpdate==
+participant BackupJobViewModel
+participant StateService
+participant StateFile
+participant MainWindow
+participant RemoteConsole
+participant ProgressTracker
+
+BackupJobViewModel -> ProgressTracker: UpdateProgress(percentage)
+ProgressTracker -> StateService: UpdateJobProgress(jobId, progress)
+StateService -> StateService: Calculate overall progress
+StateService -> StateFile: Serialize state to JSON
+StateService -> MainWindow: RaiseProgressUpdated(jobId, progress)
+StateService -> RemoteConsole: BroadcastProgressUpdate(jobId, progress)
+MainWindow -> MainWindow: Update progress bars
+RemoteConsole -> RemoteConsole: Update remote display
+
+==EnhancedLogging==
+participant BackupJobViewModel
+participant LoggerService
+participant DailyLogger
+participant CryptoTimer
+participant LogsView
+
+BackupJobViewModel -> LoggerService: LogFileTransfer(fileInfo, cryptoTime)
+LoggerService -> CryptoTimer: GetEncryptionTime()
+CryptoTimer --> LoggerService: Encryption duration
+LoggerService -> DailyLogger: LogEnhancedFileTransfer()
+DailyLogger -> DailyLogger: Write to file (JSON/XML with crypto info)
+LoggerService -> LoggerService: RaiseLogMessageAdded
+LogsView -> LogsView: Update enhanced log display
+
+@enduml

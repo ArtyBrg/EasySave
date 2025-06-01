@@ -1,0 +1,13 @@
+@startuml
+class BackupJobService {
+    + GetJobByName(jobName:string) : BackupJobViewModel
+    + AddJob(job:BackupJobViewModel) : void
+    + RemoveJob(jobName:string) : void
+    + GetJobNames() : IEnumerable<string>
+}
+class "ObservableCollection`1"<T> {
+}
+BackupJobService --> "_instance" BackupJobService
+BackupJobService --> "Instance" BackupJobService
+BackupJobService o-> "Jobs<BackupJobViewModel>" "ObservableCollection`1"
+@enduml

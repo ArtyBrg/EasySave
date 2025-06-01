@@ -3,18 +3,14 @@ using System.Text;
 
 namespace CryptoSoft;
 
-/// <summary>
-/// File manager class
-/// This class is used to encrypt and decrypt files
-/// </summary>
 public class FileManager(string path, string key)
 {
     private string FilePath { get; } = path;
     private string Key { get; } = key;
 
-    /// <summary>
+    private const string MutexName = "Global\\CryptoSoft_DLL_Mutex"; // global name shared
+
     /// check if the file exists
-    /// </summary>
     private bool CheckFile()
     {
         if (File.Exists(FilePath))
@@ -25,36 +21,48 @@ public class FileManager(string path, string key)
         return false;
     }
 
-    /// <summary>
-    /// Encrypts the file with xor encryption
-    /// </summary>
+    /// Encrypts the file with xor encryption (mono-instance)
+    
     public int TransformFile()
     {
-        if (!CheckFile()) return -1;
-        Stopwatch stopwatch = Stopwatch.StartNew();
-        var fileBytes = File.ReadAllBytes(FilePath);
-        var keyBytes = ConvertToByte(Key);
-        fileBytes = XorMethod(fileBytes, keyBytes);
-        File.WriteAllBytes(FilePath, fileBytes);
-        stopwatch.Stop();
-        return (int)stopwatch.ElapsedMilliseconds;
-    }
+        using var mutex = new Mutex(false, MutexName);
 
-    /// <summary>
-    /// Convert a string in byte array
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
+        Console.WriteLine("Waiting for lock...");
+
+        // wait for the mutex available (infinite)
+        mutex.WaitOne();
+
+        Console.WriteLine("Lock acquired.");
+        Stopwatch stopwatch = Stopwatch.StartNew();
+
+        try
+        {
+            if (!CheckFile()) return -1;
+
+            Console.WriteLine("Simulating long encryption task...");
+            // Thread.Sleep(5000); // Simulating long encryption task
+
+            var fileBytes = File.ReadAllBytes(FilePath);
+            var keyBytes = ConvertToByte(Key);
+            fileBytes = XorMethod(fileBytes, keyBytes);
+            File.WriteAllBytes(FilePath, fileBytes);
+
+            stopwatch.Stop();
+            Console.WriteLine("Task complete.");
+            return (int)stopwatch.ElapsedMilliseconds;
+        }
+        finally
+        {
+            mutex.ReleaseMutex();
+            Console.WriteLine("Lock released.");
+        }
+    }
+    /// Decrypts the file with xor encryption (mono-instance)
     private static byte[] ConvertToByte(string text)
     {
         return Encoding.UTF8.GetBytes(text);
     }
-
-    /// <summary>
-    /// </summary>
-    /// <param name="fileBytes">Bytes of the file to convert</param>
-    /// <param name="keyBytes">Key to use</param>
-    /// <returns>Bytes of the encrypted file</returns>
+    // XOR method for encryption/decryption
     private static byte[] XorMethod(IReadOnlyList<byte> fileBytes, IReadOnlyList<byte> keyBytes)
     {
         var result = new byte[fileBytes.Count];

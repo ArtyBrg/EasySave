@@ -1,0 +1,7 @@
+@startuml
+class MainWindow <<partial>> {
+    + MainWindow()
+    - SettingsButton_Click(sender:object, e:RoutedEventArgs) : void
+}
+Window <|-- MainWindow
+@enduml
