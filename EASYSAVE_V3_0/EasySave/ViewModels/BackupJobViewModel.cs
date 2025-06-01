@@ -554,7 +554,6 @@ namespace EasySave.ViewModels
                 var fileInfo = new FileInfo(sourceFile);
                 long fileSize = fileInfo.Length;
 
-                // Log démarrage du transfert avec horodatage précis
                 _loggerService.Log($"Start transfer: {sourceFile} ({fileSize} octets)");
 
                 Stopwatch sw = Stopwatch.StartNew();
@@ -611,7 +610,6 @@ namespace EasySave.ViewModels
                     encryptionTimeMs = 0;
                 }
 
-                // Log fin du transfert avec horodatage précis
                 _loggerService.Log($"End transfer: {sourceFile} ({fileSize} octets), Duration: {timeMs} ms");
 
                 _loggerService.LogFileTransfer(Name, sourceFile, targetFile, fileSize, timeMs, encryptionTimeMs);

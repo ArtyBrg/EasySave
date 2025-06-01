@@ -31,7 +31,6 @@ namespace EasySave.Services
 
         public bool CanBackupNonPriorityFile(List<BackupJobViewModel> allJobs, List<string> priorityExtensions)
         {
-            // Vérifier si des fichiers prioritaires sont en attente sur tous les jobs
             return !allJobs.Any(job => job.HasPendingPriorityFiles(priorityExtensions));
         }
         // Gets all files in the specified directory and its subdirectories.

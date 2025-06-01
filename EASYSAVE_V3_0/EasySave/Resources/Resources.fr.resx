@@ -306,4 +306,7 @@
   <data name="ButtonStopServer" xml:space="preserve">
     <value>Arrêter le serveur</value>
   </data>
+  <data name="TabServer" xml:space="preserve">
+    <value>Serveur</value>
+  </data>
 </root>

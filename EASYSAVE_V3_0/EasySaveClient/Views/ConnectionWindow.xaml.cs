@@ -3,6 +3,7 @@ using System.Net.Sockets;
 using System.Windows;
 using EasySaveClient.ViewModels;
 
+// // ConnectionWindow for establishing a connection to the EasySave server
 namespace EasySaveClient.Views
 {
     public partial class ConnectionWindow : Window
@@ -34,7 +35,7 @@ namespace EasySaveClient.Views
                 };
 
                 mainWindow.Show();
-                Close(); // ferme la fenêtre de connexion
+                Close();
             }
             catch (Exception ex)
             {

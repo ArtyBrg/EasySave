@@ -1,8 +1,13 @@
 @startuml
-class SettingsService <<static>> {
+class SettingsService {
     - {static} <<readonly>> SettingsPath : string
-    + {static} GetPriorityExtensions() : List<string>
-    + {static} Save(settings:AppSettings) : void
-    + {static} Load() : AppSettings
+    - SettingsService()
+    + GetPriorityExtensions() : List<string>
+    + Save(settings:AppSettings) : void
+    + Load() : AppSettings
 }
+class "Lazy`1"<T> {
+}
+SettingsService o-> "_instance<SettingsService>" "Lazy`1"
+SettingsService --> "Instance" SettingsService
 @enduml

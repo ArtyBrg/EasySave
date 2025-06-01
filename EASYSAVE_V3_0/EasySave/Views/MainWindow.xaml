@@ -67,7 +67,7 @@
                 <Button Content="{Binding Translations[TabSetting]}" Command="{Binding NavigateCommand}" 
                         CommandParameter="Settings" Height="40" Width="80" Margin="5" Style="{StaticResource RoundedButtonMenu}"
                         Background="Transparent" Foreground="White" BorderThickness="0"/>
-                <Button Content="Server" Command="{Binding NavigateCommand}" 
+                <Button Content="{Binding Translations[TabServer]}" Command="{Binding NavigateCommand}" 
                         CommandParameter="Server" Height="40" Width="80" Margin="5" Style="{StaticResource RoundedButtonMenu}"
                         Background="Transparent" Foreground="White" BorderThickness="0"/>
 

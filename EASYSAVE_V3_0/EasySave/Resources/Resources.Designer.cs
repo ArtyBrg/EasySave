@@ -583,6 +583,15 @@ namespace EASYSAVE_V3_0.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Server.
+        /// </summary>
+        internal static string TabServer {
+            get {
+                return ResourceManager.GetString("TabServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Settings.
         /// </summary>
         internal static string TabSetting {

@@ -1,8 +1,0 @@
-@startuml
-class ListJobsView <<partial>> {
-    - _contentLoaded : bool
-    + InitializeComponent() : void
-    <<internal>> _CreateDelegate(delegateType:System.Type, handler:string) : System.Delegate
-    - Connect(connectionId:int, target:object) : void
-}
-@enduml

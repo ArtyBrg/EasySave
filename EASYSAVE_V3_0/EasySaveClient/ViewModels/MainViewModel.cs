@@ -203,9 +203,9 @@ namespace EasySaveClient.ViewModels
             }
         }
 
+        // Displays an error message and exits the application
         private void ShowErrorAndExit(string message)
         {
-            // Assure d'appeler depuis le thread UI
             Application.Current.Dispatcher.Invoke(() =>
             {
                 MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);

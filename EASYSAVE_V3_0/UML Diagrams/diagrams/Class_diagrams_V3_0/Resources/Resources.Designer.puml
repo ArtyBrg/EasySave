@@ -17,6 +17,8 @@ class Resources {
     <<internal>> {static} ButtonLangEN : string <<get>>
     <<internal>> {static} ButtonLangFR : string <<get>>
     <<internal>> {static} ButtonSave : string <<get>>
+    <<internal>> {static} ButtonStartServer : string <<get>>
+    <<internal>> {static} ButtonStopServer : string <<get>>
     <<internal>> {static} ColumnJobName : string <<get>>
     <<internal>> {static} ColumnProgress : string <<get>>
     <<internal>> {static} ColumnStatus : string <<get>>
@@ -31,14 +33,23 @@ class Resources {
     <<internal>> {static} EditPannel : string <<get>>
     <<internal>> {static} FileToDecrypt : string <<get>>
     <<internal>> {static} InvalidFile : string <<get>>
+    <<internal>> {static} IpAddress : string <<get>>
     <<internal>> {static} JobName : string <<get>>
     <<internal>> {static} ListJobs : string <<get>>
     <<internal>> {static} PriorizeFile : string <<get>>
     <<internal>> {static} SelectedSoftware : string <<get>>
+    <<internal>> {static} ServerStarted : string <<get>>
+    <<internal>> {static} ServerState : string <<get>>
+    <<internal>> {static} ServerStatusOffline : string <<get>>
+    <<internal>> {static} ServerStatusOnline : string <<get>>
+    <<internal>> {static} ServerStatusTitle : string <<get>>
+    <<internal>> {static} ServerStopped : string <<get>>
     <<internal>> {static} SettingCrypt : string <<get>>
     <<internal>> {static} SettingLanguage : string <<get>>
     <<internal>> {static} SettingLog : string <<get>>
     <<internal>> {static} SettingLogText : string <<get>>
+    <<internal>> {static} SettingMaxSize : string <<get>>
+    <<internal>> {static} SettingMaxSizeText : string <<get>>
     <<internal>> {static} SettingPriorization : string <<get>>
     <<internal>> {static} SettingSoftware : string <<get>>
     <<internal>> {static} SettingsTitle : string <<get>>
@@ -48,8 +59,10 @@ class Resources {
     <<internal>> {static} TabDecrypt : string <<get>>
     <<internal>> {static} TabHome : string <<get>>
     <<internal>> {static} TabJob : string <<get>>
+    <<internal>> {static} TabServer : string <<get>>
     <<internal>> {static} TabSetting : string <<get>>
     <<internal>> {static} TargetPath : string <<get>>
+    <<internal>> {static} ToggleServer : string <<get>>
     <<internal>> {static} UseCalc : string <<get>>
     <<internal>> {static} Welcome : string <<get>>
 }

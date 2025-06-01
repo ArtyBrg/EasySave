@@ -34,6 +34,7 @@ MainViewModel --> "_backupManagerViewModel" BackupManagerViewModel
 MainViewModel --> "_languageService" LanguageService
 MainViewModel --> "_loggerService" LoggerService
 MainViewModel --> "_remoteConsole" RemoteConsoleService
+MainViewModel --> "RemoteConsole" RemoteConsoleService
 MainViewModel o-> "_logBuilder" StringBuilder
 MainViewModel --> "BackupManager" BackupManagerViewModel
 MainViewModel --> "NavigateCommand" ICommand

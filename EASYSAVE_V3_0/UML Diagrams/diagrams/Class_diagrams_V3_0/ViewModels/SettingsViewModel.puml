@@ -9,6 +9,8 @@ class SettingsViewModel {
     + FileToPrioritize : string <<get>> <<set>>
     - _fileExtensionToCrypt : string = ""
     + FileExtensionToCrypt : string <<get>> <<set>>
+    - _maxParallelLargeFileSizeKo : int = 0
+    + MaxParallelLargeFileSizeKo : int <<get>> <<set>>
     - _currentBusinessSoftware : string = "Aucun"
     + CurrentBusinessSoftware : string <<get>> <<set>>
     + SettingsViewModel(loggerService:LoggerService)

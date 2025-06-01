@@ -1,6 +1,7 @@
 @startuml
 class AppSettings {
-    + Language : string <<get>> <<set>> = "EN"
+    + Language : string <<get>> <<set>>
+    + MaxParallelLargeFileSizeKo : int <<get>> <<set>>
 }
 class BusinessSoftware {
     + Name : string <<get>> <<set>> = "Aucun"

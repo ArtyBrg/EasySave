@@ -35,5 +35,6 @@
 !include .\\Views\ListJobsView.xaml.puml
 !include .\\Views\LogsView.xaml.puml
 !include .\\Views\MainWindow.xaml.puml
+!include .\\Views\ServerStatusView.xaml.puml
 !include .\\Views\SettingsView.xaml.puml
 @enduml

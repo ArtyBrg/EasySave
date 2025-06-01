@@ -1,0 +1,17 @@
+@startuml
+class ServerStatusView <<partial>> {
+    - _server : RemoteConsoleService?
+    - _isRunning : bool
+    - _translations : TranslationProvider?
+    + ServerStatusView()
+    - ServerStatusView_DataContextChanged(sender:object, e:DependencyPropertyChangedEventArgs) : void
+    - Translations_PropertyChanged(sender:object?, e:PropertyChangedEventArgs) : void
+    - ServerStatusView_Loaded(sender:object, e:RoutedEventArgs) : void
+    - RefreshUI() : void
+    - UpdateUIState(isRunning:bool) : void
+    - ToggleButton_Click(sender:object, e:RoutedEventArgs) : void
+    - StopServer() : void
+    - GetLocalIPAddress() : string
+}
+UserControl <|-- ServerStatusView
+@enduml
