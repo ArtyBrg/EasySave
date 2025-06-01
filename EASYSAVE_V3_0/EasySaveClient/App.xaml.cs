@@ -16,6 +16,9 @@ namespace EasySaveClient
 
             // Gestion globale des exceptions non gérées dans les threads non-UI
             AppDomain.CurrentDomain.UnhandledException += OnDomainUnhandledException;
+
+            var connectionWindow = new Views.ConnectionWindow();
+            connectionWindow.Show();
         }
 
         private void OnDispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

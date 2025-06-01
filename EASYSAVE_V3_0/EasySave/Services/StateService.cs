@@ -15,7 +15,7 @@ namespace EasySave.Services
     /// Manages the state of backup jobs
     public class StateService
     {
-        private static readonly string SettingsPath = Path.Combine(AppContext.BaseDirectory, @"..\\..\\..\\", "Settings", "settings.json");
+        private static readonly string SettingsPath = Path.Combine(AppContext.BaseDirectory, "Settings", "settings.json");
 
         // AJOUTEZ CETTE MÉTHODE
         public static List<string> GetPriorityExtensions()
@@ -52,7 +52,7 @@ namespace EasySave.Services
         private static StateService _instance;
         public static StateService Instance => _instance ??= new StateService(new LoggerService());
 
-        private string StateFile = Path.Combine(AppContext.BaseDirectory, @"..\\..\\..\\", "States", "state.json");
+        private string StateFile = Path.Combine(AppContext.BaseDirectory, "States", "state.json");
         private readonly List<BackupState> _states = new();
         private readonly LoggerService _logger;
 

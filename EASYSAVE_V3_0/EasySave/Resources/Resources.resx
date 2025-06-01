@@ -276,4 +276,34 @@
   <data name="SettingMaxSizeText" xml:space="preserve">
     <value>Select max file size in KB:</value>
   </data>
+  <data name="ServerStatusTitle" xml:space="preserve">
+    <value>Server Status</value>
+  </data>
+  <data name="IpAddress" xml:space="preserve">
+    <value>IP Address: </value>
+  </data>
+  <data name="ServerState" xml:space="preserve">
+    <value>Status: </value>
+  </data>
+  <data name="ToggleServer" xml:space="preserve">
+    <value>Start Server</value>
+  </data>
+  <data name="ServerStatusOnline" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="ServerStatusOffline" xml:space="preserve">
+    <value>Offline</value>
+  </data>
+  <data name="ServerStarted" xml:space="preserve">
+    <value>Started</value>
+  </data>
+  <data name="ServerStopped" xml:space="preserve">
+    <value>Stopped</value>
+  </data>
+  <data name="ButtonStartServer" xml:space="preserve">
+    <value>Start Server</value>
+  </data>
+  <data name="ButtonStopServer" xml:space="preserve">
+    <value>Stop Server</value>
+  </data>
 </root>

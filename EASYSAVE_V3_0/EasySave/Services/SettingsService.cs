@@ -10,7 +10,7 @@ namespace EasySave.Services
 {
     public class SettingsService
     {
-        private static readonly string SettingsPath = Path.Combine(AppContext.BaseDirectory, @"..\\..\\..\\", "Settings", "settings.json");
+        private static readonly string SettingsPath = Path.Combine(AppContext.BaseDirectory, "Settings", "settings.json");
         private static readonly Lazy<SettingsService> _instance = new(() => new SettingsService());
 
         public static SettingsService Instance => _instance.Value;

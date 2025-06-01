@@ -24,6 +24,8 @@ namespace EasySave.ViewModels
         private readonly LoggerService _loggerService;
         private readonly RemoteConsoleService _remoteConsole;
 
+        public RemoteConsoleService RemoteConsole => _remoteConsole;
+
         // Properties
         private string _selectedViewName;
         private StringBuilder _logBuilder = new StringBuilder();
@@ -56,7 +58,7 @@ namespace EasySave.ViewModels
             // Passe le vrai ViewModel une fois ici :
             _remoteConsole.Initialize(_backupManagerViewModel);
             StateService.Instance.SetRemoteConsole(_remoteConsole);
-            _remoteConsole.Start();
+            // _remoteConsole.Start();
             InitLanguage();
 
             // Initialization

@@ -601,7 +601,7 @@ namespace EasySave.ViewModels
             {
                 // Creation of the settings folder if it does not exist
 
-                string settingsFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\\..\\..\\", "Settings");
+                string settingsFolder = Path.Combine(AppContext.BaseDirectory, "Settings");
                 if (!Directory.Exists(settingsFolder))
                 {
                     Directory.CreateDirectory(settingsFolder);

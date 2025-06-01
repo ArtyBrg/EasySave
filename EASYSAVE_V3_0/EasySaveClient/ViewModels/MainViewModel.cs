@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
@@ -38,50 +39,31 @@ namespace EasySaveClient.ViewModels
         public ICommand PlayCommand { get; }
         public ICommand StopCommand { get; }
 
-        public MainViewModel()
+        public MainViewModel(TcpClient client)
         {
+            _client = client;
+            _stream = _client.GetStream();
 
-            PauseCommand = new RelayCommand(param =>
-            {
-                var jobName = param as string;
-                if (!string.IsNullOrEmpty(jobName))
-                    SendCommandToServer(jobName, "Pause");
-            });
+            PauseCommand = new RelayCommand(param => SendCommandToServer(param as string, "Pause"));
+            StopCommand = new RelayCommand(param => SendCommandToServer(param as string, "Stop"));
+            PlayCommand = new RelayCommand(param => SendCommandToServer(param as string, "Play"));
 
-            StopCommand = new RelayCommand(param =>
-            {
-                var jobName = param as string;
-                if (!string.IsNullOrEmpty(jobName))
-                    SendCommandToServer(jobName, "Stop");
-            });
-
-            PlayCommand = new RelayCommand(param =>
-            {
-                var jobName = param as string;
-                if (!string.IsNullOrEmpty(jobName))
-                    SendCommandToServer(jobName, "Play");
-            });
-
-            ConnectToServer();
-
-            // AllocConsole();
+            StartListening();
         }
 
-        private async void ConnectToServer()
+        private async void StartListening()
         {
             try
             {
-                _client = new TcpClient("127.0.0.1", 8080);
-                _stream = _client.GetStream();
-
-                using var reader = new System.IO.StreamReader(_stream, Encoding.UTF8);
-
+                using var reader = new StreamReader(_stream, Encoding.UTF8);
                 while (true)
                 {
                     var line = await reader.ReadLineAsync();
-                    if (line == null) break;
-
-                    Console.WriteLine("Data received: " + line);
+                    if (line == null)
+                    {
+                        ShowErrorAndExit("Le serveur distant a été arrêté.");
+                        break;
+                    }
 
                     try
                     {
@@ -93,7 +75,7 @@ namespace EasySaveClient.ViewModels
                             if (payloadText.TrimStart().StartsWith("["))
                             {
                                 var states = JsonSerializer.Deserialize<List<BackupState>>(payloadText);
-                                App.Current.Dispatcher.Invoke(() =>
+                                Application.Current.Dispatcher.Invoke(() =>
                                 {
                                     BackupStates.Clear();
                                     foreach (var state in states)
@@ -103,7 +85,7 @@ namespace EasySaveClient.ViewModels
                             else
                             {
                                 var state = JsonSerializer.Deserialize<BackupState>(payloadText);
-                                App.Current.Dispatcher.Invoke(() =>
+                                Application.Current.Dispatcher.Invoke(() =>
                                 {
                                     var existing = BackupStates.FirstOrDefault(s => s.Name == state.Name);
                                     if (existing == null)
@@ -128,13 +110,14 @@ namespace EasySaveClient.ViewModels
                     }
                     catch (JsonException ex)
                     {
-                        ShowErrorAndExit("JSON parsing error: " + ex.Message);
+                        ShowErrorAndExit("Erreur JSON : " + ex.Message);
+                        break;
                     }
                 }
             }
             catch (Exception ex)
             {
-                ShowErrorAndExit("Connection error: " + ex.Message);
+                ShowErrorAndExit("Erreur lors de la lecture : " + ex.Message);
             }
         }
 
