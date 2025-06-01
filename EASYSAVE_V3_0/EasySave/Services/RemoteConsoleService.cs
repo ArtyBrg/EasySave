@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -12,27 +12,35 @@ namespace EasySave.Services
 {
     public class RemoteConsoleService
     {
+        public bool IsRunning => _isRunning;
 
         private readonly StateService _stateService;
         private BackupManagerViewModel _backupManager;
 
+        private Socket _serverSocket;
         private Socket _lastClient;
+        private Thread _serverThread;
+        private bool _isRunning;
 
         public RemoteConsoleService(StateService stateService)
         {
             _stateService = stateService;
         }
 
-        private Socket _serverSocket;
-        private bool _isRunning;
+        public void Initialize(BackupManagerViewModel backupManager)
+        {
+            _backupManager = backupManager;
+            Console.WriteLine("BackupManager initialisé dans le serveur");
+        }
 
         // Starts the remote console server and listens for incoming client connections
         public void Start()
         {
+            if (_isRunning)
+                return;
+
             if (_backupManager == null)
-            {
                 throw new InvalidOperationException("Le BackupManager doit être initialisé avant de démarrer le serveur.");
-            }
 
             _serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             _serverSocket.Bind(new IPEndPoint(IPAddress.Any, 8080));
@@ -42,28 +50,81 @@ namespace EasySave.Services
             Console.WriteLine("Console distante en écoute sur le port 8080...");
 
             // Start a background thread to accept clients
-            Thread serverThread = new Thread(() =>
+            _serverThread = new Thread(() =>
             {
-                while (_isRunning)
+                try
                 {
-                    // Accept a new client connection
-                    Socket client = _serverSocket.Accept();
-                    _lastClient = client;
-                    // Handle the client in a separate thread
-                    Thread clientThread = new Thread(() => HandleClient(client));
-                    clientThread.Start();
-                }
-            });
+                    while (_isRunning)
+                    {
+                        try
+                        {
+                            // Accept a new client connection
+                            var client = _serverSocket.Accept();
+                            _lastClient = client;
 
-            serverThread.IsBackground = true;
-            serverThread.Start();
+                            // Handle the client in a separate thread
+                            Thread clientThread = new Thread(() => HandleClient(client))
+                            {
+                                IsBackground = true
+                            };
+                            clientThread.Start();
+                        }
+                        catch (SocketException ex)
+                        {
+                            if (_isRunning)
+                                Console.WriteLine("Erreur socket : " + ex.Message);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Erreur serveur : " + ex.Message);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Erreur thread serveur principal : " + ex.Message);
+                }
+            })
+            {
+                IsBackground = true
+            };
+
+            _serverThread.Start();
         }
 
-        // Initializes the backup manager for the service
-        public void Initialize(BackupManagerViewModel backupManager)
+        public void Stop()
         {
-            _backupManager = backupManager;
-            Console.WriteLine("BackupManager initialisé dans le serveur");
+            try
+            {
+                _isRunning = false;
+
+                if (_lastClient != null)
+                {
+                    try
+                    {
+                        _lastClient.Shutdown(SocketShutdown.Both);
+                    }
+                    catch { }
+                    _lastClient.Close();
+                    _lastClient = null;
+                }
+
+                if (_serverSocket != null)
+                {
+                    try
+                    {
+                        _serverSocket.Close();
+                    }
+                    catch { }
+                    _serverSocket = null;
+                }
+
+                Console.WriteLine("Serveur arrêté.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erreur lors de l'arrêt du serveur : " + ex.Message);
+            }
         }
 
         // Handles communication with a connected client
@@ -89,10 +150,7 @@ namespace EasySave.Services
                     // Receive data from the client
                     int bytesRec = client.Receive(buffer);
                     if (bytesRec == 0)
-                    {
-                        Console.WriteLine("Client déconnecté.");
                         break;
-                    }
 
                     string request = Encoding.UTF8.GetString(buffer, 0, bytesRec);
                     Console.WriteLine($"Commande reçue : {request}");
@@ -118,29 +176,18 @@ namespace EasySave.Services
                         if (job == null)
                         {
                             Console.WriteLine($"Job '{jobName}' introuvable !");
-                            return;
+                            continue;
                         }
 
                         // Execute the requested action on the job
-                        switch (action.ToLower())
+                        switch (action?.ToLower())
+                        
                         {
-                            case "pause":
-                                Console.WriteLine($"Exécution PauseJob() pour {jobName}");
-                                job.PauseJob();
-                                Console.WriteLine($"PauseJob() terminé pour {jobName}");
-                                break;
-                            case "stop":
-                                Console.WriteLine($"Exécution StopJob() pour {jobName}");
-                                job.StopJob();
-                                Console.WriteLine($"StopJob() terminé pour {jobName}");
-                                break;
-                            case "play":
-                                Console.WriteLine($"Exécution ExecuteAsync() pour {jobName}");
-                                job.ExecuteAsync();
-                                Console.WriteLine($"ExecuteAsync() terminé pour {jobName}");
-                                break;
+                            case "pause": job.PauseJob(); break;
+                            case "stop": job.StopJob(); break;
+                            case "play": job.ExecuteAsync(); break;
                             default:
-                                Console.WriteLine($"Action '{action}' non reconnue");
+                                Console.WriteLine($"Action inconnue : {action}");
                                 break;
                         }
                     }
@@ -160,10 +207,7 @@ namespace EasySave.Services
             try
             {
                 if (_lastClient == null || !_lastClient.Connected)
-                {
-                    Console.WriteLine("Aucun client connecté.");
                     return;
-                }
 
                 var message = new NetworkMessage
                 {
@@ -172,10 +216,8 @@ namespace EasySave.Services
                 };
 
                 var json = JsonSerializer.Serialize(message) + "\n";
-                // Console.WriteLine("Message envoyé au client : " + json); // <== ICI
-
                 byte[] data = Encoding.UTF8.GetBytes(json);
-                _lastClient?.Send(data);
+                _lastClient.Send(data);
             }
             catch (Exception ex)
             {
@@ -183,7 +225,6 @@ namespace EasySave.Services
                 Console.WriteLine("Erreur envoi update : " + ex.Message);
             }
         }
-
     }
 
     // Represents a message sent over the network

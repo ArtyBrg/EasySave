@@ -205,6 +205,24 @@ namespace EASYSAVE_V3_0.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Start Server.
+        /// </summary>
+        internal static string ButtonStartServer {
+            get {
+                return ResourceManager.GetString("ButtonStartServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Stop Server.
+        /// </summary>
+        internal static string ButtonStopServer {
+            get {
+                return ResourceManager.GetString("ButtonStopServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Name.
         /// </summary>
         internal static string ColumnJobName {
@@ -331,6 +349,15 @@ namespace EASYSAVE_V3_0.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à IP Address: .
+        /// </summary>
+        internal static string IpAddress {
+            get {
+                return ResourceManager.GetString("IpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Job Name:.
         /// </summary>
         internal static string JobName {
@@ -367,6 +394,60 @@ namespace EASYSAVE_V3_0.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Started.
+        /// </summary>
+        internal static string ServerStarted {
+            get {
+                return ResourceManager.GetString("ServerStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Status: .
+        /// </summary>
+        internal static string ServerState {
+            get {
+                return ResourceManager.GetString("ServerState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Offline.
+        /// </summary>
+        internal static string ServerStatusOffline {
+            get {
+                return ResourceManager.GetString("ServerStatusOffline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Online.
+        /// </summary>
+        internal static string ServerStatusOnline {
+            get {
+                return ResourceManager.GetString("ServerStatusOnline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Server Status.
+        /// </summary>
+        internal static string ServerStatusTitle {
+            get {
+                return ResourceManager.GetString("ServerStatusTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Stopped.
+        /// </summary>
+        internal static string ServerStopped {
+            get {
+                return ResourceManager.GetString("ServerStopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à File extensions to be encrypted during backups:.
         /// </summary>
         internal static string SettingCrypt {
@@ -399,6 +480,24 @@ namespace EASYSAVE_V3_0.Resources {
         internal static string SettingLogText {
             get {
                 return ResourceManager.GetString("SettingLogText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Maximum file size: (KB).
+        /// </summary>
+        internal static string SettingMaxSize {
+            get {
+                return ResourceManager.GetString("SettingMaxSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Select max file size in KB:.
+        /// </summary>
+        internal static string SettingMaxSizeText {
+            get {
+                return ResourceManager.GetString("SettingMaxSizeText", resourceCulture);
             }
         }
         
@@ -498,6 +597,15 @@ namespace EASYSAVE_V3_0.Resources {
         internal static string TargetPath {
             get {
                 return ResourceManager.GetString("TargetPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Start Server.
+        /// </summary>
+        internal static string ToggleServer {
+            get {
+                return ResourceManager.GetString("ToggleServer", resourceCulture);
             }
         }
         

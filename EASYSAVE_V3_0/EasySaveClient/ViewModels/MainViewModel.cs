@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
@@ -43,50 +45,33 @@ namespace EasySaveClient.ViewModels
         public ICommand StopCommand { get; }
 
         // Constructor initializes commands and connects to the server
-        public MainViewModel()
+        public MainViewModel(TcpClient client)
         {
-            PauseCommand = new RelayCommand(param =>
-            {
-                var jobName = param as string;
-                if (!string.IsNullOrEmpty(jobName))
-                    SendCommandToServer(jobName, "Pause");
-            });
+            _client = client;
+            _stream = _client.GetStream();
 
-            StopCommand = new RelayCommand(param =>
-            {
-                var jobName = param as string;
-                if (!string.IsNullOrEmpty(jobName))
-                    SendCommandToServer(jobName, "Stop");
-            });
+            PauseCommand = new RelayCommand(param => SendCommandToServer(param as string, "Pause"));
+            StopCommand = new RelayCommand(param => SendCommandToServer(param as string, "Stop"));
+            PlayCommand = new RelayCommand(param => SendCommandToServer(param as string, "Play"));
 
-            PlayCommand = new RelayCommand(param =>
-            {
-                var jobName = param as string;
-                if (!string.IsNullOrEmpty(jobName))
-                    SendCommandToServer(jobName, "Play");
-            });
-
-            ConnectToServer();
-
-            AllocConsole();
+            StartListening();
         }
 
-        // Connects to the remote server and listens for state updates
-        private async void ConnectToServer()
+
+        // Listens to the remote server and listens for state updates
+        private async void StartListening()
         {
             try
             {
-                _client = new TcpClient("127.0.0.1", 8080);
-                _stream = _client.GetStream();
-
-                using var reader = new System.IO.StreamReader(_stream, Encoding.UTF8);
-
+                using var reader = new StreamReader(_stream, Encoding.UTF8);
                 while (true)
                 {
-                    var line = await reader.ReadLineAsync(); // Reads until \n
-                    if (line == null) break;
-
-                    Console.WriteLine("Données reçues : " + line);
+                    var line = await reader.ReadLineAsync();
+                    if (line == null)
+                    {
+                        ShowErrorAndExit("Le serveur distant a été arrêté.");
+                        break;
+                    }
 
                     try
                     {
@@ -99,7 +84,7 @@ namespace EasySaveClient.ViewModels
                             if (payloadText.TrimStart().StartsWith("["))
                             {
                                 var states = JsonSerializer.Deserialize<List<BackupState>>(payloadText);
-                                App.Current.Dispatcher.Invoke(() =>
+                                Application.Current.Dispatcher.Invoke(() =>
                                 {
                                     BackupStates.Clear();
                                     foreach (var state in states)
@@ -109,7 +94,7 @@ namespace EasySaveClient.ViewModels
                             else
                             {
                                 var state = JsonSerializer.Deserialize<BackupState>(payloadText);
-                                App.Current.Dispatcher.Invoke(() =>
+                                Application.Current.Dispatcher.Invoke(() =>
                                 {
                                     var existing = BackupStates.FirstOrDefault(s => s.Name == state.Name);
                                     if (existing == null)
@@ -135,13 +120,14 @@ namespace EasySaveClient.ViewModels
                     }
                     catch (JsonException ex)
                     {
-                        MessageBox.Show("Erreur JSON : " + ex.Message);
+                        ShowErrorAndExit("Erreur JSON : " + ex.Message);
+                        break;
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erreur de connexion : " + ex.Message);
+                ShowErrorAndExit("Erreur lors de la lecture : " + ex.Message);
             }
         }
 
@@ -216,6 +202,17 @@ namespace EasySaveClient.ViewModels
                 Console.WriteLine($"Erreur envoi commande : {ex.Message}");
             }
         }
+
+        private void ShowErrorAndExit(string message)
+        {
+            // Assure d'appeler depuis le thread UI
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Application.Current.Shutdown();
+            });
+        }
+
     }
 }
 

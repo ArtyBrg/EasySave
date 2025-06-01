@@ -270,4 +270,40 @@
   <data name="SettingPriorization" xml:space="preserve">
     <value>Extensions de fichiers à prioriser lors des sauvegardes :</value>
   </data>
+  <data name="SettingMaxSize" xml:space="preserve">
+    <value>Taille maximale des fichiers : (Ko)</value>
+  </data>
+  <data name="SettingMaxSizeText" xml:space="preserve">
+    <value>Sélectionnez la taille maximale du fichier en Ko :</value>
+  </data>
+  <data name="ServerStatusTitle" xml:space="preserve">
+    <value>État du Serveur</value>
+  </data>
+  <data name="IpAddress" xml:space="preserve">
+    <value>Adresse IP : </value>
+  </data>
+  <data name="ServerState" xml:space="preserve">
+    <value>Statut : </value>
+  </data>
+  <data name="ToggleServer" xml:space="preserve">
+    <value>Démarrer le serveur</value>
+  </data>
+  <data name="ServerStatusOnline" xml:space="preserve">
+    <value>En ligne</value>
+  </data>
+  <data name="ServerStatusOffline" xml:space="preserve">
+    <value>Hors ligne</value>
+  </data>
+  <data name="ServerStarted" xml:space="preserve">
+    <value>Démarré</value>
+  </data>
+  <data name="ServerStopped" xml:space="preserve">
+    <value>Arrêté</value>
+  </data>
+  <data name="ButtonStartServer" xml:space="preserve">
+    <value>Démarrer le serveur</value>
+  </data>
+  <data name="ButtonStopServer" xml:space="preserve">
+    <value>Arrêter le serveur</value>
+  </data>
 </root>

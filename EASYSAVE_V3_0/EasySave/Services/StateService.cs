@@ -15,8 +15,8 @@ namespace EasySave.Services
     public class StateService
     {
         // Path to the settings JSON file
-        private static readonly string SettingsPath = Path.Combine(AppContext.BaseDirectory, @"..\\..\\..\\", "Settings", "settings.json");
-
+        private static readonly string SettingsPath = Path.Combine(AppContext.BaseDirectory, "Settings", "settings.json");
+        
         // Returns the list of priority file extensions from settings
         public static List<string> GetPriorityExtensions()
         {
@@ -54,7 +54,8 @@ namespace EasySave.Services
         public static StateService Instance => _instance ??= new StateService(new LoggerService());
 
         // Path to the state JSON file
-        private string StateFile = Path.Combine(AppContext.BaseDirectory, @"..\\..\\..\\", "States", "state.json");
+        private string StateFile = Path.Combine(AppContext.BaseDirectory, "States", "state.json");
+      
         // List of all backup states
         private readonly List<BackupState> _states = new();
         // Logger for error and info messages

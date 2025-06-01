@@ -15,10 +15,19 @@ namespace EasySave.Services
         // Logger service for logging operations
         private readonly LoggerService _logger;
 
+        private static readonly object LargeFileLock = new object();
+        private static bool IsLargeFileTransferInProgress = false;
+        private readonly int _maxLargeFileSizeBytes;
+
+
         public FileSystemService(LoggerService logger)
         {
             _logger = logger;
+
+            var settings = SettingsService.Instance.Load();
+            _maxLargeFileSizeBytes = settings.MaxParallelLargeFileSizeKo * 1024;
         }
+
 
         public bool CanBackupNonPriorityFile(List<BackupJobViewModel> allJobs, List<string> priorityExtensions)
         {
@@ -48,27 +57,53 @@ namespace EasySave.Services
         // Gets all files in the specified directory and its subdirectories that are larger than the given size.
         public void CopyFile(string source, string target)
         {
-            // Validate the source and target paths
             if (string.IsNullOrWhiteSpace(source))
                 throw new ArgumentException("Source path cannot be null or empty", nameof(source));
-
-            // Check if the source file exists
             if (string.IsNullOrWhiteSpace(target))
                 throw new ArgumentException("Target path cannot be null or empty", nameof(target));
-
-            // Check if the target directory exists
             if (!File.Exists(source))
                 throw new FileNotFoundException($"Source file not found: {source}");
 
-            var targetDir = Path.GetDirectoryName(target);
-            if (!string.IsNullOrWhiteSpace(targetDir))
+            var fileInfo = new FileInfo(source);
+            bool isLargeFile = fileInfo.Length > _maxLargeFileSizeBytes;
+
+            if (isLargeFile)
             {
-                Directory.CreateDirectory(targetDir);
+                lock (LargeFileLock)
+                {
+                    while (IsLargeFileTransferInProgress)
+                    {
+                        System.Threading.Monitor.Wait(LargeFileLock);
+                    }
+
+                    IsLargeFileTransferInProgress = true;
+                }
             }
 
-            File.Copy(source, target, true);
-            _logger.Log($"File copied from {source} to {target}");
+            try
+            {
+                var targetDir = Path.GetDirectoryName(target);
+                if (!string.IsNullOrWhiteSpace(targetDir))
+                {
+                    Directory.CreateDirectory(targetDir);
+                }
+
+                File.Copy(source, target, true);
+                _logger.Log($"File copied from {source} to {target}");
+            }
+            finally
+            {
+                if (isLargeFile)
+                {
+                    lock (LargeFileLock)
+                    {
+                        IsLargeFileTransferInProgress = false;
+                        System.Threading.Monitor.PulseAll(LargeFileLock);
+                    }
+                }
+            }
         }
+
 
         // Gets all files in the specified directory and its subdirectories that are larger than the given size.
         public long GetDirectorySize(string path)

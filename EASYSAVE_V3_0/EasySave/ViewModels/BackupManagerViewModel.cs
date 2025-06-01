@@ -363,8 +363,7 @@ namespace EasySave.ViewModels
         }
 
         // Path to the jobs file on disk
-        private static readonly string JobsFileName = Path.GetFullPath(
-            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "BackupJobs", "jobs.json"));
+        private static readonly string JobsFileName = Path.Combine(AppContext.BaseDirectory, "BackupsJobs", "jobs.json");
 
         // Saves the jobs to a JSON file
         public void SaveJobsToFile()

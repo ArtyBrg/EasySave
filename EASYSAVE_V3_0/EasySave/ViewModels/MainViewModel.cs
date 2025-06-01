@@ -25,6 +25,8 @@ namespace EasySave.ViewModels
         private readonly LoggerService _loggerService;
         private readonly RemoteConsoleService _remoteConsole;
 
+        public RemoteConsoleService RemoteConsole => _remoteConsole;
+
         // Name of the currently selected view
         private string _selectedViewName;
         // StringBuilder for accumulating log messages
@@ -57,7 +59,7 @@ namespace EasySave.ViewModels
             _remoteConsole = new RemoteConsoleService(StateService.Instance);
             _remoteConsole.Initialize(_backupManagerViewModel);
             StateService.Instance.SetRemoteConsole(_remoteConsole);
-            _remoteConsole.Start();
+            // _remoteConsole.Start();
             InitLanguage();
 
             // Set default view and job type
@@ -204,7 +206,7 @@ namespace EasySave.ViewModels
         // Initializes the language from settings
         private void InitLanguage()
         {
-            var settings = SettingsService.Load();
+            var settings = SettingsService.Instance.Load();
             CurrentLanguage = settings?.Language ?? "FR";
             // Notify UI of language change
             OnPropertyChanged(nameof(CurrentLanguage));

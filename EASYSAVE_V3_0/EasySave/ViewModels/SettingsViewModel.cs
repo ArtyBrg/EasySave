@@ -53,7 +53,7 @@ namespace EasySave.ViewModels
         {
             try
             {
-                var settings = SettingsService.Load();
+                var settings = SettingsService.Instance.Load();
 
                 if (string.IsNullOrEmpty(settings?.BusinessSoftware?.FullPath))
                     return;
@@ -178,6 +178,20 @@ namespace EasySave.ViewModels
                 if (_fileExtensionToCrypt != value)
                 {
                     _fileExtensionToCrypt = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private int _maxParallelLargeFileSizeKo = 0;
+        public int MaxParallelLargeFileSizeKo
+        {
+            get => _maxParallelLargeFileSizeKo;
+            set
+            {
+                if (_maxParallelLargeFileSizeKo != value)
+                {
+                    _maxParallelLargeFileSizeKo = value;
                     OnPropertyChanged();
                 }
             }
@@ -413,6 +427,7 @@ namespace EasySave.ViewModels
             _loggerService?.Log($"- Log format: {SelectedLogFormat}");
             _loggerService?.Log($"- Extensions to encrypt: {string.Join(", ", ExtensionsToCrypt)}");
             _loggerService?.Log($"- Business software: {CurrentBusinessSoftware}");
+            _loggerService?.Log($"- Max parallel large file size (Ko): {MaxParallelLargeFileSizeKo}");
             _loggerService?.Log("Settings applied successfully.");
 
             App.AppViewModel.ChangeLanguages(SelectedLanguage);
@@ -475,7 +490,7 @@ namespace EasySave.ViewModels
         {
             try
             {
-                var settings = SettingsService.Load();
+                var settings = SettingsService.Instance.Load();
 
                 if (settings != null)
                 {
@@ -483,6 +498,8 @@ namespace EasySave.ViewModels
                     _loggerService?.Log($"Language loaded from settings: {SelectedLanguage}");
                     SelectedLogFormat = settings.LogFormat;
                     _loggerService?.Log($"Log format loaded from settings: {SelectedLogFormat}");
+                    MaxParallelLargeFileSizeKo = settings.MaxParallelLargeFileSizeKo;
+                    _loggerService?.Log($"Max parallel large file size (Ko) loaded from settings: {MaxParallelLargeFileSizeKo}");
 
                     // Load extensions to encrypt
                     ExtensionsToCrypt.Clear();
@@ -572,8 +589,9 @@ namespace EasySave.ViewModels
         {
             try
             {
-                // Create the settings folder if it does not exist
-                string settingsFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\\..\\..\\", "Settings");
+                string settingsFolder = Path.Combine(AppContext.BaseDirectory, "Settings");
+                
+                // Creation of the settings folder if it does not exist
                 if (!Directory.Exists(settingsFolder))
                 {
                     Directory.CreateDirectory(settingsFolder);
@@ -592,7 +610,8 @@ namespace EasySave.ViewModels
                     {
                         Name = CurrentBusinessSoftware,
                         FullPath = SelectedBusinessSoftware?.FullPath ?? ""
-                    }
+                    },
+                    MaxParallelLargeFileSizeKo = MaxParallelLargeFileSizeKo
                 };
 
                 // Serialize the settings object to JSON
