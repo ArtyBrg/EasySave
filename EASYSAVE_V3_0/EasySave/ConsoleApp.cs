@@ -33,6 +33,9 @@ namespace EasySave_WPF
                 return;
             }
 
+            // Ajuste les IDs pour qu'ils deviennent des indices
+            jobIds = jobIds.Select(id => id - 1).ToList();
+
             // Execute the selected jobs asynchronously
             Task.Run(async () =>
             {
