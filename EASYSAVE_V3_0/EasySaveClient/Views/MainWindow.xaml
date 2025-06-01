@@ -1,19 +1,19 @@
 ﻿<Window x:Class="EasySaveClient.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Console de Suivi EasySave"
+        Title="EasySave Monitoring Console"
         Height="500" Width="1000"
         Background="#F4F6F7"
         WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
-    <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="26"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="#16A085"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="Margin" Value="0,10,0,20"/>
-    </Style>
+        <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#16A085"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,10,0,20"/>
+        </Style>
     </Window.Resources>
 
     <Grid Margin="20">
@@ -22,10 +22,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Suivi des Sauvegardes"
+        <TextBlock Text="Backup Monitoring"
                    Style="{StaticResource HeaderTextStyle}"/>
-        
-        <!-- DataGrid pour les BackupStates -->
+
+        <!-- DataGrid for BackupStates -->
         <Border Grid.Row="1"
                 Background="White"
                 CornerRadius="10"
@@ -47,9 +47,9 @@
                       CanUserDeleteRows="False">
 
                 <DataGrid.Columns>
-                <DataGridTextColumn Header="Nom" Binding="{Binding Name}" Width="*"/>
-                <DataGridTextColumn Header="État" Binding="{Binding State}" Width="100"/>
-                    <DataGridTemplateColumn Header="Progression" Width="150">
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="State" Binding="{Binding State}" Width="100"/>
+                    <DataGridTemplateColumn Header="Progress" Width="150">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ProgressBar Value="{Binding Progress}" 
@@ -61,29 +61,28 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Source" Binding="{Binding SourcePath}" Width="2*"/>
-                <DataGridTextColumn Header="Cible" Binding="{Binding TargetPath}" Width="2*"/>
-                <DataGridTextColumn Header="Fichiers restants" Binding="{Binding FilesRemaining}" Width="120"/> 
-                <DataGridTextColumn Header="Taille restante" Binding="{Binding RemainingSize}" Width="120"/>
-                <DataGridTextColumn Header="Fichier actuel source" Binding="{Binding CurrentSourceFile}" Width="2*"/>
-                <DataGridTextColumn Header="Fichier actuel cible" Binding="{Binding CurrentTargetFile}" Width="2*"/>
-                <DataGridTextColumn Header="Timestamp" Binding="{Binding Timestamp}" Width="140"/>
+                    <DataGridTextColumn Header="Target" Binding="{Binding TargetPath}" Width="2*"/>
+                    <DataGridTextColumn Header="Files Remaining" Binding="{Binding FilesRemaining}" Width="120"/>
+                    <DataGridTextColumn Header="Remaining Size" Binding="{Binding RemainingSize}" Width="120"/>
+                    <DataGridTextColumn Header="Current Source File" Binding="{Binding CurrentSourceFile}" Width="2*"/>
+                    <DataGridTextColumn Header="Current Target File" Binding="{Binding CurrentTargetFile}" Width="2*"/>
+                    <DataGridTextColumn Header="Timestamp" Binding="{Binding Timestamp}" Width="140"/>
 
                     <DataGridTemplateColumn Header="Actions">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Button Content="▶" ToolTip="Execute" Width="30" Height="24" Margin="2" Background="#27AE60" Foreground="White"
-                                    Command="{Binding DataContext.PlayCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                    CommandParameter="{Binding Name}"/>
-                                    
+                                            Command="{Binding DataContext.PlayCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                            CommandParameter="{Binding Name}"/>
+
                                     <Button Content="⏸" ToolTip="Pause/Resume" Width="30" Height="24" Margin="2" Background="#F39C12" 
-                                    Foreground="White" Command="{Binding DataContext.PauseCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                    CommandParameter="{Binding Name}" />
+                                            Foreground="White" Command="{Binding DataContext.PauseCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                            CommandParameter="{Binding Name}" />
 
                                     <Button Content="⏹" ToolTip="Stop" Width="30" Height="24" Margin="2" Background="#C0392B" Foreground="White"
-                                    Command="{Binding DataContext.StopCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                    CommandParameter="{Binding Name}" />
-
+                                            Command="{Binding DataContext.StopCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                            CommandParameter="{Binding Name}" />
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

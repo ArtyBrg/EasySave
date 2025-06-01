@@ -1,7 +1,7 @@
 ﻿<Window x:Class="EasySaveClient.Views.ConnectionWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Connexion au serveur"
+        Title="Server Connection"
         Height="360" Width="420"
         Background="#F4F6F7"
         WindowStartupLocation="CenterScreen"
@@ -58,7 +58,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Connexion au serveur"
+        <TextBlock Text="Server Connection"
                    FontSize="22"
                    FontWeight="Bold"
                    Foreground="#16A085"
@@ -66,12 +66,12 @@
                    Margin="0,0,0,25"
                    Grid.Row="0"/>
 
-        <TextBlock Text="Adresse IP :" Style="{StaticResource LabelStyle}" Grid.Row="1"/>
+        <TextBlock Text="IP Address:" Style="{StaticResource LabelStyle}" Grid.Row="1"/>
         <TextBox x:Name="IpBox" Text="127.0.0.1" Style="{StaticResource InputBoxStyle}" Grid.Row="2"/>
 
-        <TextBlock Text="Port :" Style="{StaticResource LabelStyle}" Grid.Row="3"/>
+        <TextBlock Text="Port:" Style="{StaticResource LabelStyle}" Grid.Row="3"/>
         <TextBox x:Name="PortBox" Text="8080" Style="{StaticResource InputBoxStyle}" Grid.Row="4"/>
 
-        <Button Content="Se connecter" Click="Connect_Click" Grid.Row="5" Margin="0,20,0,10"/>
+        <Button Content="Connect" Click="Connect_Click" Grid.Row="5" Margin="0,20,0,10"/>
     </Grid>
 </Window>
